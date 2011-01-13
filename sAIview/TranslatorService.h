@@ -19,7 +19,7 @@ namespace TranslatorService {
     using namespace System;
     using namespace System::Diagnostics;
     using namespace System;
-    ref class Soap;
+    ref class SoapService;
     ref class TranslateOptions;
     ref class TranslateArrayResponse;
     ref class Translation;
@@ -100,7 +100,7 @@ namespace TranslatorService {
     System::Diagnostics::DebuggerStepThroughAttribute, 
     System::ComponentModel::DesignerCategoryAttribute(L"code"), 
     System::Web::Services::WebServiceBindingAttribute(Name=L"BasicHttpBinding_LanguageService", Namespace=L"http://tempuri.org/")]
-    public ref class Soap : public System::Web::Services::Protocols::SoapHttpClientProtocol {
+    public ref class SoapService : public System::Web::Services::Protocols::SoapHttpClientProtocol {
         
         private: System::Threading::SendOrPostCallback^  AddTranslationOperationCompleted;
         
@@ -173,7 +173,7 @@ namespace TranslatorService {
         public: event TranslatorService::TranslateArrayCompletedEventHandler^  TranslateArrayCompleted;
         
         /// <remarks/>
-        public: Soap();
+        public: SoapService();
         /// <remarks/>
         public: [System::Web::Services::Protocols::SoapDocumentMethodAttribute(L"http://api.microsofttranslator.com/V2/LanguageService/AddTranslation", 
             RequestNamespace=L"http://api.microsofttranslator.com/V2", ResponseNamespace=L"http://api.microsofttranslator.com/V2", Use=System::Web::Services::Description::SoapBindingUse::Literal, 
@@ -500,9 +500,13 @@ namespace TranslatorService {
             RequestNamespace=L"http://api.microsofttranslator.com/V2", ResponseNamespace=L"http://api.microsofttranslator.com/V2", Use=System::Web::Services::Description::SoapBindingUse::Literal, 
             ParameterStyle=System::Web::Services::Protocols::SoapParameterStyle::Wrapped)]
         [returnvalue: System::Xml::Serialization::XmlElementAttribute(IsNullable=true)]
-        System::String^  Translate([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  appId, 
-                    [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  text, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
-                    System::String^  from, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  to);
+        System::String^  Translate(
+                    [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  appId, 
+                    [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  text, 
+                    [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  from, 
+                    [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  to, 
+                    [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  contentType, 
+                    [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  category);
         
         /// <remarks/>
         public: System::IAsyncResult^  BeginTranslate(
@@ -510,6 +514,8 @@ namespace TranslatorService {
                     System::String^  text, 
                     System::String^  from, 
                     System::String^  to, 
+                    System::String^  contentType, 
+                    System::String^  category, 
                     System::AsyncCallback^  callback, 
                     System::Object^  asyncState);
         
@@ -517,10 +523,22 @@ namespace TranslatorService {
         public: System::String^  EndTranslate(System::IAsyncResult^  asyncResult);
         
         /// <remarks/>
-        public: System::Void TranslateAsync(System::String^  appId, System::String^  text, System::String^  from, System::String^  to);
+        public: System::Void TranslateAsync(
+                    System::String^  appId, 
+                    System::String^  text, 
+                    System::String^  from, 
+                    System::String^  to, 
+                    System::String^  contentType, 
+                    System::String^  category);
         
         /// <remarks/>
-        public: System::Void TranslateAsync(System::String^  appId, System::String^  text, System::String^  from, System::String^  to, 
+        public: System::Void TranslateAsync(
+                    System::String^  appId, 
+                    System::String^  text, 
+                    System::String^  from, 
+                    System::String^  to, 
+                    System::String^  contentType, 
+                    System::String^  category, 
                     System::Object^  userState);
         
         private: System::Void OnTranslateOperationCompleted(System::Object^  arg);
@@ -1171,11 +1189,11 @@ namespace TranslatorService {
 namespace TranslatorService {
     
     
-    inline Soap::Soap() {
-        this->Url = L"http://api.microsofttranslator.com/v2/Soap.svc";
+    inline SoapService::SoapService() {
+        this->Url = L"http://api.microsofttranslator.com/V2/soap.svc";
     }
     
-    inline System::Void Soap::AddTranslation(
+    inline System::Void SoapService::AddTranslation(
                 [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  appId, 
                 [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  originalText, 
                 [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  translatedText, 
@@ -1191,7 +1209,7 @@ namespace TranslatorService {
                 to, rating, ratingSpecified, contentType, category, user, uri});
     }
     
-    inline System::IAsyncResult^  Soap::BeginAddTranslation(
+    inline System::IAsyncResult^  SoapService::BeginAddTranslation(
                 System::String^  appId, 
                 System::String^  originalText, 
                 System::String^  translatedText, 
@@ -1209,11 +1227,11 @@ namespace TranslatorService {
                 from, to, rating, ratingSpecified, contentType, category, user, uri}, callback, asyncState);
     }
     
-    inline System::Void Soap::EndAddTranslation(System::IAsyncResult^  asyncResult) {
+    inline System::Void SoapService::EndAddTranslation(System::IAsyncResult^  asyncResult) {
         this->EndInvoke(asyncResult);
     }
     
-    inline System::Void Soap::AddTranslationAsync(
+    inline System::Void SoapService::AddTranslationAsync(
                 System::String^  appId, 
                 System::String^  originalText, 
                 System::String^  translatedText, 
@@ -1229,7 +1247,7 @@ namespace TranslatorService {
             user, uri, nullptr);
     }
     
-    inline System::Void Soap::AddTranslationAsync(
+    inline System::Void SoapService::AddTranslationAsync(
                 System::String^  appId, 
                 System::String^  originalText, 
                 System::String^  translatedText, 
@@ -1243,13 +1261,13 @@ namespace TranslatorService {
                 System::String^  uri, 
                 System::Object^  userState) {
         if (this->AddTranslationOperationCompleted == nullptr) {
-            this->AddTranslationOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnAddTranslationOperationCompleted);
+            this->AddTranslationOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnAddTranslationOperationCompleted);
         }
         this->InvokeAsync(L"AddTranslation", gcnew cli::array< System::Object^  >(11) {appId, originalText, translatedText, 
                 from, to, rating, ratingSpecified, contentType, category, user, uri}, this->AddTranslationOperationCompleted, userState);
     }
     
-    inline System::Void Soap::OnAddTranslationOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnAddTranslationOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->AddTranslationCompleted(this, (gcnew System::ComponentModel::AsyncCompletedEventArgs(invokeArgs->Error, invokeArgs->Cancelled, 
@@ -1257,7 +1275,7 @@ namespace TranslatorService {
         }
     }
     
-    inline cli::array< System::Int32 >^  Soap::BreakSentences([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
+    inline cli::array< System::Int32 >^  SoapService::BreakSentences([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
                 System::String^  appId, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  text, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
                 System::String^  language) {
         cli::array< System::Object^  >^  results = this->Invoke(L"BreakSentences", gcnew cli::array< System::Object^  >(3) {appId, 
@@ -1265,31 +1283,31 @@ namespace TranslatorService {
         return (cli::safe_cast<cli::array< System::Int32 >^  >(results[0]));
     }
     
-    inline System::IAsyncResult^  Soap::BeginBreakSentences(System::String^  appId, System::String^  text, System::String^  language, 
+    inline System::IAsyncResult^  SoapService::BeginBreakSentences(System::String^  appId, System::String^  text, System::String^  language, 
                 System::AsyncCallback^  callback, System::Object^  asyncState) {
         return this->BeginInvoke(L"BreakSentences", gcnew cli::array< System::Object^  >(3) {appId, text, language}, callback, 
             asyncState);
     }
     
-    inline cli::array< System::Int32 >^  Soap::EndBreakSentences(System::IAsyncResult^  asyncResult) {
+    inline cli::array< System::Int32 >^  SoapService::EndBreakSentences(System::IAsyncResult^  asyncResult) {
         cli::array< System::Object^  >^  results = this->EndInvoke(asyncResult);
         return (cli::safe_cast<cli::array< System::Int32 >^  >(results[0]));
     }
     
-    inline System::Void Soap::BreakSentencesAsync(System::String^  appId, System::String^  text, System::String^  language) {
+    inline System::Void SoapService::BreakSentencesAsync(System::String^  appId, System::String^  text, System::String^  language) {
         this->BreakSentencesAsync(appId, text, language, nullptr);
     }
     
-    inline System::Void Soap::BreakSentencesAsync(System::String^  appId, System::String^  text, System::String^  language, 
+    inline System::Void SoapService::BreakSentencesAsync(System::String^  appId, System::String^  text, System::String^  language, 
                 System::Object^  userState) {
         if (this->BreakSentencesOperationCompleted == nullptr) {
-            this->BreakSentencesOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnBreakSentencesOperationCompleted);
+            this->BreakSentencesOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnBreakSentencesOperationCompleted);
         }
         this->InvokeAsync(L"BreakSentences", gcnew cli::array< System::Object^  >(3) {appId, text, language}, this->BreakSentencesOperationCompleted, 
             userState);
     }
     
-    inline System::Void Soap::OnBreakSentencesOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnBreakSentencesOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->BreakSentencesCompleted(this, (gcnew TranslatorService::BreakSentencesCompletedEventArgs(invokeArgs->Results, 
@@ -1297,35 +1315,35 @@ namespace TranslatorService {
         }
     }
     
-    inline System::String^  Soap::Detect([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  appId, 
+    inline System::String^  SoapService::Detect([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  appId, 
                 [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  text) {
         cli::array< System::Object^  >^  results = this->Invoke(L"Detect", gcnew cli::array< System::Object^  >(2) {appId, 
                 text});
         return (cli::safe_cast<System::String^  >(results[0]));
     }
     
-    inline System::IAsyncResult^  Soap::BeginDetect(System::String^  appId, System::String^  text, System::AsyncCallback^  callback, 
+    inline System::IAsyncResult^  SoapService::BeginDetect(System::String^  appId, System::String^  text, System::AsyncCallback^  callback, 
                 System::Object^  asyncState) {
         return this->BeginInvoke(L"Detect", gcnew cli::array< System::Object^  >(2) {appId, text}, callback, asyncState);
     }
     
-    inline System::String^  Soap::EndDetect(System::IAsyncResult^  asyncResult) {
+    inline System::String^  SoapService::EndDetect(System::IAsyncResult^  asyncResult) {
         cli::array< System::Object^  >^  results = this->EndInvoke(asyncResult);
         return (cli::safe_cast<System::String^  >(results[0]));
     }
     
-    inline System::Void Soap::DetectAsync(System::String^  appId, System::String^  text) {
+    inline System::Void SoapService::DetectAsync(System::String^  appId, System::String^  text) {
         this->DetectAsync(appId, text, nullptr);
     }
     
-    inline System::Void Soap::DetectAsync(System::String^  appId, System::String^  text, System::Object^  userState) {
+    inline System::Void SoapService::DetectAsync(System::String^  appId, System::String^  text, System::Object^  userState) {
         if (this->DetectOperationCompleted == nullptr) {
-            this->DetectOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnDetectOperationCompleted);
+            this->DetectOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnDetectOperationCompleted);
         }
         this->InvokeAsync(L"Detect", gcnew cli::array< System::Object^  >(2) {appId, text}, this->DetectOperationCompleted, userState);
     }
     
-    inline System::Void Soap::OnDetectOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnDetectOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->DetectCompleted(this, (gcnew TranslatorService::DetectCompletedEventArgs(invokeArgs->Results, invokeArgs->Error, 
@@ -1333,7 +1351,7 @@ namespace TranslatorService {
         }
     }
     
-    inline cli::array< System::String^  >^  Soap::DetectArray([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
+    inline cli::array< System::String^  >^  SoapService::DetectArray([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
                 System::String^  appId, [System::Xml::Serialization::XmlArrayAttribute(IsNullable=true)] [System::Xml::Serialization::XmlArrayItemAttribute(Namespace=L"http://schemas.microsoft.com/2003/10/Serialization/Arrays")] 
                 cli::array< System::String^  >^  texts) {
         cli::array< System::Object^  >^  results = this->Invoke(L"DetectArray", gcnew cli::array< System::Object^  >(2) {appId, 
@@ -1341,29 +1359,29 @@ namespace TranslatorService {
         return (cli::safe_cast<cli::array< System::String^  >^  >(results[0]));
     }
     
-    inline System::IAsyncResult^  Soap::BeginDetectArray(System::String^  appId, cli::array< System::String^  >^  texts, 
+    inline System::IAsyncResult^  SoapService::BeginDetectArray(System::String^  appId, cli::array< System::String^  >^  texts, 
                 System::AsyncCallback^  callback, System::Object^  asyncState) {
         return this->BeginInvoke(L"DetectArray", gcnew cli::array< System::Object^  >(2) {appId, texts}, callback, asyncState);
     }
     
-    inline cli::array< System::String^  >^  Soap::EndDetectArray(System::IAsyncResult^  asyncResult) {
+    inline cli::array< System::String^  >^  SoapService::EndDetectArray(System::IAsyncResult^  asyncResult) {
         cli::array< System::Object^  >^  results = this->EndInvoke(asyncResult);
         return (cli::safe_cast<cli::array< System::String^  >^  >(results[0]));
     }
     
-    inline System::Void Soap::DetectArrayAsync(System::String^  appId, cli::array< System::String^  >^  texts) {
+    inline System::Void SoapService::DetectArrayAsync(System::String^  appId, cli::array< System::String^  >^  texts) {
         this->DetectArrayAsync(appId, texts, nullptr);
     }
     
-    inline System::Void Soap::DetectArrayAsync(System::String^  appId, cli::array< System::String^  >^  texts, System::Object^  userState) {
+    inline System::Void SoapService::DetectArrayAsync(System::String^  appId, cli::array< System::String^  >^  texts, System::Object^  userState) {
         if (this->DetectArrayOperationCompleted == nullptr) {
-            this->DetectArrayOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnDetectArrayOperationCompleted);
+            this->DetectArrayOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnDetectArrayOperationCompleted);
         }
         this->InvokeAsync(L"DetectArray", gcnew cli::array< System::Object^  >(2) {appId, texts}, this->DetectArrayOperationCompleted, 
             userState);
     }
     
-    inline System::Void Soap::OnDetectArrayOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnDetectArrayOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->DetectArrayCompleted(this, (gcnew TranslatorService::DetectArrayCompletedEventArgs(invokeArgs->Results, invokeArgs->Error, 
@@ -1371,7 +1389,7 @@ namespace TranslatorService {
         }
     }
     
-    inline System::String^  Soap::GetAppIdToken(
+    inline System::String^  SoapService::GetAppIdToken(
                 [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  appId, 
                 System::Int32 minRatingRead, 
                 [System::Xml::Serialization::XmlIgnoreAttribute] System::Boolean minRatingReadSpecified, 
@@ -1384,7 +1402,7 @@ namespace TranslatorService {
         return (cli::safe_cast<System::String^  >(results[0]));
     }
     
-    inline System::IAsyncResult^  Soap::BeginGetAppIdToken(
+    inline System::IAsyncResult^  SoapService::BeginGetAppIdToken(
                 System::String^  appId, 
                 System::Int32 minRatingRead, 
                 System::Boolean minRatingReadSpecified, 
@@ -1398,12 +1416,12 @@ namespace TranslatorService {
                 maxRatingWrite, maxRatingWriteSpecified, expireSeconds, expireSecondsSpecified}, callback, asyncState);
     }
     
-    inline System::String^  Soap::EndGetAppIdToken(System::IAsyncResult^  asyncResult) {
+    inline System::String^  SoapService::EndGetAppIdToken(System::IAsyncResult^  asyncResult) {
         cli::array< System::Object^  >^  results = this->EndInvoke(asyncResult);
         return (cli::safe_cast<System::String^  >(results[0]));
     }
     
-    inline System::Void Soap::GetAppIdTokenAsync(
+    inline System::Void SoapService::GetAppIdTokenAsync(
                 System::String^  appId, 
                 System::Int32 minRatingRead, 
                 System::Boolean minRatingReadSpecified, 
@@ -1415,7 +1433,7 @@ namespace TranslatorService {
             expireSecondsSpecified, nullptr);
     }
     
-    inline System::Void Soap::GetAppIdTokenAsync(
+    inline System::Void SoapService::GetAppIdTokenAsync(
                 System::String^  appId, 
                 System::Int32 minRatingRead, 
                 System::Boolean minRatingReadSpecified, 
@@ -1425,13 +1443,13 @@ namespace TranslatorService {
                 System::Boolean expireSecondsSpecified, 
                 System::Object^  userState) {
         if (this->GetAppIdTokenOperationCompleted == nullptr) {
-            this->GetAppIdTokenOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnGetAppIdTokenOperationCompleted);
+            this->GetAppIdTokenOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnGetAppIdTokenOperationCompleted);
         }
         this->InvokeAsync(L"GetAppIdToken", gcnew cli::array< System::Object^  >(7) {appId, minRatingRead, minRatingReadSpecified, 
                 maxRatingWrite, maxRatingWriteSpecified, expireSeconds, expireSecondsSpecified}, this->GetAppIdTokenOperationCompleted, userState);
     }
     
-    inline System::Void Soap::OnGetAppIdTokenOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnGetAppIdTokenOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->GetAppIdTokenCompleted(this, (gcnew TranslatorService::GetAppIdTokenCompletedEventArgs(invokeArgs->Results, 
@@ -1439,7 +1457,7 @@ namespace TranslatorService {
         }
     }
     
-    inline cli::array< System::String^  >^  Soap::GetLanguageNames([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
+    inline cli::array< System::String^  >^  SoapService::GetLanguageNames([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
                 System::String^  appId, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  locale, [System::Xml::Serialization::XmlArrayAttribute(IsNullable=true)] 
                 [System::Xml::Serialization::XmlArrayItemAttribute(Namespace=L"http://schemas.microsoft.com/2003/10/Serialization/Arrays")] 
                 cli::array< System::String^  >^  languageCodes) {
@@ -1448,31 +1466,31 @@ namespace TranslatorService {
         return (cli::safe_cast<cli::array< System::String^  >^  >(results[0]));
     }
     
-    inline System::IAsyncResult^  Soap::BeginGetLanguageNames(System::String^  appId, System::String^  locale, cli::array< System::String^  >^  languageCodes, 
+    inline System::IAsyncResult^  SoapService::BeginGetLanguageNames(System::String^  appId, System::String^  locale, cli::array< System::String^  >^  languageCodes, 
                 System::AsyncCallback^  callback, System::Object^  asyncState) {
         return this->BeginInvoke(L"GetLanguageNames", gcnew cli::array< System::Object^  >(3) {appId, locale, languageCodes}, 
             callback, asyncState);
     }
     
-    inline cli::array< System::String^  >^  Soap::EndGetLanguageNames(System::IAsyncResult^  asyncResult) {
+    inline cli::array< System::String^  >^  SoapService::EndGetLanguageNames(System::IAsyncResult^  asyncResult) {
         cli::array< System::Object^  >^  results = this->EndInvoke(asyncResult);
         return (cli::safe_cast<cli::array< System::String^  >^  >(results[0]));
     }
     
-    inline System::Void Soap::GetLanguageNamesAsync(System::String^  appId, System::String^  locale, cli::array< System::String^  >^  languageCodes) {
+    inline System::Void SoapService::GetLanguageNamesAsync(System::String^  appId, System::String^  locale, cli::array< System::String^  >^  languageCodes) {
         this->GetLanguageNamesAsync(appId, locale, languageCodes, nullptr);
     }
     
-    inline System::Void Soap::GetLanguageNamesAsync(System::String^  appId, System::String^  locale, cli::array< System::String^  >^  languageCodes, 
+    inline System::Void SoapService::GetLanguageNamesAsync(System::String^  appId, System::String^  locale, cli::array< System::String^  >^  languageCodes, 
                 System::Object^  userState) {
         if (this->GetLanguageNamesOperationCompleted == nullptr) {
-            this->GetLanguageNamesOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnGetLanguageNamesOperationCompleted);
+            this->GetLanguageNamesOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnGetLanguageNamesOperationCompleted);
         }
         this->InvokeAsync(L"GetLanguageNames", gcnew cli::array< System::Object^  >(3) {appId, locale, languageCodes}, this->GetLanguageNamesOperationCompleted, 
             userState);
     }
     
-    inline System::Void Soap::OnGetLanguageNamesOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnGetLanguageNamesOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->GetLanguageNamesCompleted(this, (gcnew TranslatorService::GetLanguageNamesCompletedEventArgs(invokeArgs->Results, 
@@ -1480,35 +1498,35 @@ namespace TranslatorService {
         }
     }
     
-    inline cli::array< System::String^  >^  Soap::GetLanguagesForSpeak([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
+    inline cli::array< System::String^  >^  SoapService::GetLanguagesForSpeak([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
                 System::String^  appId) {
         cli::array< System::Object^  >^  results = this->Invoke(L"GetLanguagesForSpeak", gcnew cli::array< System::Object^  >(1) {appId});
         return (cli::safe_cast<cli::array< System::String^  >^  >(results[0]));
     }
     
-    inline System::IAsyncResult^  Soap::BeginGetLanguagesForSpeak(System::String^  appId, System::AsyncCallback^  callback, 
+    inline System::IAsyncResult^  SoapService::BeginGetLanguagesForSpeak(System::String^  appId, System::AsyncCallback^  callback, 
                 System::Object^  asyncState) {
         return this->BeginInvoke(L"GetLanguagesForSpeak", gcnew cli::array< System::Object^  >(1) {appId}, callback, asyncState);
     }
     
-    inline cli::array< System::String^  >^  Soap::EndGetLanguagesForSpeak(System::IAsyncResult^  asyncResult) {
+    inline cli::array< System::String^  >^  SoapService::EndGetLanguagesForSpeak(System::IAsyncResult^  asyncResult) {
         cli::array< System::Object^  >^  results = this->EndInvoke(asyncResult);
         return (cli::safe_cast<cli::array< System::String^  >^  >(results[0]));
     }
     
-    inline System::Void Soap::GetLanguagesForSpeakAsync(System::String^  appId) {
+    inline System::Void SoapService::GetLanguagesForSpeakAsync(System::String^  appId) {
         this->GetLanguagesForSpeakAsync(appId, nullptr);
     }
     
-    inline System::Void Soap::GetLanguagesForSpeakAsync(System::String^  appId, System::Object^  userState) {
+    inline System::Void SoapService::GetLanguagesForSpeakAsync(System::String^  appId, System::Object^  userState) {
         if (this->GetLanguagesForSpeakOperationCompleted == nullptr) {
-            this->GetLanguagesForSpeakOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnGetLanguagesForSpeakOperationCompleted);
+            this->GetLanguagesForSpeakOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnGetLanguagesForSpeakOperationCompleted);
         }
         this->InvokeAsync(L"GetLanguagesForSpeak", gcnew cli::array< System::Object^  >(1) {appId}, this->GetLanguagesForSpeakOperationCompleted, 
             userState);
     }
     
-    inline System::Void Soap::OnGetLanguagesForSpeakOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnGetLanguagesForSpeakOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->GetLanguagesForSpeakCompleted(this, (gcnew TranslatorService::GetLanguagesForSpeakCompletedEventArgs(invokeArgs->Results, 
@@ -1516,35 +1534,35 @@ namespace TranslatorService {
         }
     }
     
-    inline cli::array< System::String^  >^  Soap::GetLanguagesForTranslate([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
+    inline cli::array< System::String^  >^  SoapService::GetLanguagesForTranslate([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
                 System::String^  appId) {
         cli::array< System::Object^  >^  results = this->Invoke(L"GetLanguagesForTranslate", gcnew cli::array< System::Object^  >(1) {appId});
         return (cli::safe_cast<cli::array< System::String^  >^  >(results[0]));
     }
     
-    inline System::IAsyncResult^  Soap::BeginGetLanguagesForTranslate(System::String^  appId, System::AsyncCallback^  callback, 
+    inline System::IAsyncResult^  SoapService::BeginGetLanguagesForTranslate(System::String^  appId, System::AsyncCallback^  callback, 
                 System::Object^  asyncState) {
         return this->BeginInvoke(L"GetLanguagesForTranslate", gcnew cli::array< System::Object^  >(1) {appId}, callback, asyncState);
     }
     
-    inline cli::array< System::String^  >^  Soap::EndGetLanguagesForTranslate(System::IAsyncResult^  asyncResult) {
+    inline cli::array< System::String^  >^  SoapService::EndGetLanguagesForTranslate(System::IAsyncResult^  asyncResult) {
         cli::array< System::Object^  >^  results = this->EndInvoke(asyncResult);
         return (cli::safe_cast<cli::array< System::String^  >^  >(results[0]));
     }
     
-    inline System::Void Soap::GetLanguagesForTranslateAsync(System::String^  appId) {
+    inline System::Void SoapService::GetLanguagesForTranslateAsync(System::String^  appId) {
         this->GetLanguagesForTranslateAsync(appId, nullptr);
     }
     
-    inline System::Void Soap::GetLanguagesForTranslateAsync(System::String^  appId, System::Object^  userState) {
+    inline System::Void SoapService::GetLanguagesForTranslateAsync(System::String^  appId, System::Object^  userState) {
         if (this->GetLanguagesForTranslateOperationCompleted == nullptr) {
-            this->GetLanguagesForTranslateOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnGetLanguagesForTranslateOperationCompleted);
+            this->GetLanguagesForTranslateOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnGetLanguagesForTranslateOperationCompleted);
         }
         this->InvokeAsync(L"GetLanguagesForTranslate", gcnew cli::array< System::Object^  >(1) {appId}, this->GetLanguagesForTranslateOperationCompleted, 
             userState);
     }
     
-    inline System::Void Soap::OnGetLanguagesForTranslateOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnGetLanguagesForTranslateOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->GetLanguagesForTranslateCompleted(this, (gcnew TranslatorService::GetLanguagesForTranslateCompletedEventArgs(invokeArgs->Results, 
@@ -1552,7 +1570,7 @@ namespace TranslatorService {
         }
     }
     
-    inline TranslatorService::GetTranslationsResponse^  Soap::GetTranslations(
+    inline TranslatorService::GetTranslationsResponse^  SoapService::GetTranslations(
                 [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  appId, 
                 [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  text, 
                 [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  from, 
@@ -1565,7 +1583,7 @@ namespace TranslatorService {
         return (cli::safe_cast<TranslatorService::GetTranslationsResponse^  >(results[0]));
     }
     
-    inline System::IAsyncResult^  Soap::BeginGetTranslations(
+    inline System::IAsyncResult^  SoapService::BeginGetTranslations(
                 System::String^  appId, 
                 System::String^  text, 
                 System::String^  from, 
@@ -1579,12 +1597,12 @@ namespace TranslatorService {
                 maxTranslationsSpecified, options}, callback, asyncState);
     }
     
-    inline TranslatorService::GetTranslationsResponse^  Soap::EndGetTranslations(System::IAsyncResult^  asyncResult) {
+    inline TranslatorService::GetTranslationsResponse^  SoapService::EndGetTranslations(System::IAsyncResult^  asyncResult) {
         cli::array< System::Object^  >^  results = this->EndInvoke(asyncResult);
         return (cli::safe_cast<TranslatorService::GetTranslationsResponse^  >(results[0]));
     }
     
-    inline System::Void Soap::GetTranslationsAsync(
+    inline System::Void SoapService::GetTranslationsAsync(
                 System::String^  appId, 
                 System::String^  text, 
                 System::String^  from, 
@@ -1595,7 +1613,7 @@ namespace TranslatorService {
         this->GetTranslationsAsync(appId, text, from, to, maxTranslations, maxTranslationsSpecified, options, nullptr);
     }
     
-    inline System::Void Soap::GetTranslationsAsync(
+    inline System::Void SoapService::GetTranslationsAsync(
                 System::String^  appId, 
                 System::String^  text, 
                 System::String^  from, 
@@ -1605,13 +1623,13 @@ namespace TranslatorService {
                 TranslatorService::TranslateOptions^  options, 
                 System::Object^  userState) {
         if (this->GetTranslationsOperationCompleted == nullptr) {
-            this->GetTranslationsOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnGetTranslationsOperationCompleted);
+            this->GetTranslationsOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnGetTranslationsOperationCompleted);
         }
         this->InvokeAsync(L"GetTranslations", gcnew cli::array< System::Object^  >(7) {appId, text, from, to, maxTranslations, 
                 maxTranslationsSpecified, options}, this->GetTranslationsOperationCompleted, userState);
     }
     
-    inline System::Void Soap::OnGetTranslationsOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnGetTranslationsOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->GetTranslationsCompleted(this, (gcnew TranslatorService::GetTranslationsCompletedEventArgs(invokeArgs->Results, 
@@ -1619,43 +1637,62 @@ namespace TranslatorService {
         }
     }
     
-    inline System::String^  Soap::Translate([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  appId, 
-                [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  text, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
-                System::String^  from, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  to) {
-        cli::array< System::Object^  >^  results = this->Invoke(L"Translate", gcnew cli::array< System::Object^  >(4) {appId, 
-                text, from, to});
+    inline System::String^  SoapService::Translate(
+                [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  appId, 
+                [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  text, 
+                [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  from, 
+                [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  to, 
+                [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  contentType, 
+                [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  category) {
+        cli::array< System::Object^  >^  results = this->Invoke(L"Translate", gcnew cli::array< System::Object^  >(6) {appId, 
+                text, from, to, contentType, category});
         return (cli::safe_cast<System::String^  >(results[0]));
     }
     
-    inline System::IAsyncResult^  Soap::BeginTranslate(
+    inline System::IAsyncResult^  SoapService::BeginTranslate(
                 System::String^  appId, 
                 System::String^  text, 
                 System::String^  from, 
                 System::String^  to, 
+                System::String^  contentType, 
+                System::String^  category, 
                 System::AsyncCallback^  callback, 
                 System::Object^  asyncState) {
-        return this->BeginInvoke(L"Translate", gcnew cli::array< System::Object^  >(4) {appId, text, from, to}, callback, asyncState);
+        return this->BeginInvoke(L"Translate", gcnew cli::array< System::Object^  >(6) {appId, text, from, to, contentType, 
+                category}, callback, asyncState);
     }
     
-    inline System::String^  Soap::EndTranslate(System::IAsyncResult^  asyncResult) {
+    inline System::String^  SoapService::EndTranslate(System::IAsyncResult^  asyncResult) {
         cli::array< System::Object^  >^  results = this->EndInvoke(asyncResult);
         return (cli::safe_cast<System::String^  >(results[0]));
     }
     
-    inline System::Void Soap::TranslateAsync(System::String^  appId, System::String^  text, System::String^  from, System::String^  to) {
-        this->TranslateAsync(appId, text, from, to, nullptr);
+    inline System::Void SoapService::TranslateAsync(
+                System::String^  appId, 
+                System::String^  text, 
+                System::String^  from, 
+                System::String^  to, 
+                System::String^  contentType, 
+                System::String^  category) {
+        this->TranslateAsync(appId, text, from, to, contentType, category, nullptr);
     }
     
-    inline System::Void Soap::TranslateAsync(System::String^  appId, System::String^  text, System::String^  from, System::String^  to, 
+    inline System::Void SoapService::TranslateAsync(
+                System::String^  appId, 
+                System::String^  text, 
+                System::String^  from, 
+                System::String^  to, 
+                System::String^  contentType, 
+                System::String^  category, 
                 System::Object^  userState) {
         if (this->TranslateOperationCompleted == nullptr) {
-            this->TranslateOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnTranslateOperationCompleted);
+            this->TranslateOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnTranslateOperationCompleted);
         }
-        this->InvokeAsync(L"Translate", gcnew cli::array< System::Object^  >(4) {appId, text, from, to}, this->TranslateOperationCompleted, 
-            userState);
+        this->InvokeAsync(L"Translate", gcnew cli::array< System::Object^  >(6) {appId, text, from, to, contentType, category}, 
+            this->TranslateOperationCompleted, userState);
     }
     
-    inline System::Void Soap::OnTranslateOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnTranslateOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->TranslateCompleted(this, (gcnew TranslatorService::TranslateCompletedEventArgs(invokeArgs->Results, invokeArgs->Error, 
@@ -1663,15 +1700,15 @@ namespace TranslatorService {
         }
     }
     
-    inline System::Void Soap::AddTranslationArray([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  appId, 
-                [System::Xml::Serialization::XmlArrayAttribute(IsNullable=true)] [System::Xml::Serialization::XmlArrayItemAttribute(Namespace=L"http://schemas.datacontract.org/2004/07/Microsoft.MT.Web.Service.V2")] 
+    inline System::Void SoapService::AddTranslationArray([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
+                System::String^  appId, [System::Xml::Serialization::XmlArrayAttribute(IsNullable=true)] [System::Xml::Serialization::XmlArrayItemAttribute(Namespace=L"http://schemas.datacontract.org/2004/07/Microsoft.MT.Web.Service.V2")] 
                 cli::array< TranslatorService::Translation^  >^  translations, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
                 System::String^  from, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  to, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
                 TranslatorService::TranslateOptions^  options) {
         this->Invoke(L"AddTranslationArray", gcnew cli::array< System::Object^  >(5) {appId, translations, from, to, options});
     }
     
-    inline System::IAsyncResult^  Soap::BeginAddTranslationArray(
+    inline System::IAsyncResult^  SoapService::BeginAddTranslationArray(
                 System::String^  appId, 
                 cli::array< TranslatorService::Translation^  >^  translations, 
                 System::String^  from, 
@@ -1683,16 +1720,16 @@ namespace TranslatorService {
                 to, options}, callback, asyncState);
     }
     
-    inline System::Void Soap::EndAddTranslationArray(System::IAsyncResult^  asyncResult) {
+    inline System::Void SoapService::EndAddTranslationArray(System::IAsyncResult^  asyncResult) {
         this->EndInvoke(asyncResult);
     }
     
-    inline System::Void Soap::AddTranslationArrayAsync(System::String^  appId, cli::array< TranslatorService::Translation^  >^  translations, 
+    inline System::Void SoapService::AddTranslationArrayAsync(System::String^  appId, cli::array< TranslatorService::Translation^  >^  translations, 
                 System::String^  from, System::String^  to, TranslatorService::TranslateOptions^  options) {
         this->AddTranslationArrayAsync(appId, translations, from, to, options, nullptr);
     }
     
-    inline System::Void Soap::AddTranslationArrayAsync(
+    inline System::Void SoapService::AddTranslationArrayAsync(
                 System::String^  appId, 
                 cli::array< TranslatorService::Translation^  >^  translations, 
                 System::String^  from, 
@@ -1700,13 +1737,13 @@ namespace TranslatorService {
                 TranslatorService::TranslateOptions^  options, 
                 System::Object^  userState) {
         if (this->AddTranslationArrayOperationCompleted == nullptr) {
-            this->AddTranslationArrayOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnAddTranslationArrayOperationCompleted);
+            this->AddTranslationArrayOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnAddTranslationArrayOperationCompleted);
         }
         this->InvokeAsync(L"AddTranslationArray", gcnew cli::array< System::Object^  >(5) {appId, translations, from, to, 
                 options}, this->AddTranslationArrayOperationCompleted, userState);
     }
     
-    inline System::Void Soap::OnAddTranslationArrayOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnAddTranslationArrayOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->AddTranslationArrayCompleted(this, (gcnew System::ComponentModel::AsyncCompletedEventArgs(invokeArgs->Error, 
@@ -1714,7 +1751,7 @@ namespace TranslatorService {
         }
     }
     
-    inline cli::array< TranslatorService::GetTranslationsResponse^  >^  Soap::GetTranslationsArray(
+    inline cli::array< TranslatorService::GetTranslationsResponse^  >^  SoapService::GetTranslationsArray(
                 [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  appId, 
                 [System::Xml::Serialization::XmlArrayAttribute(IsNullable=true)] [System::Xml::Serialization::XmlArrayItemAttribute(Namespace=L"http://schemas.microsoft.com/2003/10/Serialization/Arrays")] 
                 cli::array< System::String^  >^  texts, 
@@ -1728,7 +1765,7 @@ namespace TranslatorService {
         return (cli::safe_cast<cli::array< TranslatorService::GetTranslationsResponse^  >^  >(results[0]));
     }
     
-    inline System::IAsyncResult^  Soap::BeginGetTranslationsArray(
+    inline System::IAsyncResult^  SoapService::BeginGetTranslationsArray(
                 System::String^  appId, 
                 cli::array< System::String^  >^  texts, 
                 System::String^  from, 
@@ -1742,12 +1779,12 @@ namespace TranslatorService {
                 maxTranslations, maxTranslationsSpecified, options}, callback, asyncState);
     }
     
-    inline cli::array< TranslatorService::GetTranslationsResponse^  >^  Soap::EndGetTranslationsArray(System::IAsyncResult^  asyncResult) {
+    inline cli::array< TranslatorService::GetTranslationsResponse^  >^  SoapService::EndGetTranslationsArray(System::IAsyncResult^  asyncResult) {
         cli::array< System::Object^  >^  results = this->EndInvoke(asyncResult);
         return (cli::safe_cast<cli::array< TranslatorService::GetTranslationsResponse^  >^  >(results[0]));
     }
     
-    inline System::Void Soap::GetTranslationsArrayAsync(
+    inline System::Void SoapService::GetTranslationsArrayAsync(
                 System::String^  appId, 
                 cli::array< System::String^  >^  texts, 
                 System::String^  from, 
@@ -1758,7 +1795,7 @@ namespace TranslatorService {
         this->GetTranslationsArrayAsync(appId, texts, from, to, maxTranslations, maxTranslationsSpecified, options, nullptr);
     }
     
-    inline System::Void Soap::GetTranslationsArrayAsync(
+    inline System::Void SoapService::GetTranslationsArrayAsync(
                 System::String^  appId, 
                 cli::array< System::String^  >^  texts, 
                 System::String^  from, 
@@ -1768,13 +1805,13 @@ namespace TranslatorService {
                 TranslatorService::TranslateOptions^  options, 
                 System::Object^  userState) {
         if (this->GetTranslationsArrayOperationCompleted == nullptr) {
-            this->GetTranslationsArrayOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnGetTranslationsArrayOperationCompleted);
+            this->GetTranslationsArrayOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnGetTranslationsArrayOperationCompleted);
         }
         this->InvokeAsync(L"GetTranslationsArray", gcnew cli::array< System::Object^  >(7) {appId, texts, from, to, maxTranslations, 
                 maxTranslationsSpecified, options}, this->GetTranslationsArrayOperationCompleted, userState);
     }
     
-    inline System::Void Soap::OnGetTranslationsArrayOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnGetTranslationsArrayOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->GetTranslationsArrayCompleted(this, (gcnew TranslatorService::GetTranslationsArrayCompletedEventArgs(invokeArgs->Results, 
@@ -1782,7 +1819,7 @@ namespace TranslatorService {
         }
     }
     
-    inline System::String^  Soap::Speak([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  appId, 
+    inline System::String^  SoapService::Speak([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  appId, 
                 [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  text, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
                 System::String^  language, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  format) {
         cli::array< System::Object^  >^  results = this->Invoke(L"Speak", gcnew cli::array< System::Object^  >(4) {appId, 
@@ -1790,7 +1827,7 @@ namespace TranslatorService {
         return (cli::safe_cast<System::String^  >(results[0]));
     }
     
-    inline System::IAsyncResult^  Soap::BeginSpeak(
+    inline System::IAsyncResult^  SoapService::BeginSpeak(
                 System::String^  appId, 
                 System::String^  text, 
                 System::String^  language, 
@@ -1801,25 +1838,26 @@ namespace TranslatorService {
             asyncState);
     }
     
-    inline System::String^  Soap::EndSpeak(System::IAsyncResult^  asyncResult) {
+    inline System::String^  SoapService::EndSpeak(System::IAsyncResult^  asyncResult) {
         cli::array< System::Object^  >^  results = this->EndInvoke(asyncResult);
         return (cli::safe_cast<System::String^  >(results[0]));
     }
     
-    inline System::Void Soap::SpeakAsync(System::String^  appId, System::String^  text, System::String^  language, System::String^  format) {
+    inline System::Void SoapService::SpeakAsync(System::String^  appId, System::String^  text, System::String^  language, 
+                System::String^  format) {
         this->SpeakAsync(appId, text, language, format, nullptr);
     }
     
-    inline System::Void Soap::SpeakAsync(System::String^  appId, System::String^  text, System::String^  language, System::String^  format, 
-                System::Object^  userState) {
+    inline System::Void SoapService::SpeakAsync(System::String^  appId, System::String^  text, System::String^  language, 
+                System::String^  format, System::Object^  userState) {
         if (this->SpeakOperationCompleted == nullptr) {
-            this->SpeakOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnSpeakOperationCompleted);
+            this->SpeakOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnSpeakOperationCompleted);
         }
         this->InvokeAsync(L"Speak", gcnew cli::array< System::Object^  >(4) {appId, text, language, format}, this->SpeakOperationCompleted, 
             userState);
     }
     
-    inline System::Void Soap::OnSpeakOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnSpeakOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->SpeakCompleted(this, (gcnew TranslatorService::SpeakCompletedEventArgs(invokeArgs->Results, invokeArgs->Error, 
@@ -1827,7 +1865,7 @@ namespace TranslatorService {
         }
     }
     
-    inline cli::array< TranslatorService::TranslateArrayResponse^  >^  Soap::TranslateArray([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
+    inline cli::array< TranslatorService::TranslateArrayResponse^  >^  SoapService::TranslateArray([System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
                 System::String^  appId, [System::Xml::Serialization::XmlArrayAttribute(IsNullable=true)] [System::Xml::Serialization::XmlArrayItemAttribute(Namespace=L"http://schemas.microsoft.com/2003/10/Serialization/Arrays")] 
                 cli::array< System::String^  >^  texts, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  from, 
                 [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] System::String^  to, [System::Xml::Serialization::XmlElementAttribute(IsNullable=true)] 
@@ -1837,7 +1875,7 @@ namespace TranslatorService {
         return (cli::safe_cast<cli::array< TranslatorService::TranslateArrayResponse^  >^  >(results[0]));
     }
     
-    inline System::IAsyncResult^  Soap::BeginTranslateArray(
+    inline System::IAsyncResult^  SoapService::BeginTranslateArray(
                 System::String^  appId, 
                 cli::array< System::String^  >^  texts, 
                 System::String^  from, 
@@ -1849,17 +1887,17 @@ namespace TranslatorService {
             callback, asyncState);
     }
     
-    inline cli::array< TranslatorService::TranslateArrayResponse^  >^  Soap::EndTranslateArray(System::IAsyncResult^  asyncResult) {
+    inline cli::array< TranslatorService::TranslateArrayResponse^  >^  SoapService::EndTranslateArray(System::IAsyncResult^  asyncResult) {
         cli::array< System::Object^  >^  results = this->EndInvoke(asyncResult);
         return (cli::safe_cast<cli::array< TranslatorService::TranslateArrayResponse^  >^  >(results[0]));
     }
     
-    inline System::Void Soap::TranslateArrayAsync(System::String^  appId, cli::array< System::String^  >^  texts, System::String^  from, 
-                System::String^  to, TranslatorService::TranslateOptions^  options) {
+    inline System::Void SoapService::TranslateArrayAsync(System::String^  appId, cli::array< System::String^  >^  texts, 
+                System::String^  from, System::String^  to, TranslatorService::TranslateOptions^  options) {
         this->TranslateArrayAsync(appId, texts, from, to, options, nullptr);
     }
     
-    inline System::Void Soap::TranslateArrayAsync(
+    inline System::Void SoapService::TranslateArrayAsync(
                 System::String^  appId, 
                 cli::array< System::String^  >^  texts, 
                 System::String^  from, 
@@ -1867,13 +1905,13 @@ namespace TranslatorService {
                 TranslatorService::TranslateOptions^  options, 
                 System::Object^  userState) {
         if (this->TranslateArrayOperationCompleted == nullptr) {
-            this->TranslateArrayOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::Soap::OnTranslateArrayOperationCompleted);
+            this->TranslateArrayOperationCompleted = gcnew System::Threading::SendOrPostCallback(this, &TranslatorService::SoapService::OnTranslateArrayOperationCompleted);
         }
         this->InvokeAsync(L"TranslateArray", gcnew cli::array< System::Object^  >(5) {appId, texts, from, to, options}, this->TranslateArrayOperationCompleted, 
             userState);
     }
     
-    inline System::Void Soap::OnTranslateArrayOperationCompleted(System::Object^  arg) {
+    inline System::Void SoapService::OnTranslateArrayOperationCompleted(System::Object^  arg) {
         {
             System::Web::Services::Protocols::InvokeCompletedEventArgs^  invokeArgs = (cli::safe_cast<System::Web::Services::Protocols::InvokeCompletedEventArgs^  >(arg));
             this->TranslateArrayCompleted(this, (gcnew TranslatorService::TranslateArrayCompletedEventArgs(invokeArgs->Results, 
@@ -1881,7 +1919,7 @@ namespace TranslatorService {
         }
     }
     
-    inline System::Void Soap::CancelAsync(System::Object^  userState) {
+    inline System::Void SoapService::CancelAsync(System::Object^  userState) {
         __super::CancelAsync(userState);
     }
     

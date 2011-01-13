@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="sCLOTHfix"
 	ProjectGUID="{ECDAB396-33CD-4EFB-B54E-13B495D86C3A}"
 	RootNamespace="sTools"
@@ -222,10 +222,6 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\dds.h"
-				>
-			</File>
-			<File
 				RelativePath=".\MainWindow.h"
 				FileType="3"
 				>
@@ -234,6 +230,10 @@
 					SubType="Designer"
 					>
 				</File>
+			</File>
+			<File
+				RelativePath=".\WebService.h"
+				>
 			</File>
 		</Filter>
 		<Filter
@@ -256,6 +256,24 @@
 			<File
 				RelativePath=".\icons.resx"
 				SubType="Designer"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="COMMON"
+			>
+			<File
+				RelativePath="..\COMMON\dds.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Generated Files"
+			UniqueIdentifier="{67DA6AC5-F800-4c08-8B7A-83BB121AAD01}"
+			SourceControlFiles="false"
+			>
+			<File
+				RelativePath=".\com_microsofttranslatorapi.h"
 				>
 			</File>
 		</Filter>

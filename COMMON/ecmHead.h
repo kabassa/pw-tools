@@ -9,11 +9,27 @@ public ref class ecmHEAD
 	{
 	}
 
+	public: int Version;
+	public: String^ SkinModelPath;
 	public: ArrayList^ Parameters;
 
 	public: void SetAllParameters(array<String^>^ Properties)
 	{
 		Parameters = gcnew ArrayList(Properties);
+		Version = -1;
+		if(Properties[0]->StartsWith("MOXTVersion:"))
+		{
+			Version = Convert::ToInt32(Properties[0]->Split(gcnew array<wchar_t>{' '})[1]);
+		}
+		SkinModelPath = "";
+		if(Properties[1]->StartsWith("SkinModelPath:"))
+		{
+			SkinModelPath = Properties[1]->Split(gcnew array<wchar_t>{' '})[1];
+		}
+		while(((String^)Parameters[Parameters->Count-1]) == "")
+		{
+			Parameters->RemoveAt(Parameters->Count-1);
+		}
 	}
 
 	public: void Fix(Options^ options)
@@ -57,8 +73,12 @@ public ref class ecmHEAD
 				}
 				if(line->StartsWith("DefSpeed:"))
 				{
+					// if we don't have remove empty entries,
+					// then the "" entry before DefSpeed is still available
+					/*
 					Parameters->Insert(i, "");
 					i++;
+					*/
 				}
 			}
 		}

@@ -245,10 +245,6 @@
 					>
 				</File>
 			</File>
-			<File
-				RelativePath=".\MapStruct.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -278,6 +274,14 @@
 			</File>
 			<File
 				RelativePath="sliderV.gif"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="COMMON"
+			>
+			<File
+				RelativePath="..\COMMON\map.h"
 				>
 			</File>
 		</Filter>

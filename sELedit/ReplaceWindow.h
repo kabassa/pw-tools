@@ -1,6 +1,6 @@
 #pragma once
 
-#include "eListCollection.h"
+#include "..\COMMON\eListCollection.h"
 
 using namespace System;
 using namespace System::ComponentModel;

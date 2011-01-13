@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="sGSHOPedit"
 	ProjectGUID="{0298CD2F-9FC3-4EF3-8334-642FA5FE1A2A}"
 	RootNamespace="sTools"
@@ -222,10 +222,6 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\boutique.h"
-				>
-			</File>
-			<File
 				RelativePath=".\MainWindow.h"
 				FileType="3"
 				>
@@ -251,6 +247,14 @@
 			</File>
 			<File
 				RelativePath=".\icons.resx"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="COMMON"
+			>
+			<File
+				RelativePath="..\COMMON\boutique.h"
 				>
 			</File>
 		</Filter>

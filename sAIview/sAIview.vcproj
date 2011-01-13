@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="sAIview"
 	ProjectGUID="{0CA9B98C-39CF-410F-8208-7F1A58C71F7C}"
 	RootNamespace="sTools"
@@ -372,6 +372,14 @@
 			>
 			<File
 				RelativePath=".\TranslatorService.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="COMMON"
+			>
+			<File
+				RelativePath="..\COMMON\aipolicy.h"
 				>
 			</File>
 		</Filter>
