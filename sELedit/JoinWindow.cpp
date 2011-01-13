@@ -1,0 +1,2 @@
+#include "JoinWindow.h"
+
