@@ -232,22 +232,6 @@
 				</File>
 			</File>
 			<File
-				RelativePath=".\eList.h"
-				>
-			</File>
-			<File
-				RelativePath=".\eList58.h"
-				>
-			</File>
-			<File
-				RelativePath=".\eListCollection.h"
-				>
-			</File>
-			<File
-				RelativePath=".\JoinWindow.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\JoinWindow.h"
 				FileType="3"
 				>
@@ -293,6 +277,22 @@
 			<File
 				RelativePath=".\icons.resx"
 				SubType="Designer"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="COMMON"
+			>
+			<File
+				RelativePath="..\COMMON\eList.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\eList58.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\eListCollection.h"
 				>
 			</File>
 		</Filter>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "nvTT\include\nvtt.h"
+#include "nvtt\include\nvtt.h"
 
 using namespace System;
 using namespace System::IO;

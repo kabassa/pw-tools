@@ -235,10 +235,6 @@
 					>
 				</File>
 			</File>
-			<File
-				RelativePath=".\npcgen.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -255,6 +251,14 @@
 			</File>
 			<File
 				RelativePath=".\icons.resx"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="COMMON"
+			>
+			<File
+				RelativePath="..\COMMON\npcgen.h"
 				>
 			</File>
 		</Filter>

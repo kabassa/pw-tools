@@ -8,11 +8,12 @@ public ref struct Options
 	bool gfxDowngrade;
 	bool gfx152to150;
 	bool gfx210to160;
+
+	bool ecmDowngrade;
 	bool ecmSoulsphereHook;
 	double ecmSoulsphereHookTX;
 	double ecmSoulsphereHookTY;
 	double ecmSoulsphereHookTZ;
-	bool sgcDowngrade;
 
-	bool ecmDowngrade;
+	bool sgcDowngrade;
 };

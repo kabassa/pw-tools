@@ -62,7 +62,7 @@
 				AdditionalDependencies="nvtt.lib"
 				OutputFile="..\bin\sMODfix\sMODfix_debug.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="nvTT\lib"
+				AdditionalLibraryDirectories="..\COMMON\nvtt\lib"
 				ManifestFile=".\Debug\$(TargetFileName).intermediate.manifest"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -141,7 +141,7 @@
 				AdditionalDependencies="nvtt.lib"
 				OutputFile="..\bin\sMODfix\sMODfix.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="nvTT\lib"
+				AdditionalLibraryDirectories="..\COMMON\nvtt\lib"
 				ManifestFile=".\Release\$(TargetFileName).intermediate.manifest"
 				GenerateDebugInformation="false"
 				SubSystem="2"
@@ -222,142 +222,6 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\ecm.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ecmAct.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ecmChild.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ecmHead.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ecmScript.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ecmSkin.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ecmType.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock000.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock100.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock101.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock102.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock110.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock120.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock121.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock122.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock123.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock124.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock125.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock130.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock140.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock150.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock151.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock152.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock160.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock170.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock180.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock190.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock200.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock210.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock211.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxBlock230.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gfxHead.h"
-				>
-			</File>
-			<File
 				RelativePath=".\LoadingScreen.h"
 				FileType="3"
 				>
@@ -375,26 +239,6 @@
 					SubType="Designer"
 					>
 				</File>
-			</File>
-			<File
-				RelativePath=".\nvTT\include\nvtt.h"
-				>
-			</File>
-			<File
-				RelativePath=".\options.h"
-				>
-			</File>
-			<File
-				RelativePath=".\sgc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\smd.h"
-				>
-			</File>
-			<File
-				RelativePath=".\texture.h"
-				>
 			</File>
 			<File
 				RelativePath=".\WebService.h"
@@ -523,6 +367,162 @@
 			>
 			<File
 				RelativePath=".\TranslatorService.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="COMMON"
+			>
+			<File
+				RelativePath="..\COMMON\ecm.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ecmAct.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ecmChild.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ecmHead.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ecmScript.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ecmSkin.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ecmType.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfx.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock000.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock100.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock101.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock102.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock110.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock120.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock121.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock122.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock123.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock124.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock125.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock130.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock140.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock150.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock151.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock152.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock160.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock170.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock180.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock190.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock200.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock210.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock211.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxBlock230.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\gfxHead.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\options.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\sgc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\smd.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\texture.h"
 				>
 			</File>
 		</Filter>

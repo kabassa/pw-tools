@@ -370,6 +370,58 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="COMMON"
+			>
+			<File
+				RelativePath="..\COMMON\bon.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ecm.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ecmAct.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ecmChild.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ecmHead.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ecmScript.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ecmSkin.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ecmType.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\model.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\ski.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\smd.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\stck.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

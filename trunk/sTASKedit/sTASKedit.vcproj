@@ -231,26 +231,6 @@
 					>
 				</File>
 			</File>
-			<File
-				RelativePath=".\task.h"
-				>
-			</File>
-			<File
-				RelativePath=".\task_clone.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\task_coding.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\task_load.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\task_save.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -267,6 +247,30 @@
 			</File>
 			<File
 				RelativePath=".\icons.resx"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="COMMON"
+			>
+			<File
+				RelativePath="..\COMMON\task.h"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\task_clone.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\task_coding.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\task_load.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\COMMON\task_save.cpp"
 				>
 			</File>
 		</Filter>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aipolicy.h"
+#include "..\COMMON\aipolicy.h"
 #include "LoadingScreen.h"
 #include "TranslatorService.h"
 
@@ -38,7 +38,7 @@ public ref class MainWindow : public System::Windows::Forms::Form
 
 			try
 			{
-				soap = gcnew TranslatorService::Soap();
+				soap = gcnew TranslatorService::SoapService();
 				appID = "763743C8043FA427227700179E653860B731D443";
 				from = "zh-CHS";
 				to = "en";
@@ -66,7 +66,7 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			}
 		}
 
-		TranslatorService::Soap^ soap;
+		TranslatorService::SoapService^ soap;
 		String^ appID;
 		String^ from;
 		String^ to;
@@ -1410,7 +1410,7 @@ public ref class MainWindow : public System::Windows::Forms::Form
 					to = comboBox_language->SelectedItem->ToString();
 					try
 					{
-						textBox_translation->Text = soap->Translate(appID, listBox_ActionSet->SelectedItem->ToString()->Split(gcnew array<wchar_t>{'\0'})[0], from, to);
+						textBox_translation->Text = soap->Translate(appID, listBox_ActionSet->SelectedItem->ToString()->Split(gcnew array<wchar_t>{'\0'})[0], from, to, "text/plain", "general");
 					}
 					catch(...)
 					{
