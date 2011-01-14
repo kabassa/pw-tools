@@ -1,0 +1,126 @@
+#####################
+### COMPLECT BONI ###
+#####################
+
+# Atk Level +5 -> Crit 3%
+2268=1907
+# Def Level +10 -> Vit +15
+2269=1902
+# Def Level +3 -> P-Dmg Reduction 3%
+2274=1898
+# Atk Level +5 -> Crit 3%
+2290=1907
+# Def Level +10 -> Vit +15
+2291=1902
+# Def Level +3 -> P-Dmg Reduction 3%
+2292=1898
+
+# Def Lefel +10 -> Vit +15
+2312=1902
+# Crit +1% -> Crit +3%
+2313=1903
+# Atk Level +10 -> P-Dmg Reduction 3%
+2314=1898
+# Def Level +10 -> Vit +15
+2315=1902
+# Atk Level +20 -> Crit +3%
+2316=1903
+
+# Def Lefel +10 -> Vit +15
+2317=1902
+# Crit +1% -> Crit +3%
+2318=1903
+# Atk Level +10 -> P-Dmg Reduction 3%
+2319=1898
+# Def Level +10 -> Vit +15
+2320=1902
+# Atk Level +20 -> Crit +3%
+2321=1903
+
+# Def Lefel +10 -> Vit +15
+2322=1902
+# Crit +1% -> Crit +3%
+2323=1903
+# Atk Level +10 -> P-Dmg Reduction 3%
+2324=1898
+# Def Level +10 -> Vit +15
+2325=1902
+# Atk Level +20 -> Crit +3%
+2326=1903
+
+# Def Lefel +10 -> Vit +15
+2327=1902
+# Crit +1% -> Crit +3%
+2328=1903
+# Atk Level +10 -> P-Dmg Reduction 3%
+2329=1898
+# Def Level +10 -> Vit +15
+2330=1902
+# Atk Level +20 -> Crit +3%
+2331=1903
+
+# Def Lefel +10 -> Vit +15
+2332=1902
+# Crit +1% -> Crit +3%
+2333=1903
+# Atk Level +10 -> P-Dmg Reduction 3%
+2334=1898
+# Def Level +10 -> Vit +15
+2335=1902
+# Atk Level +20 -> Crit +3%
+2336=1903
+
+# Def Lefel +10 -> Vit +15
+2337=1902
+# Crit +1% -> Crit +3%
+2338=1903
+# Atk Level +10 -> P-Dmg Reduction 3%
+2339=1898
+# Def Level +10 -> Vit +15
+2340=1902
+# Atk Level +20 -> Crit +3%
+2341=1903
+
+# Def Lefel +10 -> Vit +15
+2342=1902
+# Crit +1% -> Crit +3%
+2343=1903
+# Atk Level +10 -> P-Dmg Reduction 3%
+2344=1898
+# Def Level +10 -> Vit +15
+2345=1902
+# Atk Level +20 -> Crit +3%
+2346=1903
+
+# Def Lefel +10 -> Vit +15
+2347=1902
+# Crit +1% -> Crit +3%
+2348=1903
+# Atk Level +10 -> P-Dmg Reduction 3%
+2349=1898
+# Def Level +10 -> Vit +15
+2350=1902
+# Atk Level +20 -> Crit +3%
+2351=1903
+
+# Def Lefel +10 -> Vit +15
+2352=1902
+# Crit +1% -> Crit +3%
+2353=1903
+# Atk Level +10 -> P-Dmg Reduction 3%
+2354=1898
+# Def Level +10 -> Vit +15
+2355=1902
+# Atk Level +20 -> Crit +3%
+2356=1903
+
+# Def Lefel +10 -> Vit +15
+2357=1902
+# Crit +1% -> Crit +3%
+2358=1903
+# Atk Level +10 -> P-Dmg Reduction 3%
+2359=1898
+# Def Level +10 -> Vit +15
+2360=1902
+# Atk Level +20 -> Crit +3%
+2361=1903
