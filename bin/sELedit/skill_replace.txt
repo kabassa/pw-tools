@@ -1,5 +1,4 @@
 847=847
-# Health Recovery (to powerful, don't replace)
 #867=694
 882=882
 883=883
@@ -11,10 +10,8 @@
 890=890
 891=891
 892=892
-# fate executioner/executor -> fire attak
 893=171
 894=894
-# Self Explosion 5k Ignoring Def -> 
 895=895
 945=945
 946=946
@@ -35,7 +32,6 @@
 1065=1065
 1066=1066
 1067=1067
-# Diabolic Shocktrooper DoT -> Water DoT
 1068=349
 1158=1158
 1161=1161
