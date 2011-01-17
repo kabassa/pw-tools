@@ -285,6 +285,8 @@ public ref class Task
 	public: int required_quests_undone_count;
 	public: array<int>^ required_quests_undone;
 	// Married, Occupation, Reputation?, ...
+
+//ToDo: Required (integer) Blacksmith Level, Tailor, Craftsman, Apothecary -> from behinning of TEAM_MEMBER_REQUIREMENTS
 	public: array<unsigned char>^ TEAM_MEMBER_REQUIREMENTS; // 48 Byte
 	public: int required_team_member_groups_count;
 	public: array<unsigned char>^ required_team_member_groups_unknown; // 4 Byte
