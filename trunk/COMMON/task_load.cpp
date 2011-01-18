@@ -469,7 +469,7 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	}
 	required_wait_time = br->ReadInt32();
 
-	// At this place the v99 positions must be guessed due to leak of informations...
+	// At this place the v89 positions must be guessed due to leak of informations...
 
 	if(version >= 89)
 	{
@@ -503,60 +503,6 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		br->ReadBytes(5);
 	}
 
-	if(version >= 89)
-	{
-		for(int m=0; m<v89_Trigger_Location_Count; m++)
-		{
-			// use the first location span for v56
-			if(m == 0)
-			{
-				quest_trigger_location->east = br->ReadSingle();
-				quest_trigger_location->bottom = br->ReadSingle();
-				quest_trigger_location->south = br->ReadSingle();
-				quest_trigger_location->west = br->ReadSingle();
-				quest_trigger_location->top = br->ReadSingle();
-				quest_trigger_location->north = br->ReadSingle();
-			}
-			else
-			{
-				br->ReadBytes(24);
-			}
-		}
-
-		for(int m=0; m<v89_Unknown_Location_1_Count; m++)
-		{
-			br->ReadBytes(24);
-		}
-
-		for(int m=0; m<v89_Unknown_Location_2_Count; m++)
-		{
-			br->ReadBytes(24);
-		}
-
-		for(int m=0; m<v89_Required_Reach_Location_Count;m++)
-		{
-			// use the first location span for v56
-			if(m == 0)
-			{
-				required_reach_location->east = br->ReadSingle();
-				required_reach_location->bottom = br->ReadSingle();
-				required_reach_location->south = br->ReadSingle();
-				required_reach_location->west = br->ReadSingle();
-				required_reach_location->top = br->ReadSingle();
-				required_reach_location->north = br->ReadSingle();
-			}
-			else
-			{
-				br->ReadBytes(24);
-			}
-		}
-
-		for(int m=0; m<v89_Unknown_Location_3_Count; m++)
-		{
-			br->ReadBytes(24);
-		}
-	}
-
 // ################# AUTHOR TEXT #############################
 
 	author_text = gcnew array<unsigned char>(0);
@@ -571,6 +517,21 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	for(int i=0; i<date_spans->Length; i++)
 	{
 		date_spans[i] = ReadDateSpan(version, br);
+	}
+
+// ################# V89 DONT LEAVE LOCATIONS #############################
+
+	if(version >= 89)
+	{
+		for(int m=0; m<v89_Unknown_Location_1_Count; m++)
+		{
+			br->ReadBytes(24);
+		}
+
+		for(int m=0; m<v89_Unknown_Location_2_Count; m++)
+		{
+			br->ReadBytes(24);
+		}
 	}
 
 // ################# GROOVE AUDIT SCRIPTS #############################
@@ -615,6 +576,53 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		for(int i=0; i<v79_Public_Count_5; i++)
 		{
 			br->ReadBytes(128); // Text
+		}
+	}
+
+// ################# QUEST LOCATIONS #############################
+
+	if(version >= 89)
+	{
+		for(int m=0; m<v89_Trigger_Location_Count; m++)
+		{
+			// use the first location span for v56
+			if(m == 0)
+			{
+				quest_trigger_location->east = br->ReadSingle();
+				quest_trigger_location->bottom = br->ReadSingle();
+				quest_trigger_location->south = br->ReadSingle();
+				quest_trigger_location->west = br->ReadSingle();
+				quest_trigger_location->top = br->ReadSingle();
+				quest_trigger_location->north = br->ReadSingle();
+			}
+			else
+			{
+				br->ReadBytes(24);
+			}
+		}
+
+		for(int m=0; m<v89_Required_Reach_Location_Count;m++)
+		{
+			// use the first location span for v56
+			if(m == 0)
+			{
+				required_reach_location->east = br->ReadSingle();
+				required_reach_location->bottom = br->ReadSingle();
+				required_reach_location->south = br->ReadSingle();
+				required_reach_location->west = br->ReadSingle();
+				required_reach_location->top = br->ReadSingle();
+				required_reach_location->north = br->ReadSingle();
+			}
+			else
+			{
+				br->ReadBytes(24);
+			}
+		}
+
+		// another v89 location...
+		for(int m=0; m<v89_Unknown_Location_3_Count; m++)
+		{
+			br->ReadBytes(24);
 		}
 	}
 
