@@ -18,7 +18,8 @@ void Task::Save(int version, BinaryWriter^ bw)
 	bw->Write(UNKNOWN_EVENT);
 	bw->Write(UNKNOWN_ZEROS);
 	bw->Write(date_unknown);
-	bw->Write(UNKNOWN_FLAGS);
+	bw->Write(UNKNOWN_FLAGS_1);
+	bw->Write(UNKNOWN_FLAGS_2);
 	bw->Write(can_give_up);
 	bw->Write(repeatable);
 	bw->Write(repeatable_after_failure);

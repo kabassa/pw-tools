@@ -33,7 +33,7 @@ Item^ ReadItem(int version, BinaryReader^ br)
 	item->amount = br->ReadInt32();
 	item->probability = br->ReadSingle();
 
-	if(version >= 79)
+	if(version >= 89)
 	{
 		br->ReadBytes(4);
 	}
@@ -137,7 +137,7 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 	reward->UNKNOWN_1 = br->ReadInt32();
 	reward->storage_slots = br->ReadInt32();
 
-	if(version >= 79)
+	if(version >= 89)
 	{
 		br->ReadInt32(); // Cupboard Slots
 		br->ReadInt32(); // Wardrobe Slots
@@ -149,6 +149,7 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 	reward->vigor = br->ReadInt32();
 	reward->teleport = ReadLocation(version, br);
 	reward->aiTrigger = br->ReadInt32();
+
 	if(version <= 55)
 	{
 		reward->UNKNOWN_2 = gcnew array<unsigned char>(8);
@@ -160,11 +161,12 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 	{
 		reward->UNKNOWN_2 = br->ReadBytes(8);
 	}
+
 	reward->item_groups_count = br->ReadInt32();
 	reward->SEPERATOR = br->ReadBytes(4);
 
 	// Public Quest Rewards
-	if(version >= 79)
+	if(version >= 89)
 	{
 		v79_Count_1 = br->ReadInt32(); // public reward chases count
 		br->ReadBytes(19);
@@ -174,6 +176,7 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 		br->ReadInt32(); // random contribution min
 		br->ReadInt32(); // random contribution max
 		br->ReadInt32(); // required reward contribution
+		br->ReadBytes(8);
 		v79_Count_2 = br->ReadInt32(); // public reward items count
 		br->ReadBytes(4);
 		v79_Count_3 = br->ReadInt32(); // public reward specials count
@@ -191,7 +194,7 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 		reward->item_groups[i] = ReadItemGroup(version, br);
 	}
 
-	if(version >= 79)
+	if(version >= 89)
 	{
 		if(v79_Count_1>0)
 		{
@@ -255,6 +258,11 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 {
 	br->BaseStream->Position = stream_position;
 
+	int v89_Trigger_Location_Count;
+	int v89_Required_Reach_Location_Count;
+	int v89_Unknown_Location_1_Count;
+	int v89_Unknown_Location_2_Count;
+	int v89_Unknown_Location_3_Count;
 	int v79_Public_Count_1; // Unknown Count
 	int v79_Public_Count_2; // Scripts Count
 	int v79_Public_Count_3; // Sub Scripts Count
@@ -268,10 +276,9 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	author_mode = br->ReadBoolean();
 	UNKNOWN_001a = br->ReadBytes(4);
 	type = br->ReadInt32();
-
 	time_limit = br->ReadInt32();
 
-	if(version >= 79)
+	if(version >= 89)
 	{
 		br->ReadBytes(2);
 		ReadDate(version, br);
@@ -283,28 +290,57 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	UNKNOWN_EVENT = br->ReadBytes(4);
 	UNKNOWN_ZEROS = br->ReadBytes(8);
 
-	if(version >= 79)
+	if(version >= 89)
 	{
 		br->ReadBytes(12);
 	}
 
 	date_unknown = br->ReadBytes(8);
-	UNKNOWN_FLAGS = br->ReadBytes(9);
+	UNKNOWN_FLAGS_1 = br->ReadBytes(4);
+
+	if(version >= 89)
+	{
+		br->ReadBytes(4);
+	}
+
+	UNKNOWN_FLAGS_2 = br->ReadBytes(5);
 	can_give_up = br->ReadBoolean();
 	repeatable = br->ReadBoolean();
 	repeatable_after_failure = br->ReadBoolean();
 	UNKNOWN_004 = br->ReadBytes(8);
-	quest_trigger_location = ReadLocationSpan(version, br, false);
 
-	if(version >= 79)
+	if(version >= 89)
 	{
-		br->ReadBytes(58);
+		quest_trigger_location = gcnew LocationSpan();
+		quest_trigger_location->map_id = br->ReadInt32();
+		v89_Trigger_Location_Count = br->ReadInt32();
+	}
+	else
+	{
+		quest_trigger_location = ReadLocationSpan(version, br, false);
+	}
+
+	if(version >= 89)
+	{
+		br->ReadBytes(5);
+		br->ReadInt32(); // unknown map id
+		v89_Unknown_Location_1_Count = br->ReadInt32();
+		br->ReadBytes(5);
+		br->ReadInt32(); // unknown map id
+		v89_Unknown_Location_2_Count = br->ReadInt32();
+		br->ReadBytes(4);
 	}
 
 	UNKNOWN_005a_1 = br->ReadBytes(1);
 	instant_teleport_location = ReadLocation(version, br);
 	ai_trigger = br->ReadInt32();
 	UNKNOWN_005a_3 = br->ReadBytes(3);
+
+	if(version >= 89)
+	{
+		br->ReadBytes(2);
+	}
+
 	UNKNOWN_005b = br->ReadBytes(1);
 	UNKNOWN_LEVEL = br->ReadInt32();
 	UNKNOWN_005c = br->ReadBytes(2);
@@ -312,18 +348,18 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	reward_npc = br->ReadInt32();
 	UNKNOWN_006 = br->ReadBytes(4);
 
-	if(version >= 79)
+	if(version >= 89)
 	{
 		v79_Public_Count_1 = br->ReadInt32();
 		br->ReadBytes(12);
 		br->ReadInt32();
-		br->ReadBytes(10);
+		br->ReadBytes(15);
 		v79_Public_Count_2 = br->ReadInt32();
 		br->ReadBytes(8);
 		br->ReadBytes(1);
 		br->ReadBytes(1);
 		v79_Public_Count_4 = br->ReadInt32();
-		br->ReadBytes(9);
+		br->ReadBytes(14);
 	}
 
 	level_min = br->ReadInt32();
@@ -354,9 +390,16 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	{
 		required_occupations[i] = br->ReadInt32();
 	}
+
+	if(version >= 89)
+	{
+		br->ReadInt32(); // occupation 9
+		br->ReadInt32(); // occupation 10
+	}
+
 	UNKNOWN_011_a2 = br->ReadBytes(5);
 
-	if(version >= 79)
+	if(version >= 89)
 	{
 		br->ReadBytes(19);
 		ReadDate(version, br);
@@ -372,16 +415,16 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	}
 	TEAM_MEMBER_REQUIREMENTS = br->ReadBytes(48);
 
-	if(version >= 79)
+	if(version >= 89)
 	{
-		br->ReadBytes(2);
+		br->ReadBytes(3);
 	}
 
 	required_team_member_groups_count = br->ReadInt32();
 	required_team_member_groups_unknown = br->ReadBytes(4);
 	UNKNOWN_012_a = br->ReadBytes(1);
 
-	if(version >= 79)
+	if(version >= 89)
 	{
 		br->ReadBytes(9);
 		br->ReadInt32(); // Script ID
@@ -398,14 +441,31 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	required_get_items_unknown = br->ReadBytes(4);
 	required_coins = br->ReadInt32();
 	UNKNOWN_015 = br->ReadBytes(16);
-	required_reach_location = ReadLocationSpan(version, br, true);
+
+	if(version >= 89)
+	{
+		br->ReadBytes(12);
+	}
+
+	if(version >= 89)
+	{
+		required_reach_location = gcnew LocationSpan();
+		v89_Required_Reach_Location_Count = br->ReadInt32();
+		required_reach_location->map_id = br->ReadInt32();
+	}
+	else
+	{
+		required_reach_location = ReadLocationSpan(version, br, true);
+	}
 	required_wait_time = br->ReadInt32();
 
 	// At this place the v79 positions must be guessed due to leak of informations...
 
-	if(version >= 79)
+	if(version >= 89)
 	{
-		br->ReadBytes(28);
+		br->ReadBytes(4);
+		br->ReadInt32(); // unknown map id
+		v89_Unknown_Location_3_Count = br->ReadInt32();
 		br->ReadInt32();
 		br->ReadBytes(5);
 		br->ReadInt32(); // ID
@@ -428,6 +488,65 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	next_quest = br->ReadInt32();
 	sub_quest_first = br->ReadInt32();
 
+	if(version >= 89)
+	{
+		br->ReadBytes(5);
+	}
+
+	if(version >= 89)
+	{
+		for(int m=0; m<v89_Trigger_Location_Count; m++)
+		{
+			// use the first location span for v56
+			if(m == 0)
+			{
+				quest_trigger_location->east = br->ReadSingle();
+				quest_trigger_location->bottom = br->ReadSingle();
+				quest_trigger_location->south = br->ReadSingle();
+				quest_trigger_location->west = br->ReadSingle();
+				quest_trigger_location->top = br->ReadSingle();
+				quest_trigger_location->north = br->ReadSingle();
+			}
+			else
+			{
+				br->ReadBytes(24);
+			}
+		}
+
+		for(int m=0; m<v89_Unknown_Location_1_Count; m++)
+		{
+			br->ReadBytes(24);
+		}
+
+		for(int m=0; m<v89_Unknown_Location_2_Count; m++)
+		{
+			br->ReadBytes(24);
+		}
+
+		for(int m=0; m<v89_Required_Reach_Location_Count;m++)
+		{
+			// use the first location span for v56
+			if(m == 0)
+			{
+				required_reach_location->east = br->ReadSingle();
+				required_reach_location->bottom = br->ReadSingle();
+				required_reach_location->south = br->ReadSingle();
+				required_reach_location->west = br->ReadSingle();
+				required_reach_location->top = br->ReadSingle();
+				required_reach_location->north = br->ReadSingle();
+			}
+			else
+			{
+				br->ReadBytes(24);
+			}
+		}
+
+		for(int m=0; m<v89_Unknown_Location_3_Count; m++)
+		{
+			br->ReadBytes(24);
+		}
+	}
+
 // ################# AUTHOR TEXT #############################
 
 	author_text = gcnew array<unsigned char>(0);
@@ -446,7 +565,7 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 // ################# GROOVE AUDIT SCRIPTS #############################
 
-	if(version >= 79)
+	if(version >= 89)
 	{
 		for(int i=0; i<v79_Public_Count_1; i++)
 		{
@@ -470,6 +589,7 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 			br->ReadInt32(); // Mob ID
 			br->ReadBytes(4); // Unknown
 			br->ReadInt32(); // Amount ?
+			br->ReadBytes(4); // Unknown
 		}
 
 		for(int i=0; i<v79_Public_Count_3; i++)

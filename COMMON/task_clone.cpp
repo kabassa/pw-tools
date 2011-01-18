@@ -16,7 +16,8 @@ Task^ Task::Clone()
 	result->UNKNOWN_EVENT = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_EVENT));
 	result->UNKNOWN_ZEROS = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_ZEROS));
 	result->date_unknown = HexString_to_ByteArray(ByteArray_to_HexString(this->date_unknown));
-	result->UNKNOWN_FLAGS = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_FLAGS));
+	result->UNKNOWN_FLAGS_1 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_FLAGS_1));
+	result->UNKNOWN_FLAGS_2 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_FLAGS_2));
 	result->can_give_up = this->can_give_up;
 	result->repeatable = this->repeatable;
 	result->repeatable_after_failure = this->repeatable_after_failure;

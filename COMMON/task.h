@@ -243,11 +243,12 @@ public ref class Task
 	public: array<unsigned char>^ UNKNOWN_EVENT; // 4 Bytes
 	public: array<unsigned char>^ UNKNOWN_ZEROS; // 8 Bytes -> All Zeros
 	public: array<unsigned char>^ date_unknown; // 8 Bytes
-	public: array<unsigned char>^ UNKNOWN_FLAGS; // 9 Bytes
+	public: array<unsigned char>^ UNKNOWN_FLAGS_1; // 6 Bytes
+	public: array<unsigned char>^ UNKNOWN_FLAGS_2; // 3 Bytes
 	public: bool can_give_up;
 	public: bool repeatable;
 	public: bool repeatable_after_failure;
-	public: array<unsigned char>^ UNKNOWN_004; // 12 Byte
+	public: array<unsigned char>^ UNKNOWN_004; // 8 Byte
 	public: LocationSpan^ quest_trigger_location;
 	public: array<unsigned char>^ UNKNOWN_005a_1; // 1 Byte
 	public: Location^ instant_teleport_location;
