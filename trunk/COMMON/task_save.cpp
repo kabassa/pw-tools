@@ -77,7 +77,11 @@ void Task::Save(int version, BinaryWriter^ bw)
 	{
 		bw->Write(required_quests_undone[i]);
 	}
-	bw->Write(TEAM_MEMBER_REQUIREMENTS);
+	bw->Write(required_blacksmith_level);
+	bw->Write(required_tailor_level);
+	bw->Write(required_craftsman_level);
+	bw->Write(required_apothecary_level);
+	bw->Write(TEAM_MEMBER_REQUIREMENT);
 	bw->Write(required_team_member_groups_count);
 	bw->Write(required_team_member_groups_unknown);
 	bw->Write(UNKNOWN_012_a);

@@ -80,7 +80,11 @@ Task^ Task::Clone()
 	{
 		result->required_quests_undone[i] = this->required_quests_undone[i];
 	}
-	result->TEAM_MEMBER_REQUIREMENTS = HexString_to_ByteArray(ByteArray_to_HexString(this->TEAM_MEMBER_REQUIREMENTS));
+	result->required_blacksmith_level = this->required_blacksmith_level;
+	result->required_tailor_level = this->required_tailor_level;
+	result->required_craftsman_level = this->required_craftsman_level;
+	result->required_apothecary_level = this->required_apothecary_level;
+	result->TEAM_MEMBER_REQUIREMENT = HexString_to_ByteArray(ByteArray_to_HexString(this->TEAM_MEMBER_REQUIREMENT));
 	result->required_team_member_groups_count = this->required_team_member_groups_count;
 	result->required_team_member_groups_unknown = this->required_team_member_groups_unknown;
 	result->UNKNOWN_012_a = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_012_a));
