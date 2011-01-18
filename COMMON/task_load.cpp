@@ -393,8 +393,14 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		br->ReadInt32(); // occupation 9
-		br->ReadInt32(); // occupation 10
+		if(br->ReadInt32() > 0) // occupation 9
+		{
+			required_occupations_count--;
+		}
+		if(br->ReadInt32() > 0) // occupation 10
+		{
+			required_occupations_count--;
+		}
 	}
 
 	UNKNOWN_011_a2 = br->ReadBytes(5);
@@ -413,7 +419,11 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	{
 		required_quests_undone[i] = br->ReadInt32();
 	}
-	TEAM_MEMBER_REQUIREMENTS = br->ReadBytes(48);
+	required_blacksmith_level = br->ReadInt32();
+	required_tailor_level = br->ReadInt32();
+	required_craftsman_level = br->ReadInt32();
+	required_apothecary_level = br->ReadInt32();
+	TEAM_MEMBER_REQUIREMENT = br->ReadBytes(32);
 
 	if(version >= 89)
 	{
@@ -459,7 +469,7 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	}
 	required_wait_time = br->ReadInt32();
 
-	// At this place the v79 positions must be guessed due to leak of informations...
+	// At this place the v99 positions must be guessed due to leak of informations...
 
 	if(version >= 89)
 	{
