@@ -241,10 +241,6 @@
 				</File>
 			</File>
 			<File
-				RelativePath=".\LoseQuestWindow.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\LoseQuestWindow.h"
 				FileType="3"
 				>
