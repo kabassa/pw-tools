@@ -114,6 +114,7 @@ using namespace System::Drawing;
 			this->listBox_Activate->Name = L"listBox_Activate";
 			this->listBox_Activate->Size = System::Drawing::Size(200, 277);
 			this->listBox_Activate->TabIndex = 3;
+			this->listBox_Activate->SelectedIndexChanged += gcnew System::EventHandler(this, &LoseQuestWindow::select_quest);
 			// 
 			// webBrowser
 			// 
