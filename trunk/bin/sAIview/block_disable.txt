@@ -1,0 +1,181 @@
+# default operations for condition blocks with public counters is to enable them
+# blocks listed in this file will overwrite the default behavious, they will be disabled
+# syntax: ControllerID:SetID i.e. 168:3
+
+
+#######################
+### Twilight Temple ###
+#######################
+
+# an instant kill skill was added to bosses if there were not enough monsters killed
+# we remove these instant kill skills, but keep the other skill to increase difficulty
+
+# General Feng
+209:16
+# Cosmoforce
+210:10
+# Ancient Evil: Lethal Vengeance
+225:14
+# Djinscream
+226:9
+226:12
+226:14
+# Deathflow: Null
+227:5
+# Steelation
+229:6
+229:9
+# Dark Colluseast
+230:7
+230:10
+# Twilight Emperor: Vacuity
+237:12
+# Twilight Minister: Vacuity
+238:9
+# Illusion Lord: Armageddon
+240:15
+# General Wurlord: Null
+252:2
+# Soulripper: Null
+263:2
+# Astralwalker: Null
+264:6
+# Deathflow: Vacuity
+265:5
+# Deathflow: Doom
+266:4
+# Illusion Nemen: Vacuity
+267:5
+# Illusion Nemen: Doom
+268:4
+# Twilight Emperor: Doom
+273:9
+# Twilight Minister: Doom
+274:8
+# Fataliqua
+277:2
+# Coredash
+278:2
+278:8
+278:9
+# Illusion Nemen: Null
+1224:2
+# Steelation: Null
+1225:2
+# Dark Colluseast: Null
+1226:2
+
+####################
+### Warsong City ###
+####################
+
+# controller (disable fallen pavillon announcements)
+1277:5
+1277:6
+1277:7
+1277:8
+1277:9
+1277:10
+1277:11
+1277:12
+1277:13
+1277:14
+1277:15
+1277:16
+1277:17
+1277:18
+1277:19
+1277:20
+1277:21
+1277:23
+1277:24
+
+# Pestilent Destroyer (disable protected pavillons condition)
+1281:2
+1281:10
+1281:11
+1281:12
+1281:13
+1281:14
+1281:15
+1281:16
+1281:17
+1281:18
+1281:19
+
+# Obscure Reaper (disable protected pavillons condition)
+1282:2
+1282:7
+1282:8
+1282:9
+1282:10
+1282:11
+1282:12
+1282:13
+1282:14
+1282:15
+1282:16
+
+# Snakefist Guardian (disable protected pavillons condition)
+1283:1
+1283:13
+1283:14
+1283:16
+1283:17
+1283:18
+1283:19
+1283:20
+1283:21
+1283:22
+1283:23
+
+# Cannonfist Orclord (disable protected pavillons condition)
+1284:2
+1284:8
+1284:9
+1284:11
+1284:12
+1284:13
+1284:14
+1284:15
+1284:16
+1284:17
+1284:18
+
+# Shadowskull Lich (disable protected pavillons condition)
+1285:2
+1285:3
+1285:4
+1285:5
+1285:6
+1285:7
+1285:8
+1285:9
+1285:10
+1285:11
+
+# The Incacerate (disable minion depending elemental skills)
+1286:5
+1286:6
+1286:7
+1286:8
+1286:9
+
+###########################
+### Forgotten Frostland ###
+###########################
+
+
+
+#########################
+### Palace of Nirvana ###
+#########################
+
+# Inferno Sovereign
+# number of additional spawned traps set to 6
+1372:3
+1372:5
+1372:7
+1372:8
+1372:9
+#1372:10
