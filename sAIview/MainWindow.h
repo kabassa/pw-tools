@@ -34,6 +34,7 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			Application::DoEvents();
 
 			skillReplace = loadSkillReplace("skill_replace.txt");
+			blockDisable = loadBlockDisable("block_disable.txt");
 			GUID = 1;
 
 			try
@@ -71,6 +72,7 @@ public ref class MainWindow : public System::Windows::Forms::Form
 		String^ from;
 		String^ to;
 		Collections::SortedList^ skillReplace;
+		ArrayList^ blockDisable;
 
 		private: AIPolicy^ AI;
 		private: int GUID;
@@ -312,7 +314,7 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			this->comboBox_cat->Items->AddRange(gcnew cli::array< System::Object^  >(3) {L"Procedures", L"Conditions", L"AI Control Link"});
 			this->comboBox_cat->Location = System::Drawing::Point(9, 27);
 			this->comboBox_cat->Name = L"comboBox_cat";
-			this->comboBox_cat->Size = System::Drawing::Size(121, 21);
+			this->comboBox_cat->Size = System::Drawing::Size(103, 21);
 			this->comboBox_cat->TabIndex = 0;
 			this->comboBox_cat->SelectedIndexChanged += gcnew System::EventHandler(this, &MainWindow::change_searchCat);
 			// 
@@ -351,9 +353,9 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			this->comboBox_subCat->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
 			this->comboBox_subCat->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->comboBox_subCat->FormattingEnabled = true;
-			this->comboBox_subCat->Location = System::Drawing::Point(136, 27);
+			this->comboBox_subCat->Location = System::Drawing::Point(118, 27);
 			this->comboBox_subCat->Name = L"comboBox_subCat";
-			this->comboBox_subCat->Size = System::Drawing::Size(121, 21);
+			this->comboBox_subCat->Size = System::Drawing::Size(139, 21);
 			this->comboBox_subCat->TabIndex = 1;
 			// 
 			// comboBox_language
@@ -444,6 +446,34 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			sr->Close();
 
 			return skillTable;
+		}
+
+		ArrayList^ loadBlockDisable(String^ file)
+		{
+			ArrayList^ blockTable = gcnew ArrayList();
+
+			String^ debug = Application::StartupPath + "\\" + file;
+			StreamReader^ sr = gcnew StreamReader(Application::StartupPath + "\\" + file);
+
+			String^ line;
+			array<String^>^ pair;
+			array<String^>^ seperator = gcnew array<String^>{":"};
+			while(!sr->EndOfStream)
+			{
+				line = sr->ReadLine();
+				if(!line->StartsWith("#") && line->Contains(":"))
+				{
+					pair = line->Split(seperator, StringSplitOptions::RemoveEmptyEntries);
+					if(pair->Length == 2)
+					{
+						blockTable->Add(pair[0] + ":" + pair[1]);
+					}
+				}
+			}
+
+			sr->Close();
+
+			return blockTable;
 		}
 		/*
 			get target
@@ -540,11 +570,11 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			}
 			if(operator_id == 12)
 			{
-				return ">"; // GREATER THEN
+				return ">"; // ?
 			}
 			if(operator_id == 13)
 			{
-				return ">="; // GREATER EQUALS
+				return ">="; // GREATER EQUALS ?
 			}
 			if(operator_id == 14)
 			{
@@ -552,7 +582,7 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			}
 			if(operator_id == 15)
 			{
-				return "<="; // LESS EQUALS ?
+				return ">"; // GREATER THEN
 			}
 			if(operator_id == 16)
 			{
@@ -1364,7 +1394,14 @@ public ref class MainWindow : public System::Windows::Forms::Form
 						result->action_controllers[ac]->action_sets[as]->conditions = gcnew Condition();
 						result->action_controllers[ac]->action_sets[as]->conditions->operator_id = 3;
 						result->action_controllers[ac]->action_sets[as]->conditions->argument_bytes = 4;
-						result->action_controllers[ac]->action_sets[as]->conditions->value = gcnew array<unsigned char>{0, 0, 128, 63};
+						if(blockDisable->Contains(source_ai->action_controllers[ac]->id + ":" + source_ai->action_controllers[ac]->action_sets[as]->id))
+						{
+							result->action_controllers[ac]->action_sets[as]->conditions->value = gcnew array<unsigned char>{0, 0, 0, 0};
+						}
+						else
+						{
+							result->action_controllers[ac]->action_sets[as]->conditions->value = gcnew array<unsigned char>{0, 0, 128, 63};
+						}
 						result->action_controllers[ac]->action_sets[as]->conditions->subnode_2 = 0;
 						result->action_controllers[ac]->action_sets[as]->conditions->subnode_3 = 0;
 						result->action_controllers[ac]->action_sets[as]->conditions->condition_type = 3;
@@ -1466,9 +1503,9 @@ public ref class MainWindow : public System::Windows::Forms::Form
 							"Fade_Aggro",
 							"Break",
 							"NPC_Generator",
-							"Procedure_15",
-							"Procedure_16",
-							"Procedure_17"
+							"Initialize_Public_Counter",
+							"Increment_Public_Counter",
+							"Player_Aimed_NPC_Spawn"
 						}
 					);
 					comboBox_subCat->SelectedIndex = 0;
