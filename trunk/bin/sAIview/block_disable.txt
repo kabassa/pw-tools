@@ -69,6 +69,34 @@
 ### Warsong City ###
 ####################
 
+# monster wave controller (disable all possibility of kill counts, because npcgens are started anywys in set 12)
+1271:2
+1271:3
+1271:4
+1271:5
+1271:6
+1271:7
+1271:8
+1271:9
+1271:10
+1271:11
+1271:16
+1271:17
+1271:18
+1271:19
+1271:20
+
+# chest controller (disable the 8 of 9 possibilities, disable auto close after 3 chests have been destroied)
+1272:12
+1272:13
+1272:14
+1272:15
+1272:16
+1272:17
+1272:18
+1272:19
+1272:20
+
 # controller (disable fallen pavillon announcements)
 1277:5
 1277:6
@@ -153,6 +181,7 @@
 1285:9
 1285:10
 1285:11
+1290:2
 
 # The Incacerate (disable minion depending elemental skills)
 1286:5
@@ -160,6 +189,10 @@
 1286:7
 1286:8
 1286:9
+
+# Bonecracker (disable Shadowskull Lich stages by calling the last one directly)
+1291:2
+1291:3
 
 ###########################
 ### Forgotten Frostland ###
