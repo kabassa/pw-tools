@@ -1,5 +1,9 @@
 #include "main.h"
 
+// RWPD decoding keys
+//#define KEY_1 711164174
+//#define KEY_2 839959661
+
 // FW decoding keys
 //#define KEY_1 566434367
 //#define KEY_2 408690725
