@@ -7,11 +7,11 @@ using namespace System::IO;
 
 String^ colorFormating(String^ line)
 {
-	String^ result = "";
-
 	array<String^>^ blocks = line->Split(gcnew array<wchar_t>{'^'});
 	if(blocks->Length > 1)
 	{
+		String^ result = "";
+
 		if(blocks[0] != "")
 		{
 			result += blocks[0];
@@ -25,8 +25,13 @@ String^ colorFormating(String^ line)
 				result += "</font>";
 			}
 		}
+
+		return result;
 	}
-	return result;
+	else
+	{
+		return line;
+	}
 }
 int main(array<System::String ^> ^args)
 {
@@ -69,7 +74,7 @@ int main(array<System::String ^> ^args)
 Text::Encoding^ enc = Text::Encoding::GetEncoding("Unicode");
 
 		array<String^>^ description;
-		String^ out = "<html encoding='UTF-8'>\n<head>\n</head>\n<body bgcolor='#111111'>\n<table align='center' border='1' color='#ffffff'><tr><th align='center'>Nr.</th><th align='left'>Text</th></tr>\n";
+		String^ out = "<html encoding='UTF-8'>\n<head>\n</head>\n<body bgcolor='#111111' text='#ffffff'>\n<table align='center' border='1' color='#ffffff'><tr><th align='center'>Nr.</th><th align='left'>Text</th></tr>\n";
 
 		for(int i=0; i<skills->Length-1; i+=4)
 		{
