@@ -381,7 +381,16 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	{
 		required_quests_done[i] = br->ReadInt32();
 	}
-	UNKNOWN_011_1 = br->ReadBytes(11);
+	if(version >= 90)
+	{
+		br->ReadBytes(60);
+	}
+	UNKNOWN_011_1a = br->ReadBytes(1);
+	if(version >= 90)
+	{
+		br->ReadBytes(4);
+	}
+	UNKNOWN_011_1b = br->ReadBytes(10);
 	required_gender = br->ReadInt32();
 	UNKNOWN_011_2 = br->ReadBytes(1);
 	required_occupations_count = br->ReadInt32();

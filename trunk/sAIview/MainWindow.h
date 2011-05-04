@@ -592,6 +592,10 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			{
 				return "Value"; // defines a value for operator comparsion i.e. value of score, minutes, level, ...
 			}
+			if(operator_id == 18)
+			{
+				return "Is_Event?";
+			}
 			return "?";
 		}
 		/*
@@ -671,6 +675,10 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			if(c->operator_id == 17)
 			{
 				return BitConverter::ToInt32(c->value, 0).ToString();
+			}
+			if(c->operator_id == 18)
+			{
+				return "";
 			}
 			return "?";
 		}
