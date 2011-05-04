@@ -62,7 +62,8 @@ void Task::Save(int version, BinaryWriter^ bw)
 	{
 		bw->Write(required_quests_done[i]);
 	}
-	bw->Write(UNKNOWN_011_1);
+	bw->Write(UNKNOWN_011_1a);
+	bw->Write(UNKNOWN_011_1b);
 	bw->Write(required_gender);
 	bw->Write(UNKNOWN_011_2);
 	bw->Write(required_occupations_count);

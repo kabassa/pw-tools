@@ -276,7 +276,8 @@ public ref class Task
 	public: int required_quests_done_count;
 	public: array<int>^ required_quests_done;
 
-	public: array<unsigned char>^ UNKNOWN_011_1; // 11 Byte
+	public: array<unsigned char>^ UNKNOWN_011_1a; // 1 Byte
+	public: array<unsigned char>^ UNKNOWN_011_1b; // 10 Byte
 	public: int required_gender;
 	public: array<unsigned char>^ UNKNOWN_011_2; // 1 Byte
 	public: int required_occupations_count;

@@ -63,7 +63,8 @@ Task^ Task::Clone()
 	{
 		result->required_quests_done[i] = this->required_quests_done[i];
 	}
-	result->UNKNOWN_011_1 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_011_1));
+	result->UNKNOWN_011_1a = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_011_1a));
+	result->UNKNOWN_011_1b = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_011_1b));
 	result->required_gender = this->required_gender;
 	result->UNKNOWN_011_2 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_011_2));
 	result->required_occupations_count = this->required_occupations_count;
