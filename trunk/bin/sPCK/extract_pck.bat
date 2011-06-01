@@ -1,5 +1,5 @@
 ::sPCK.exe -x "D:\- GAMES -\Perfect World International\element\building.pck"
-::sPCK.exe -x "D:\- GAMES -\Perfect World International\element\configs.pck"
+sPCK.exe -x "D:\- GAMES -\Perfect World International\element\configs.pck"
 ::sPCK.exe -x "D:\- GAMES -\Perfect World International\element\facedata.pck"
 ::sPCK.exe -x "D:\- GAMES -\Perfect World International\element\fonts.pck"
 sPCK.exe -x "D:\- GAMES -\Perfect World International\element\gfx.pck"
