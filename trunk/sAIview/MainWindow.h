@@ -46,10 +46,11 @@ public ref class MainWindow : public System::Windows::Forms::Form
 				comboBox_language->Items->AddRange(soap->GetLanguagesForTranslate(appID));
 				comboBox_language->SelectedItem = "en";
 			}
-			catch(...)
+			catch(Exception^ e)
 			{
 				soap = nullptr;
 				textBox_translation->Text = "TRANSLATION SERVICE UNAVAILABLE";
+				MessageBox::Show(e->Message);
 			}
 			initialize->Close();
 			Cursor = Windows::Forms::Cursors::Default;
