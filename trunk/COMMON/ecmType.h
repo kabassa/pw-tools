@@ -106,6 +106,11 @@ public ref class ecmTYPE
 					Parameters->RemoveAt(i);
 					i--;
 				}
+				if(line->StartsWith("CustomPath:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
 // not necessary because EventType: 104 will be removed...
 //{
 /*
