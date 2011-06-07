@@ -36,6 +36,11 @@ public ref class gfxBLOCK124 : gfxBLOCK
 					Parameters->RemoveAt(i);
 					i--;
 				}
+				if(line->StartsWith("StopEmitWhenFade:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
 				if(line->StartsWith("ParIniDir:"))
 				{
 					Parameters->RemoveAt(i);

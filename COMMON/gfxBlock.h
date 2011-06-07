@@ -92,6 +92,51 @@ public ref class gfxBLOCK abstract
 				Parameters->RemoveAt(i);
 				i--;
 			}
+			if(line->StartsWith("ShaderFile:"))
+			{
+				Parameters->RemoveAt(i);
+				i--;
+			}
+			if(line->StartsWith("ShaderTex: "))
+			{
+				Parameters->RemoveAt(i);
+				i--;
+			}
+			if(line->StartsWith("PSConstCount:"))
+			{
+				Parameters->RemoveAt(i);
+				i--;
+			}
+			if(line->StartsWith("PSConstIndex:"))
+			{
+				Parameters->RemoveAt(i);
+				i--;
+			}
+			if(line->StartsWith("PSConstValue:"))
+			{
+				Parameters->RemoveAt(i);
+				i--;
+			}
+			if(line->StartsWith("PSTargetCount:"))
+			{
+				Parameters->RemoveAt(i);
+				i--;
+			}
+			if(line->StartsWith("PSInterval:"))
+			{
+				Parameters->RemoveAt(i);
+				i--;
+			}
+			if(line->StartsWith("PSLoopCount:"))
+			{
+				Parameters->RemoveAt(i);
+				i--;
+			}
+			if(line->StartsWith("CanDoFadeOut:"))
+			{
+				Parameters->RemoveAt(i);
+				i--;
+			}
 		}
 	}
 	public: virtual bool Fix(Options^ options) abstract;
