@@ -83,6 +83,11 @@ Chase^ ReadChase(int version, BinaryReader^ br)
 	chase->probability = br->ReadSingle();
 	chase->unknown_2 = br->ReadByte();
 
+	if(version >= 92)
+	{
+		br->ReadBytes(8);
+	}
+
 	return chase;
 }
 
@@ -359,7 +364,16 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		br->ReadBytes(1);
 		br->ReadBytes(1);
 		v79_Public_Count_4 = br->ReadInt32();
-		br->ReadBytes(14);
+		br->ReadBytes(4);
+		br->ReadBytes(5);
+
+		// correct position not confirmed
+		if(version >= 92)
+		{
+			br->ReadBytes(5);
+		}
+
+		br->ReadBytes(5);
 	}
 
 	level_min = br->ReadInt32();
