@@ -374,6 +374,10 @@
 			Name="COMMON"
 			>
 			<File
+				RelativePath="..\COMMON\bmd.h"
+				>
+			</File>
+			<File
 				RelativePath="..\COMMON\ecm.h"
 				>
 			</File>
