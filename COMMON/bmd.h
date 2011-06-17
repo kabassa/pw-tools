@@ -1,8 +1,11 @@
 #pragma once
 
-using namespace System;
-using namespace System::IO;
-using namespace System::Collections;
+public ref struct Header
+{
+	unsigned char Type;
+	array<unsigned char>^ Zeros;
+	unsigned char BitOptions;
+};
 
 public ref struct Face
 {
@@ -34,16 +37,27 @@ public ref struct Block_2
 	array<unsigned char>^ B; // 4 Bytes
 };
 
+public ref struct Material
+{
+	array<unsigned char>^ Signature; // 10 Bytes
+	unsigned char Count; // ??? Length for Name ???
+	// array<unsigned char>^ Name;
+	array<float>^ Values;
+	unsigned char Unknown;
+};
+
 public ref struct Obj
 {
-	array<unsigned char>^ Unknown; // 4 Bytes
+	Header^ Ident;
 	array<unsigned char>^ Name; // 64 Bytes
 	array<unsigned char>^ Texture; // 56 Bytes
+	unsigned char Unknown;
 	array<Vert^>^ Vertices;
 	array<Face^>^ Faces;
 	array<Block_1^>^ Block_1s;
 	array<Block_2^>^ Block_2s;
 	array<float>^ Properties; // 12 float values
+	Material^ Materials;
 };
 
 public ref struct Number
@@ -78,11 +92,13 @@ public ref class BMD
 	}
 
 	public: array<unsigned char>^ Signature; // 4 byte
-	public: array<unsigned char>^ Ident; // 4 byte
-	private: array<float>^ Unknown_01; // 12 floats
-	private: array<Obj^>^ Objects;
-	private: array<Number^>^ Numbers;
-	private: array<Block^>^ Blocks;
+	public: Header^ Ident; // 4 byte
+	public: unsigned char IdentSplit;
+	public: Header^ IdentExtension; // 4 byte
+	public: array<float>^ Unknown; // 12 floats
+	public: array<Obj^>^ Objects;
+	public: array<Number^>^ Numbers;
+	public: array<Block^>^ Blocks;
 
 	public: void Load(String^ File)
 	{
@@ -90,12 +106,36 @@ public ref class BMD
 		BinaryReader^ br = gcnew BinaryReader(fs);
 
 		Signature = br->ReadBytes(4);
-		Ident = br->ReadBytes(4);
+		/*
+		// 4 Byte HEADER Explained:
+		// in CN 1.3.6 ver[0] = 1 || 2
+		// in PWI 1.4.4 ver[0] = 1 || 2
+		// in CN 1.3.6 ver[1] = 0
+		// in PWI 1.4.4 ver[1] = 0
+		// in CN 1.3.6 ver[2] = 0
+		// in PWI 1.4.4 ver[2] = 0
+		// in CN 1.3.6 ver[3] = 16 || 128 (seems to depend on ver[0])
+		// in PWI 1.4.4 ver[3] = 16 || 128 (seems to depend on ver[0])
+		// possible combinations for all versions: [1,0,0,128] || [2,0,0,16]
+		*/
+		Ident = gcnew Header();
+		Ident->Type = br->ReadByte();
+		Ident->Zeros = br->ReadBytes(2);
+		Ident->BitOptions = br->ReadByte();
 
-		Unknown_01 = gcnew array<float>(12);
-		for(int i=0; i<Unknown_01->Length; i++)
+		if(Ident->Type == 1)
 		{
-			Unknown_01[i] = br->ReadSingle();
+			IdentSplit = br->ReadByte();
+			IdentExtension = gcnew Header();
+			IdentExtension->Type = br->ReadByte();
+			IdentExtension->Zeros = br->ReadBytes(2);
+			IdentExtension->BitOptions = br->ReadByte();
+		}
+
+		Unknown = gcnew array<float>(12);
+		for(int i=0; i<Unknown->Length; i++)
+		{
+			Unknown[i] = br->ReadSingle();
 		}
 
 		int ObjectCount = br->ReadInt32();
@@ -103,12 +143,20 @@ public ref class BMD
 		for(int i=0; i<Objects->Length; i++)
 		{
 			Objects[i] = gcnew Obj();
-			Objects[i]->Unknown = br->ReadBytes(4);
+			Objects[i]->Ident = gcnew Header();
+			Objects[i]->Ident->Type = br->ReadByte();
+			Objects[i]->Ident->Zeros = br->ReadBytes(2);
+			Objects[i]->Ident->BitOptions = br->ReadByte();
 			Objects[i]->Name = br->ReadBytes(64);
 			Objects[i]->Texture = br->ReadBytes(256);
 
 			int VertexCount = br->ReadInt32();
 			int FacesCount = br->ReadInt32();
+
+			if(Objects[i]->Ident->Type > 5)
+			{
+				Objects[i]->Unknown = br->ReadByte();
+			}
 
 			Objects[i]->Vertices = gcnew array<Vert^>(VertexCount);
 			for(int v=0; v<Objects[i]->Vertices->Length; v++)
@@ -153,6 +201,20 @@ public ref class BMD
 			{
 				Objects[i]->Properties[p] = br->ReadSingle();
 			}
+
+			if(Objects[i]->Ident->Type > 4)
+			{
+				// Load Material
+				Objects[i]->Materials = gcnew Material();
+				Objects[i]->Materials->Signature = br->ReadBytes(10);
+				Objects[i]->Materials->Count = br->ReadByte();
+				Objects[i]->Materials->Values = gcnew array<float>(17);
+				for(int m=0; m<Objects[i]->Materials->Values->Length; m++)
+				{
+					Objects[i]->Materials->Values[m] = br->ReadSingle();
+				}
+				Objects[i]->Materials->Unknown = br->ReadByte();
+			}
 		}
 
 		int BlockCount = br->ReadInt32();
@@ -196,6 +258,16 @@ public ref class BMD
 
 	public: void Fix(Options^ options)
 	{
+		// sweep through all objects and change ident->type of object to 5 (if > 5)
+		// save(file) will automatically remove unsupported parameters depending on version
+		for(int i=0; i<Objects->Length; i++)
+		{
+			if(Objects[i]->Ident->Type > 5)
+			{
+				Objects[i]->Ident->Type = 5;
+				//Objects[i]->Ident->Unknown = 0;
+			}
+		}
 	}
 
 	public: void Save(String^ File)
@@ -204,8 +276,8 @@ public ref class BMD
 		BinaryWriter^ bw = gcnew BinaryWriter(fs);
 
 		bw->Write(Signature);
-		bw->Write(Ident);
 		/*
+		bw->Write(Ident->);
 		for(int i=0; i<12; i++)
 		{
 			bw->Write(Unknown_01[i]);
