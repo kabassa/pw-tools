@@ -276,13 +276,118 @@ public ref class BMD
 		BinaryWriter^ bw = gcnew BinaryWriter(fs);
 
 		bw->Write(Signature);
-		/*
-		bw->Write(Ident->);
-		for(int i=0; i<12; i++)
+		bw->Write(Ident->Type);
+		bw->Write(Ident->Zeros);
+		bw->Write(Ident->BitOptions);
+
+		if(Ident->Type == 1)
 		{
-			bw->Write(Unknown_01[i]);
+			bw->Write(IdentSplit);
+			bw->Write(IdentExtension->Type);
+			bw->Write(IdentExtension->Zeros);
+			bw->Write(IdentExtension->BitOptions);
 		}
-		*/
+
+		for(int i=0; i<Unknown->Length; i++)
+		{
+			bw->Write(Unknown[i]);
+		}
+
+		bw->Write(Objects->Length);
+
+		for(int i=0; i<Objects->Length; i++)
+		{
+			bw->Write(Objects[i]->Ident->Type);
+			bw->Write(Objects[i]->Ident->Zeros);
+			bw->Write(Objects[i]->Ident->BitOptions);
+			bw->Write(Objects[i]->Name);
+			bw->Write(Objects[i]->Texture);
+
+			bw->Write(Objects[i]->Vertices->Length);
+			bw->Write(Objects[i]->Faces->Length);
+
+			if(Objects[i]->Ident->Type > 5)
+			{
+				bw->Write(Objects[i]->Unknown);
+			}
+
+			for(int v=0; v<Objects[i]->Vertices->Length; v++)
+			{
+				bw->Write(Objects[i]->Vertices[v]->X);
+				bw->Write(Objects[i]->Vertices[v]->Y);
+				bw->Write(Objects[i]->Vertices[v]->Z);
+				bw->Write(Objects[i]->Vertices[v]->unknown);
+				bw->Write(Objects[i]->Vertices[v]->U);
+				bw->Write(Objects[i]->Vertices[v]->V);
+			}
+
+			for(int f=0; f<Objects[i]->Faces->Length; f++)
+			{
+				bw->Write(Objects[i]->Faces[f]->Vertex_1);
+				bw->Write(Objects[i]->Faces[f]->Vertex_2);
+				bw->Write(Objects[i]->Faces[f]->Vertex_3);
+			}
+
+			for(int b1=0; b1<Objects[i]->Block_1s->Length; b1++)
+			{
+				bw->Write(Objects[i]->Block_1s[b1]->A);
+				bw->Write(Objects[i]->Block_1s[b1]->B);
+				bw->Write(Objects[i]->Block_1s[b1]->C);
+			}
+
+			for(int b2=0; b2<Objects[i]->Block_2s->Length; b2++)
+			{
+				bw->Write(Objects[i]->Block_2s[b2]->A);
+				bw->Write(Objects[i]->Block_2s[b2]->B);
+			}
+
+			for(int p=0; p<Objects[i]->Properties->Length; p++)
+			{
+				bw->Write(Objects[i]->Properties[p]);
+			}
+
+			if(Objects[i]->Ident->Type > 4)
+			{
+				// Save Material
+				bw->Write(Objects[i]->Materials->Signature);
+				bw->Write(Objects[i]->Materials->Count);
+				for(int m=0; m<Objects[i]->Materials->Values->Length; m++)
+				{
+					bw->Write(Objects[i]->Materials->Values[m]);
+				}
+				bw->Write(Objects[i]->Materials->Unknown);
+			}
+		}
+
+		bw->Write(Blocks->Length);
+
+		for(int i=0; i<Numbers->Length; i++)
+		{
+			bw->Write(Numbers[i]->Values->Length);
+			for(int n=0; n<Numbers[i]->Values->Length; n++)
+			{
+				bw->Write(Numbers[i]->Values[n]);
+			}
+		}
+
+		for(int i=0; i<Blocks->Length; i++)
+		{
+			for(int p=0; p<Blocks[i]->Properties->Length; p++)
+			{
+				bw->Write(Blocks[i]->Properties[p]);
+			}
+			bw->Write(Blocks[i]->Seperator);
+			bw->Write(Blocks[i]->SubBlocks->Length);
+			for(int b=0; b<Blocks[i]->SubBlocks->Length; b++)
+			{
+				bw->Write(Blocks[i]->SubBlocks[b]->A);
+				bw->Write(Blocks[i]->SubBlocks[b]->B);
+				bw->Write(Blocks[i]->SubBlocks[b]->C);
+				bw->Write(Blocks[i]->SubBlocks[b]->D);
+				bw->Write(Blocks[i]->SubBlocks[b]->E);
+			}
+		}
+
 		bw->Close();
 		fs->Close();
 	}
