@@ -1,0 +1,93 @@
+a
+{
+	font-size: 9pt;
+	font-family: Arial;
+	text-decoration: none;
+	color: #aaaaaa;
+}
+
+a:hover
+{
+	font-size: 9pt;
+	font-family: Arial;
+	text-decoration: underline;
+}
+
+body
+{
+	font-size: 9pt;
+	font-family: Arial;
+	color: #aaaaaa;
+}
+
+td
+{
+	font-size: 9pt;
+	font-family: Arial;
+	color: #aaaaaa;
+}
+
+th
+{
+	font-size: 9pt;
+	font-family: Arial;
+	font-weight: bold;
+	color: #ffffff;
+	background-image:url('bg_th.jpg');
+	background-repeat:repeat-x;
+}
+
+input, textarea, select
+{
+	font-size: 8pt;
+	font-family: Arial;
+	color: #aaaaaa;
+	border: 1px solid #cccccc;
+	background: #ffffff;
+}
+
+.item_color0
+{
+	color:#ffffff;
+}
+.item_color1
+{
+	color:#8080ff;
+	font-weight: bold;
+}
+.item_color2
+{
+	color:#ffdc50;
+}
+.item_color3
+{
+	color:#aa32ff;
+}
+.item_color4
+{
+	color:#ff6000;
+}
+.item_color5
+{
+	color:#ffffff;
+}
+.item_color6
+{
+	color:#b0b0b0;
+}
+.item_color7
+{
+	color:#00ffae;
+}
+.item_color8
+{
+	color:#6cfb4b;
+}
+.item_color9
+{
+	color:#ff0000;
+}
+.item_color10
+{
+	color:#80ffff
+}
