@@ -1,0 +1,54 @@
+#menu
+{
+	margin: 0px;
+	padding: 0px;
+}
+
+#menu li
+{
+	list-style: none;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+/*IE Hack */
+* html #menu li
+{
+	height: 1px;
+}
+
+#menu li a
+{
+	display: block;
+	text-decoration: none;
+}
+
+#menu li ul
+{
+	visibility: hidden;
+	position: absolute;
+	margin: 0px;
+	padding: 0px;
+}
+
+#menu li ul li, #menu li ul li 
+{
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	background-color: #f0f0f0;
+
+	/*Remove IE Hack */
+	height: auto;
+}
+
+#menu li ul li a
+{
+	display: block;
+	padding: 2px;
+}
+
+#menu li ul li a:hover
+{
+	background-color: #ffffff;
+}
