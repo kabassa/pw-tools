@@ -1,0 +1,30 @@
+#! /bin/sh
+
+JETTY="/PWServer/jetty-7.4.2";
+PHP="/usr/bin"
+
+case "$1" in
+  start)
+	start-stop-daemon --start --background --make-pidfile --pidfile /var/run/php-cgi.pid --exec $PHP/php-cgi -- -b6666
+	echo "php-cgi started";
+
+	cd $JETTY;
+	start-stop-daemon --start --background --chdir $JETTY --exec jetty
+	echo "jetty started";
+    ;;
+  stop)
+	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile /var/run/php-cgi.pid
+	rm -f /var/run/php-cgi.pid
+	echo "php-cgi stopped";
+
+	cd $JETTY;
+	java -DSTOP.PORT=8000 -DSTOP.KEY=jetty_pid -jar start.jar --stop
+	echo "jetty stopped"
+    ;;
+  *)
+    echo "Usage: ./jetty {start|stop}";
+    exit 1;
+    ;;
+esac
+
+exit 0
