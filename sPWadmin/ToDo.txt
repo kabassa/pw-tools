@@ -1,0 +1,5 @@
++ simplify (fix) account password change function (no db lock and transfer, just fix hexstring function!)
++ make update icon db plugin
++ make update item db plugin
++ increase item db file from 30001 to 50001
++ increase item array in pwadminconf.jsp from 30001 to 50001
