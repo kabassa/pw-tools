@@ -1,3 +1,0 @@
-#! /bin/sh
-
-java -DSTOP.PORT=8000 -DSTOP.KEY=jetty_pid -jar start.jar OPTIONS=Server,jsp &> logs/jetty.log
