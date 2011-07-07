@@ -89,7 +89,7 @@
 
 	if(request.getSession().getAttribute("items") == null)
 	{
-		String[] items = new String[30001];
+		String[] items = new String[60001];
 
 		try
 		{
@@ -103,7 +103,7 @@
 				bfr = new BufferedReader(new InputStreamReader(new FileInputStream(new File(request.getRealPath("/include/items") + "/pwi.dat")), "UTF8"));
 			}
 			int count = 0;
-			while((row = bfr.readLine()) != null && count < 30001)
+			while((row = bfr.readLine()) != null && count < 60001)
 			{
 				items[count] = row;
 				count++;
