@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="sELedit"
 	ProjectGUID="{17317586-58AA-44CA-A8FE-9471170520FA}"
 	RootNamespace="sTools"
@@ -237,6 +237,15 @@
 				<File
 					RelativePath=".\ConfigWindow.resx"
 					SubType="Designer"
+					>
+				</File>
+			</File>
+			<File
+				RelativePath=".\DebugWindow.h"
+				FileType="3"
+				>
+				<File
+					RelativePath=".\DebugWindow.resx"
 					>
 				</File>
 			</File>
