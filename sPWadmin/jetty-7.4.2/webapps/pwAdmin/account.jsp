@@ -105,7 +105,7 @@
 								else
 								{
 									password = pw_encode(login + password, MessageDigest.getInstance("MD5"));
-									rs = statement.executeQuery("call adduser('" + login + "', " + password + ", '0', '0', '0', '0', '', '0', '0', '0', '0', '0', '0', '0', '', '', " + password + ")");
+									rs = statement.executeQuery("CALL adduser('" + login + "', " + password + ", '0', '0', '0', '0', '', '0', '0', '0', '0', '0', '0', '0', '', '', " + password + ")");
 									message = "<font color=\"00cc00\">Account Created</font>";
 								}
 
@@ -178,7 +178,7 @@
 								else
 								{
 									password_old = pw_encode(login + password_old, MessageDigest.getInstance("MD5"));
-
+/*
 									// Some hard encoding problems requires a strange solution...
 									// changePasswd -> wrong encoding password destroyed...
 									// Only a temp entry in database gives us a correct encoded password for comparsion
@@ -210,6 +210,23 @@
 										// UNLOCK TABLES
 										statement.executeUpdate("UNLOCK TABLES");
 
+										message = "<font color=\"00cc00\">Password Changed</font>";
+									}
+*/
+									CallableStatement cs = connection.prepareCall("{call acquireuserpasswd(?,?,?)}");
+									cs.setString(1, login);
+									cs.registerOutParameter(3, Types.VARCHAR);
+									cs.execute();
+		
+									if(password_old.compareTo(cs.getString(3)) != 0)
+									{
+										message = "<font color=\"ee0000\">Old Password Mismatch</font>";
+									}
+									else
+									{
+										password_new = pw_encode(login + password_new, MessageDigest.getInstance("MD5"));
+										statement.executeQuery("CALL changePasswd('" + login + "', " + password_new + ")");
+										statement.executeQuery("CALL changePasswd2('" + login + "', " + password_new + ")");
 										message = "<font color=\"00cc00\">Password Changed</font>";
 									}
 								}
@@ -363,7 +380,7 @@
 								{
 									if(act.compareTo("add") == 0)
 									{
-										rs = statement.executeQuery("call addGM('" + ident + "', '1')");
+										rs = statement.executeQuery("CALL addGM('" + ident + "', '1')");
 										message = "<font color=\"00cc00\">GM Access Added For User</font>";
 									}
 									else
@@ -446,7 +463,7 @@
 								}
 								else
 								{
-									rs = statement.executeQuery("call usecash ( '" + ident + "' , 1, 0, 1, 0, '" + 100*amount + "', 1, @error)");
+									rs = statement.executeQuery("CALL usecash ( '" + ident + "' , 1, 0, 1, 0, '" + 100*amount + "', 1, @error)");
 									message = "<font color=\"00cc00\">" + amount + ".00 Cubi Gold Added</font><br><font color=\"ee0000\">Transaction May Take Up To 5 Minutes<br>Relog Required To Receive Cubi</font>";
 								}
 								

@@ -1343,6 +1343,7 @@
 									}
 								}
 */
+
 								Class.forName("com.mysql.jdbc.Driver").newInstance();
 								Connection connection = DriverManager.getConnection("jdbc:mysql://" + db_host + ":" + db_port + "/" + db_database, db_user, db_password);
 								Statement statement = connection.createStatement();
@@ -1355,18 +1356,26 @@
 									sort = " DESC";
 								}
 
-								rs = statement.executeQuery("SELECT * FROM roles ORDER BY " + request.getParameter("order") + sort);
-			
-								while(rs.next())
+								try
 								{
-								       int roleid = rs.getInt("role_id");
-									String rolename = StringEscapeUtils.escapeHtml(rs.getString("role_name"));
-									int rolelevel = rs.getInt("role_level");
-									String roleoccupation = int2occupation(item_labels, rs.getInt("role_occupation"));
-									out.println("<tr><td style=\"border-top: 1px solid #cccccc\"><a href=\"index.jsp?page=role&show=details&ident=" + roleid + "&type=id\">" + rolename + "</a></td><td style=\"border-top: 1px solid #cccccc\">" + roleoccupation + "</td><td align=\"center\" style=\"border-top: 1px solid #cccccc\">" + rolelevel + "</td></tr>");
+									rs = statement.executeQuery("SELECT * FROM roles ORDER BY " + request.getParameter("order") + sort);
+			
+									while(rs.next())
+									{
+										int roleid = rs.getInt("role_id");
+										String rolename = StringEscapeUtils.escapeHtml(rs.getString("role_name"));
+										int rolelevel = rs.getInt("role_level");
+										String roleoccupation = int2occupation(item_labels, rs.getInt("role_occupation"));
+										out.println("<tr><td style=\"border-top: 1px solid #cccccc\"><a href=\"index.jsp?page=role&show=details&ident=" + roleid + "&type=id\">" + rolename + "</a></td><td style=\"border-top: 1px solid #cccccc\">" + roleoccupation + "</td><td align=\"center\" style=\"border-top: 1px solid #cccccc\">" + rolelevel + "</td></tr>");
+									}
+
+									rs.close();
+								}
+								catch(Exception e)
+								{
+									// table roles not found
 								}
 
-								rs.close();
 								statement.close();
 								connection.close();
 							//}
