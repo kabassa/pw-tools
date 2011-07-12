@@ -113,7 +113,7 @@
      												}
   											}
 										}
-									%><li style="border-bottom: 1px solid #cccccc;"><a href="http://pwadmin.codeplex.com/Thread/List.aspx">Search Plugins...</a></li>
+									%><li style="border-bottom: 1px solid #cccccc;"><a href="http://pwtools.codeplex.com/discussions/264800">Search Plugins...</a></li>
 								</ul>
 							</li>
 						</ul>
