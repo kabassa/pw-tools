@@ -805,7 +805,9 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			{
 				expression = "NPC_Generator(";
 				expression += ((int)p->parameters[0]).ToString() + ", ";
-				expression += ((int)p->parameters[1]).ToString();
+				expression += Convert::ToBoolean(((unsigned char)p->parameters[1])).ToString() + ", ";
+				expression += ((unsigned short)p->parameters[2]).ToString() + ", ";
+				expression += ((unsigned char)p->parameters[3]).ToString();
 				expression += ")";
 			}
 // ---------- following procedure types are > 1.3.6 Server -----------------
@@ -908,7 +910,7 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			}
 			if(type == 14)
 			{
-				return gcnew array<Object^>{br->ReadInt32(), br->ReadInt32()}; // NPC Generator
+				return gcnew array<Object^>{br->ReadInt32(), br->ReadByte(), br->ReadUInt16(), br->ReadByte()}; // NPC Generator
 			}
 // ---------- following procedure types are > 1.3.6 Server -----------------
 			if(type == 15)
@@ -970,7 +972,9 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			if(type == 14)
 			{
 				bw->Write((int)Parameters[0]);
-				bw->Write((int)Parameters[1]);
+				bw->Write((unsigned char)Parameters[1]);
+				bw->Write((unsigned short)Parameters[2]);
+				bw->Write((unsigned char)Parameters[3]);
 			}
 // ---------- following procedure types are > 1.3.6 Server -----------------
 			if(type == 15)
@@ -1328,8 +1332,10 @@ public ref class MainWindow : public System::Windows::Forms::Form
 						// using i as unifier to prevent multiple npc_generator() with same id's in the same action set
 						int creature_builder_id = (GUID*1000000 + (int)p[i]->parameters[0]);
 						GUID++;
-						int start = 0; // 0: start, 1: stop
-						result[count]->parameters = gcnew array<Object^>{creature_builder_id, start};
+						unsigned char stop = 0; // 0: start, 1: stop
+						unsigned short unk1 = 0;
+						unsigned char unk2 = 0;
+						result[count]->parameters = gcnew array<Object^>{creature_builder_id, stop, unk1, unk2};
 						result[count]->target = 0;
 						result[count]->extra = 0;
 					}

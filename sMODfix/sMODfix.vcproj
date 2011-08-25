@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="sMODfix"
 	ProjectGUID="{3A1F8AD8-4CAC-47B6-998C-5A9DBE00ED5E}"
 	RootNamespace="sTools"
@@ -221,6 +221,15 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\DependencyViewer.h"
+				FileType="3"
+				>
+				<File
+					RelativePath=".\DependencyViewer.resx"
+					>
+				</File>
+			</File>
 			<File
 				RelativePath=".\LoadingScreen.h"
 				FileType="3"
