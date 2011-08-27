@@ -68,7 +68,10 @@ public ref class DependencyViewer : public System::Windows::Forms::Form
 			this->SuspendLayout();
 			// 
 			// splitContainer1
-			// 
+			//
+			this->splitContainer1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+				| System::Windows::Forms::AnchorStyles::Left) 
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->splitContainer1->Location = System::Drawing::Point(0, 0);
 			this->splitContainer1->Name = L"splitContainer1";
 			this->splitContainer1->Orientation = System::Windows::Forms::Orientation::Horizontal;
@@ -100,6 +103,8 @@ public ref class DependencyViewer : public System::Windows::Forms::Form
 			this->treeView_files->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
 				| System::Windows::Forms::AnchorStyles::Left) 
 				| System::Windows::Forms::AnchorStyles::Right));
+			this->treeView_files->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			static_cast<System::Byte>(0)));
 			this->treeView_files->Location = System::Drawing::Point(3, 16);
 			this->treeView_files->Name = L"treeView_files";
 			this->treeView_files->Size = System::Drawing::Size(786, 245);
@@ -128,8 +133,8 @@ public ref class DependencyViewer : public System::Windows::Forms::Form
 			// DependencyViewer
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(7, 13);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->AutoSize = true;
+			//this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			//this->AutoSize = true;
 			this->ClientSize = System::Drawing::Size(792, 573);
 			this->Controls->Add(this->splitContainer1);
 			this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
