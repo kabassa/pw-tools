@@ -837,6 +837,24 @@ public ref class MainWindow : public System::Windows::Forms::Form
 				expression += ((int)p->parameters[5]).ToString();
 				expression += ")";
 			}
+			if(p->type == 18)
+			{
+				expression = "Procedure_18(";
+				expression += ((int)p->parameters[0]).ToString() + ", ";
+				expression += ((int)p->parameters[1]).ToString() + ", ";
+				expression += ((int)p->parameters[2]).ToString() + ", ";
+				expression += ((int)p->parameters[3]).ToString();
+				expression += ")";
+			}
+			if(p->type == 19)
+			{
+				expression = "Procedure_19(";
+				expression += "\"" + (Encoding::GetEncoding("GBK"))->GetString((array<unsigned char>^)p->parameters[0])->Replace("\0", "") + "\", ";
+				expression += ((int)p->parameters[1]).ToString() + ", ";
+				expression += ((int)p->parameters[2]).ToString() + ", ";
+				expression += ((int)p->parameters[3]).ToString();
+				expression += ")";
+			}
 			expression += " EXT(" + procedure_ext(p->target);
 			if(p->target == 6)
 			{
@@ -925,6 +943,18 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			{
 				return gcnew array<Object^>{br->ReadInt32(), br->ReadInt32(), br->ReadInt32(), br->ReadInt32(), br->ReadInt32(), br->ReadInt32()};
 			}
+			if(type == 18)
+			{
+				return gcnew array<Object^>{br->ReadInt32(), br->ReadInt32(), br->ReadInt32(), br->ReadInt32()};
+			}
+			if(type == 19)
+			{
+				return gcnew array<Object^>{br->ReadBytes(128), br->ReadInt32(), br->ReadInt32(), br->ReadInt32()};
+			}
+			if(type > 19)
+			{
+				MessageBox::Show("Unsupported procedure detected: Type " + type);
+			}
 			return gcnew array<Object^>(0);
 		}
 		/*
@@ -996,6 +1026,20 @@ public ref class MainWindow : public System::Windows::Forms::Form
 				bw->Write((int)Parameters[3]);
 				bw->Write((int)Parameters[4]);
 				bw->Write((int)Parameters[5]);
+			}
+			if(type == 18)
+			{
+				bw->Write((int)Parameters[0]);
+				bw->Write((int)Parameters[1]);
+				bw->Write((int)Parameters[2]);
+				bw->Write((int)Parameters[3]);
+			}
+			if(type == 19)
+			{
+				bw->Write((array<unsigned char>^)Parameters[0]);
+				bw->Write((int)Parameters[1]);
+				bw->Write((int)Parameters[2]);
+				bw->Write((int)Parameters[3]);
 			}
 		}
 
@@ -1076,8 +1120,8 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			load->Filter = "AI Policy (*.data)|*.data|All Files (*.*)|*.*";
 			if(load->ShowDialog() == Windows::Forms::DialogResult::OK && File::Exists(load->FileName))
 			{
-				try
-				{
+				//try
+				//{
 					Cursor = Windows::Forms::Cursors::WaitCursor;
 
 					listBox_ActionController->Items->Clear();
@@ -1129,12 +1173,12 @@ public ref class MainWindow : public System::Windows::Forms::Form
 					fr->Close();;
 
 					Cursor = Windows::Forms::Cursors::Default;
-				}
-				catch(Exception^ e)
-				{
-					Cursor = Windows::Forms::Cursors::Default;
-					MessageBox::Show("IMPORT ERROR!\n\n" + e->Message);
-				}
+				//}
+				//catch(Exception^ e)
+				//{
+				//	Cursor = Windows::Forms::Cursors::Default;
+				//	MessageBox::Show("IMPORT ERROR!\n\n" + e->Message);
+				//}
 			}
 		}
 
@@ -1264,7 +1308,7 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			for(int i=0; i<p->Length; i++)
 			{
 				// count supported procedures
-				if(p[i]->type != 15 && p[i]->type != 16)
+				if(p[i]->type < 18 && p[i]->type != 15 && p[i]->type != 16)
 				{
 					count++;
 				}
@@ -1276,7 +1320,7 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			for(int i=0; i<p->Length; i++)
 			{
 				// only keep supported procedures 
-				if(p[i]->type != 15 && p[i]->type != 16)
+				if(p[i]->type < 18 && p[i]->type != 15 && p[i]->type != 16)
 				{
 					result[count] = gcnew Procedure();
 					result[count]->type = p[i]->type;
@@ -1520,7 +1564,9 @@ public ref class MainWindow : public System::Windows::Forms::Form
 							"NPC_Generator",
 							"Initialize_Public_Counter",
 							"Increment_Public_Counter",
-							"Player_Aimed_NPC_Spawn"
+							"Player_Aimed_NPC_Spawn",
+							"Procedure_18",
+							"Procedure_19"
 						}
 					);
 					comboBox_subCat->SelectedIndex = 0;
