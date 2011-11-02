@@ -15,6 +15,7 @@ public ref struct Item
 	bool unknown;
 	int amount;
 	float probability;
+	int expiration;
 };
 
 public ref struct ItemGroup
@@ -33,6 +34,7 @@ public ref struct Chase
 	unsigned char unknown_1;
 	float probability;
 	unsigned char unknown_2;
+	array<unsigned char>^ unknown_3;
 };
 
 public ref struct Date
@@ -59,9 +61,8 @@ public ref struct Location
 	float z;
 };
 
-public ref struct LocationSpan
+public ref struct Span
 {
-	int map_id;
 	float east;
 	float bottom;
 	float south;
@@ -69,6 +70,14 @@ public ref struct LocationSpan
 	float top;
 	float north;
 };
+
+public ref struct LocationSpan
+{
+	int map_id;
+	int count;
+	array<Span^>^ spans;
+};
+
 public ref struct TeamMembers
 {
 	int level_min;
@@ -81,6 +90,66 @@ public ref struct TeamMembers
 	int quest;
 };
 
+public ref struct PQ_Chase
+{
+	int id_monster;
+	int amount_monster;
+	float probability;
+	int amount_unknown;
+};
+
+public ref struct PQ_Item
+{
+	int ranking_from;
+	int ranking_to;
+	bool unknown_3;
+	int id;
+	int amount;
+	float probability;
+};
+
+public ref struct PQ_Special
+{
+	int id_pq;
+	int unknown_2;
+	unsigned char unknown_3;
+};
+
+public ref struct PQ_Reward
+{
+	int chase_count; // public reward chases count
+	array<unsigned char>^ unknown_1; // 19 Byte
+	int unknown_quest; // New Quest ???
+	array<unsigned char>^ unknown_2; // 4 Byte
+	int unknown_level; // Level ???
+	int contribution_random_min; // random contribution min
+	int contribution_random_max; // random contribution max
+	int contribution_required; // required reward contribution
+	array<unsigned char>^ unknown_3; // 8 Byte
+	int item_count; // public reward items count
+	array<unsigned char>^ unknown_4; // 4 Byte
+	int special_count; // public reward specials count
+	array<unsigned char>^ unknown_5; // 29 Byte
+	int script_count; // public reward scripts count
+	array<unsigned char>^ unknown_6; // 8 Byte
+	int message_count; // public reward messages count
+	array<unsigned char>^ unknown_7; // 4 Byte
+
+	bool chase_unknown_1;
+	int chase_unknown_2;
+	bool chase_unknown_3;
+	array<PQ_Chase^>^ chases;
+
+	bool item_unknown_1;
+	array<PQ_Item^>^ items;
+
+	array<PQ_Special^>^ specials;
+
+	array<array<unsigned char>^>^ scripts; // 576 byte / script
+
+	array<array<unsigned char>^>^ messages; // 128 byte / message
+};
+
 public ref struct Reward
 {
 	int coins;
@@ -91,16 +160,93 @@ public ref struct Reward
 	int cultivation;
 	int UNKNOWN_1; // 4 Byte
 	int storage_slots;
+	int cupboard_slots;
+	int wardrobe_slots;
+	int account_stash_slots;
 	int inventory_slots;
 	int petbag_slots;
 	int vigor;
 	Location^ teleport;
 	int aiTrigger;
-	array<unsigned char>^ UNKNOWN_2; // 8 Byte
+	array<unsigned char>^ UNKNOWN_2a; // 3 Byte
+	array<unsigned char>^ UNKNOWN_2b; // 5 Byte
 	int item_groups_count;
 	array<unsigned char>^ SEPERATOR; // 4 Byte
+	PQ_Reward^ pq;
 	array<ItemGroup^>^ item_groups;
 };
+
+public ref struct PQ_AuditScriptInfo
+{
+	int id;
+	int unknown_1;
+	array<unsigned char>^ unknown_2; // 1 Byte
+};
+
+public ref struct PQ_AuditScript
+{
+	array<unsigned char>^ name; // 64 Byte
+	int count;
+	float id;
+	array<unsigned char>^ seperator; // 4 Byte
+	float reference_id;
+	array<unsigned char>^ code; // 496 Byte
+};
+
+public ref struct PQ_AuditChase
+{
+	int id_monster;
+	int amount_1;
+	int amount_2;
+	int amount_3;
+};
+
+public ref struct PQ_AuditExitArea
+{
+	array<unsigned char>^ unknown_1; // 4 Byte
+	LocationSpan^ location;
+	/*
+	int id_map;
+	int location_count;
+	array<Span^>^ locations;
+	*/
+	int unknown_2;
+	array<unsigned char>^ unknown_3; // 4 Byte
+	int id_script;
+	int unknown_4;
+	int unknown_5;
+	int unknown_6;
+	array<unsigned char>^ unknown_7; // 20 Byte
+	int script_count;
+	array<PQ_AuditScript^>^ scripts;
+	array<unsigned char>^ unknown_8; // 4 Byte
+	array<unsigned char>^ unknown_9; // 4 Byte
+	int message_count;
+	array<array<unsigned char>^>^ messages; // 128 byte / message
+	array<unsigned char>^ unknown_10; // 4 Byte
+};
+
+public ref struct PQ_Audit
+{
+	int script_info_count; // Unknown Count
+	array<PQ_AuditScriptInfo^>^ script_infos;
+	array<unsigned char>^ unknown_1; // 12 Byte
+	int unknown_2;
+	array<unsigned char>^ unknown_3; // 15 Byte
+	int script_count; // Scripts Count
+	array<PQ_AuditScript^>^ scripts;
+	array<unsigned char>^ unknown_4; // 8 Byte
+	array<unsigned char>^ unknown_5; // 1 Byte
+	array<unsigned char>^ unknown_6; // 1 Byte
+	int chase_count;
+	array<PQ_AuditChase^>^ chases;
+	array<unsigned char>^ unknown_7; // 4 Byte
+	array<unsigned char>^ unknown_8; // 5 Byte
+	array<unsigned char>^ unknown_9; // 5 Byte
+	array<unsigned char>^ unknown_10; // 5 Byte
+	PQ_AuditExitArea^ leave_area;
+};
+
 public ref struct Answer
 {
 	int crypt_key;
@@ -238,28 +384,41 @@ public ref class Task
 	public: array<unsigned char>^ UNKNOWN_001a; // 4 Byte
 	public: int type;
 	public: int time_limit;
+	public: array<unsigned char>^ UNKNOWN_001b; // 2 Byte
+	public: Date^ date_fail;
+	public: array<unsigned char>^ UNKNOWN_001c; // 1 Byte
 	public: array<unsigned char>^ UNKNOWN_002; // 1 Byte
 	public: int date_spans_count;
 	public: array<unsigned char>^ UNKNOWN_EVENT; // 4 Bytes
 	public: array<unsigned char>^ UNKNOWN_ZEROS; // 8 Bytes -> All Zeros
+	public: array<unsigned char>^ UNKNOWN_ZEROS_a; // 12 Bytes -> All Zeros
+
 	public: array<unsigned char>^ date_unknown; // 8 Bytes
 	public: array<unsigned char>^ UNKNOWN_FLAGS_1; // 6 Bytes
+	public: array<unsigned char>^ UNKNOWN_FLAGS_1a; // 4 Bytes
 	public: array<unsigned char>^ UNKNOWN_FLAGS_2; // 3 Bytes
 	public: bool can_give_up;
 	public: bool repeatable;
 	public: bool repeatable_after_failure;
 	public: array<unsigned char>^ UNKNOWN_004; // 8 Byte
-	public: LocationSpan^ quest_trigger_location;
+	public: LocationSpan^ quest_trigger_locations;
+	public: array<unsigned char>^ UNKNOWN_004a; // 5 Byte
+	public: LocationSpan^ quest_unknown_locations_1;
+	public: array<unsigned char>^ UNKNOWN_004b; // 5 Byte
+	public: LocationSpan^ quest_valid_locations;
+	public: array<unsigned char>^ UNKNOWN_004c; // 4 Byte
 	public: array<unsigned char>^ UNKNOWN_005a_1; // 1 Byte
 	public: Location^ instant_teleport_location;
 	public: int ai_trigger;
 	public: array<unsigned char>^ UNKNOWN_005a_3; // 3 Byte
+	public: array<unsigned char>^ UNKNOWN_005a_4; // 3 Byte
 	public: array<unsigned char>^ UNKNOWN_005b; // 1 Byte
 	public: int UNKNOWN_LEVEL;
 	public: array<unsigned char>^ UNKNOWN_005c; // 2 Byte
 	public: int quest_npc;
 	public: int reward_npc;
 	public: array<unsigned char>^ UNKNOWN_006; // 4 Byte
+	public: PQ_Audit^ pq;
 	public: int level_min;
 	public: int level_max;
 	public: array<unsigned char>^ UNKNOWN_007; // 1 Byte
@@ -275,14 +434,18 @@ public ref class Task
 	public: array<unsigned char>^ UNKNOWN_010; // 5 Byte
 	public: int required_quests_done_count;
 	public: array<int>^ required_quests_done;
-
+	public: array<unsigned char>^ UNKNOWN_011_1; // 60 Byte
 	public: array<unsigned char>^ UNKNOWN_011_1a; // 1 Byte
+	public: int UNKNOWN_011_1ab;
 	public: array<unsigned char>^ UNKNOWN_011_1b; // 10 Byte
 	public: int required_gender;
 	public: array<unsigned char>^ UNKNOWN_011_2; // 1 Byte
 	public: int required_occupations_count;
 	public: array<int>^ required_occupations;
 	public: array<unsigned char>^ UNKNOWN_011_a2; // 5 Byte
+	public: array<unsigned char>^ UNKNOWN_011_a3; // 19 Byte
+	public: Date^ unknown_date;
+	public: array<unsigned char>^ UNKNOWN_011_a4; // 5 Byte
 	public: array<unsigned char>^ UNKNOWN_011_b; // 7 Byte -> All Zeros
 	public: int required_quests_undone_count;
 	public: array<int>^ required_quests_undone;
@@ -293,9 +456,18 @@ public ref class Task
 	public: int required_craftsman_level;
 	public: int required_apothecary_level;
 	public: array<unsigned char>^ TEAM_MEMBER_REQUIREMENT; // 32 Byte
+	public: array<unsigned char>^ UNKNOWN_012; // 3 Byte
 	public: int required_team_member_groups_count;
 	public: array<unsigned char>^ required_team_member_groups_unknown; // 4 Byte
 	public: array<unsigned char>^ UNKNOWN_012_a; // 1 Byte
+
+	public: array<unsigned char>^ UNKNOWN_012_a1; // 9 Byte
+	public: int resource_pq_audit_id;
+	public: int UNKNOWN_012_a2;
+	public: int UNKNOWN_012_a3;
+	public: int required_pq_contribution;
+	public: array<unsigned char>^ UNKNOWN_012_a4; // 20 Byte
+
 	public: array<unsigned char>^ UNKNOWN_012_b; // 8 Byte
 	public: int required_chases_count;
 	public: array<unsigned char>^ required_chases_unknown; // 4 Byte
@@ -303,7 +475,8 @@ public ref class Task
 	public: array<unsigned char>^ required_get_items_unknown; // 4 Byte
 	public: int required_coins;
 	public: array<unsigned char>^ UNKNOWN_015; // 16 Byte
-	public: LocationSpan^ required_reach_location;
+	public: array<unsigned char>^ UNKNOWN_015a; // 12 Byte
+	public: LocationSpan^ required_reach_locations;
 	public: int required_wait_time;
 	public: array<unsigned char>^ UNKNOWN_016_b; // 8 Byte
 	public: array<unsigned char>^ UNKNOWN_016_c; // 24 Byte
@@ -311,6 +484,8 @@ public ref class Task
 	public: int previous_quest;
 	public: int next_quest;
 	public: int sub_quest_first;
+	public: bool UNKNOWN_016_d;
+	public: array<unsigned char>^ UNKNOWN_016_e;
 	public: array<unsigned char>^ author_text;
 	// 60 Byte Unicode
 	public: property String^ AuthorText
