@@ -35,7 +35,11 @@ Item^ ReadItem(int version, BinaryReader^ br)
 
 	if(version >= 89)
 	{
-		br->ReadBytes(4);
+		item->expiration = br->ReadInt32();
+	}
+	else
+	{
+		item->expiration = 0;
 	}
 
 	return item;
@@ -71,6 +75,7 @@ TeamMembers^ ReadTeamMembers(int version, BinaryReader^ br)
 
 	return team_member_group;
 }
+
 Chase^ ReadChase(int version, BinaryReader^ br)
 {
 	Chase^ chase = gcnew Chase();
@@ -85,7 +90,11 @@ Chase^ ReadChase(int version, BinaryReader^ br)
 
 	if(version >= 92)
 	{
-		br->ReadBytes(8);
+		chase->unknown_3 = br->ReadBytes(8);
+	}
+	else
+	{
+		chase->unknown_3 = gcnew array<unsigned char>(8);
 	}
 
 	return chase;
@@ -102,35 +111,23 @@ Location^ ReadLocation(int version, BinaryReader^ br)
 
 	return location;
 }
-LocationSpan^ ReadLocationSpan(int version, BinaryReader^ br, bool reverse)
-{
-	LocationSpan^ location_span = gcnew LocationSpan();
 
-	if(!reverse)
-	{
-		location_span->map_id = br->ReadInt32();
-	}
+Span^ ReadSpan(int version, BinaryReader^ br)
+{
+	Span^ location_span = gcnew Span();
+
 	location_span->east = br->ReadSingle();
 	location_span->bottom = br->ReadSingle();
 	location_span->south = br->ReadSingle();
 	location_span->west = br->ReadSingle();
 	location_span->top = br->ReadSingle();
 	location_span->north = br->ReadSingle();
-	if(reverse)
-	{
-		location_span->map_id = br->ReadInt32();
-	}
 
 	return location_span;
 }
+
 Reward^ ReadReward(int version, BinaryReader^ br)
 {
-	int v79_Count_1 = 0;
-	int v79_Count_2 = 0;
-	int v79_Count_3 = 0;
-	int v79_Count_4 = 0;
-	int v79_Count_5 = 0;
-
 	Reward^ reward = gcnew Reward();
 
 	reward->coins = br->ReadInt32();
@@ -144,9 +141,9 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 
 	if(version >= 89)
 	{
-		br->ReadInt32(); // Cupboard Slots
-		br->ReadInt32(); // Wardrobe Slots
-		br->ReadInt32(); // Account Stash Slots
+		reward->cupboard_slots = br->ReadInt32();
+		reward->wardrobe_slots = br->ReadInt32();
+		reward->account_stash_slots = br->ReadInt32();
 	}
 
 	reward->inventory_slots = br->ReadInt32();
@@ -154,42 +151,75 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 	reward->vigor = br->ReadInt32();
 	reward->teleport = ReadLocation(version, br);
 	reward->aiTrigger = br->ReadInt32();
+	reward->UNKNOWN_2a = br->ReadBytes(3);
 
-	if(version <= 55)
+	if(version > 55)
 	{
-		reward->UNKNOWN_2 = gcnew array<unsigned char>(8);
-		reward->UNKNOWN_2[0] = br->ReadByte();
-		reward->UNKNOWN_2[1] = br->ReadByte();
-		reward->UNKNOWN_2[2] = br->ReadByte();
+		reward->UNKNOWN_2b = br->ReadBytes(5);
 	}
 	else
 	{
-		reward->UNKNOWN_2 = br->ReadBytes(8);
+		reward->UNKNOWN_2b = gcnew array<unsigned char>(5);
 	}
 
 	reward->item_groups_count = br->ReadInt32();
 	reward->SEPERATOR = br->ReadBytes(4);
 
-	// Public Quest Rewards
+	reward->pq = gcnew PQ_Reward();
 	if(version >= 89)
 	{
-		v79_Count_1 = br->ReadInt32(); // public reward chases count
-		br->ReadBytes(19);
-		br->ReadInt32(); // New Quest ???
-		br->ReadBytes(4);
-		br->ReadInt32(); // Level ???
-		br->ReadInt32(); // random contribution min
-		br->ReadInt32(); // random contribution max
-		br->ReadInt32(); // required reward contribution
-		br->ReadBytes(8);
-		v79_Count_2 = br->ReadInt32(); // public reward items count
-		br->ReadBytes(4);
-		v79_Count_3 = br->ReadInt32(); // public reward specials count
-		br->ReadBytes(29);
-		v79_Count_4 = br->ReadInt32(); // public reward scripts count
-		br->ReadBytes(8);
-		v79_Count_5 = br->ReadInt32(); // public reward messages count
-		br->ReadBytes(4);
+		reward->pq->chase_count = br->ReadInt32();
+		reward->pq->unknown_1 = br->ReadBytes(19);
+		reward->pq->unknown_quest = br->ReadInt32();
+		reward->pq->unknown_2 = br->ReadBytes(4);
+		reward->pq->unknown_level = br->ReadInt32();
+		reward->pq->contribution_random_min = br->ReadInt32();
+		reward->pq->contribution_random_max = br->ReadInt32();
+		reward->pq->contribution_required = br->ReadInt32();
+		reward->pq->unknown_3 = br->ReadBytes(8);
+		reward->pq->item_count = br->ReadInt32();
+		reward->pq->unknown_4 = br->ReadBytes(4);
+		reward->pq->special_count = br->ReadInt32();
+		reward->pq->unknown_5 = br->ReadBytes(29);
+		reward->pq->script_count = br->ReadInt32();
+		reward->pq->unknown_6 = br->ReadBytes(8);
+		reward->pq->message_count = br->ReadInt32();
+		reward->pq->unknown_7 = br->ReadBytes(4);
+	}
+	else
+	{
+		reward->pq->chase_count = 0;
+		reward->pq->unknown_1 = gcnew array<unsigned char>(19);
+		reward->pq->unknown_quest = 0;
+		reward->pq->unknown_2 = gcnew array<unsigned char>(4);
+		reward->pq->unknown_level = 0;
+		reward->pq->contribution_random_min = 0;
+		reward->pq->contribution_random_max = 0;
+		reward->pq->contribution_required = 0;
+		reward->pq->unknown_3 = gcnew array<unsigned char>(8);
+		reward->pq->item_count = 0;
+		reward->pq->unknown_4 = gcnew array<unsigned char>(4);
+		reward->pq->special_count = 0;
+		reward->pq->unknown_5 = gcnew array<unsigned char>(29);
+		reward->pq->script_count = 0;
+		reward->pq->unknown_6 = gcnew array<unsigned char>(8);
+		reward->pq->message_count = 0;
+		reward->pq->unknown_7 = gcnew array<unsigned char>(4);
+	}
+	// initialize values to prevent NULL exception
+	{
+		reward->pq->chase_unknown_1 = false;
+		reward->pq->chase_unknown_2 = 0;
+		reward->pq->chase_unknown_3 = false;
+		reward->pq->chases = gcnew array<PQ_Chase^>(0);
+
+		reward->pq->item_unknown_1 = false;
+		reward->pq->items = gcnew array<PQ_Item^>(0);
+
+		reward->pq->specials = gcnew array<PQ_Special^>(0);
+
+		reward->pq->scripts = gcnew array<array<unsigned char>^>(0);
+		reward->pq->messages = gcnew array<array<unsigned char>^>(0);
 	}
 
 	reward->item_groups = gcnew array<ItemGroup^>(reward->item_groups_count);
@@ -201,57 +231,65 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 
 	if(version >= 89)
 	{
-		if(v79_Count_1>0)
+		if(reward->pq->chase_count>0)
 		{
-			br->ReadBytes(1);
-			br->ReadInt32();
-			br->ReadBytes(1);
-			for(int i=0; i<v79_Count_1; i++)
+			reward->pq->chase_unknown_1 = br->ReadBoolean();
+			reward->pq->chase_unknown_2 = br->ReadInt32();
+			reward->pq->chase_unknown_3 = br->ReadBoolean();
+			reward->pq->chases = gcnew array<PQ_Chase^>(reward->pq->chase_count);
+			for(int i=0; i<reward->pq->chase_count; i++)
 			{
-				br->ReadInt32(); // Mob ID ???
-				br->ReadInt32(); // Amount_1
-				br->ReadSingle(); // Probability
-				br->ReadInt32(); // Amount_2
+				reward->pq->chases[i] = gcnew PQ_Chase();
+				reward->pq->chases[i]->id_monster = br->ReadInt32();
+				reward->pq->chases[i]->amount_monster = br->ReadInt32();
+				reward->pq->chases[i]->probability = br->ReadSingle();
+				reward->pq->chases[i]->amount_unknown = br->ReadInt32();
 			}
 		}
 
-		if(v79_Count_2>0)
+		if(reward->pq->item_count>0)
 		{
-			br->ReadBytes(1);
-			for(int i=0; i<v79_Count_2; i++)
+			reward->pq->item_unknown_1 = br->ReadBoolean();
+			reward->pq->items = gcnew array<PQ_Item^>(reward->pq->item_count);
+			for(int i=0; i<reward->pq->item_count; i++)
 			{
-				br->ReadInt32();
-				br->ReadInt32();
-				br->ReadBytes(1);
-				br->ReadInt32(); // Item ID
-				br->ReadInt32();
-				br->ReadBytes(4);
+				reward->pq->items[i] = gcnew PQ_Item;
+				reward->pq->items[i]->ranking_from = br->ReadInt32();
+				reward->pq->items[i]->ranking_to = br->ReadInt32();
+				reward->pq->items[i]->unknown_3 = br->ReadBoolean();
+				reward->pq->items[i]->id = br->ReadInt32();
+				reward->pq->items[i]->amount = br->ReadInt32();
+				reward->pq->items[i]->probability =  br->ReadSingle();
 			}
 		}
 
-		if(v79_Count_3>0)
+		if(reward->pq->special_count>0)
 		{
-			for(int i=0; i<v79_Count_3; i++)
+			reward->pq->specials = gcnew array<PQ_Special^>(reward->pq->special_count);
+			for(int i=0; i<reward->pq->special_count; i++)
 			{
-				br->ReadInt32();
-				br->ReadInt32();
-				br->ReadBytes(1);
+				reward->pq->specials[i] = gcnew PQ_Special();
+				reward->pq->specials[i]->id_pq = br->ReadInt32();
+				reward->pq->specials[i]->unknown_2 = br->ReadInt32();
+				reward->pq->specials[i]->unknown_3 = br->ReadByte();
 			}
 		}
 
-		if(v79_Count_4>0)
+		if(reward->pq->script_count>0)
 		{
-			for(int i=0; i<v79_Count_4; i++)
+			reward->pq->scripts = gcnew array<array<unsigned char>^>(reward->pq->script_count);
+			for(int i=0; i<reward->pq->script_count; i++)
 			{
-				br->ReadBytes(576);
+				reward->pq->scripts[i] = br->ReadBytes(576);
 			}
 		}
 
-		if(v79_Count_5>0)
+		if(reward->pq->message_count>0)
 		{
-			for(int i=0; i<v79_Count_5; i++)
+			reward->pq->messages = gcnew array<array<unsigned char>^>(reward->pq->message_count);
+			for(int i=0; i<reward->pq->message_count; i++)
 			{
-				br->ReadBytes(128);
+				reward->pq->messages[i] = br->ReadBytes(128);
 			}
 		}
 	}
@@ -262,17 +300,6 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeCollection^ nodes)
 {
 	br->BaseStream->Position = stream_position;
-
-	int v89_Trigger_Location_Count;
-	int v89_Required_Reach_Location_Count;
-	int v89_Unknown_Location_1_Count;
-	int v89_Unknown_Location_2_Count;
-	int v89_Unknown_Location_3_Count;
-	int v79_Public_Count_1; // Unknown Count
-	int v79_Public_Count_2; // Scripts Count
-	int v79_Public_Count_3; // Sub Scripts Count
-	int v79_Public_Count_4; // Kills Count
-	int v79_Public_Count_5; // Messages Count
 
 // ################# GENERAL #############################
 
@@ -285,9 +312,21 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		br->ReadBytes(2);
-		ReadDate(version, br);
-		br->ReadBytes(1);	
+		UNKNOWN_001b = br->ReadBytes(2);
+		date_fail = ReadDate(version, br);
+		UNKNOWN_001c = br->ReadBytes(1);	
+	}
+	else
+	{
+		UNKNOWN_001b = gcnew array<unsigned char>(2);
+		date_fail = gcnew Date();
+		date_fail->year = 0;
+		date_fail->month = 0;
+		date_fail->day = 0;
+		date_fail->hour = 0;
+		date_fail->minute = 0;
+		date_fail->weekday = 0;
+		UNKNOWN_001c = gcnew array<unsigned char>(1);
 	}
 
 	UNKNOWN_002 = br->ReadBytes(1);
@@ -297,7 +336,11 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		br->ReadBytes(12);
+		UNKNOWN_ZEROS_a = br->ReadBytes(12);
+	}
+	else
+	{
+		UNKNOWN_ZEROS_a = gcnew array<unsigned char>(12);
 	}
 
 	date_unknown = br->ReadBytes(8);
@@ -305,7 +348,11 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		br->ReadBytes(4);
+		UNKNOWN_FLAGS_1a = br->ReadBytes(4);
+	}
+	else
+	{
+		UNKNOWN_FLAGS_1a = gcnew array<unsigned char>(4);
 	}
 
 	UNKNOWN_FLAGS_2 = br->ReadBytes(5);
@@ -314,26 +361,45 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	repeatable_after_failure = br->ReadBoolean();
 	UNKNOWN_004 = br->ReadBytes(8);
 
+	quest_trigger_locations = gcnew LocationSpan();
+	quest_trigger_locations->map_id = br->ReadInt32();
 	if(version >= 89)
 	{
-		quest_trigger_location = gcnew LocationSpan();
-		quest_trigger_location->map_id = br->ReadInt32();
-		v89_Trigger_Location_Count = br->ReadInt32();
+		quest_trigger_locations->count = br->ReadInt32();
+		quest_trigger_locations->spans = gcnew array<Span^>(quest_trigger_locations->count);
 	}
 	else
 	{
-		quest_trigger_location = ReadLocationSpan(version, br, false);
+		quest_trigger_locations->count = 1;
+		quest_trigger_locations->spans = gcnew array<Span^>(quest_trigger_locations->count);
+		quest_trigger_locations->spans[0] = ReadSpan(version, br);
 	}
 
+	quest_unknown_locations_1 = gcnew LocationSpan();
+	quest_valid_locations = gcnew LocationSpan();
 	if(version >= 89)
 	{
-		br->ReadBytes(5);
-		br->ReadInt32(); // unknown map id
-		v89_Unknown_Location_1_Count = br->ReadInt32();
-		br->ReadBytes(5);
-		br->ReadInt32(); // unknown map id
-		v89_Unknown_Location_2_Count = br->ReadInt32();
-		br->ReadBytes(4);
+		UNKNOWN_004a = br->ReadBytes(5);
+		quest_unknown_locations_1->map_id = br->ReadInt32();
+		quest_unknown_locations_1->count = br->ReadInt32();
+		quest_unknown_locations_1->spans = gcnew array<Span^>(quest_unknown_locations_1->count);
+		UNKNOWN_004b = br->ReadBytes(5);
+		quest_valid_locations->map_id = br->ReadInt32();
+		quest_valid_locations->count = br->ReadInt32();
+		quest_valid_locations->spans = gcnew array<Span^>(quest_valid_locations->count);
+		UNKNOWN_004c = br->ReadBytes(4);
+	}
+	else
+	{
+		UNKNOWN_004a = gcnew array<unsigned char>(5);
+		quest_unknown_locations_1->map_id = 0;
+		quest_unknown_locations_1->count = 0;
+		quest_unknown_locations_1->spans = gcnew array<Span^>(0);
+		UNKNOWN_004b = gcnew array<unsigned char>(5);
+		quest_valid_locations->map_id = 0;
+		quest_valid_locations->count = 0;
+		quest_valid_locations->spans = gcnew array<Span^>(0);
+		UNKNOWN_004c = gcnew array<unsigned char>(4);
 	}
 
 	UNKNOWN_005a_1 = br->ReadBytes(1);
@@ -343,7 +409,11 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		br->ReadBytes(2);
+		UNKNOWN_005a_4 = br->ReadBytes(2);
+	}
+	else
+	{
+		UNKNOWN_005a_4 = gcnew array<unsigned char>(2);
 	}
 
 	UNKNOWN_005b = br->ReadBytes(1);
@@ -353,28 +423,52 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	reward_npc = br->ReadInt32();
 	UNKNOWN_006 = br->ReadBytes(4);
 
+	pq = gcnew PQ_Audit();
 	if(version >= 89)
 	{
-		v79_Public_Count_1 = br->ReadInt32();
-		br->ReadBytes(12);
-		br->ReadInt32();
-		br->ReadBytes(15);
-		v79_Public_Count_2 = br->ReadInt32();
-		br->ReadBytes(8);
-		br->ReadBytes(1);
-		br->ReadBytes(1);
-		v79_Public_Count_4 = br->ReadInt32();
-		br->ReadBytes(4);
-		br->ReadBytes(5);
+		pq->script_info_count = br->ReadInt32();
+		pq->unknown_1 = br->ReadBytes(12);
+		pq->unknown_2 = br->ReadInt32();
+		pq->unknown_3 = br->ReadBytes(15);
+		pq->script_count = br->ReadInt32();
+		pq->unknown_4 = br->ReadBytes(8);
+		pq->unknown_5 = br->ReadBytes(1);
+		pq->unknown_6 = br->ReadBytes(1);
+		pq->chase_count = br->ReadInt32();
+		pq->unknown_7 = br->ReadBytes(4);
+		pq->unknown_8 = br->ReadBytes(5);
 
 		// correct position not confirmed
 		if(version >= 92)
 		{
-			br->ReadBytes(5);
+			pq->unknown_9 = br->ReadBytes(5);
+		}
+		else
+		{
+			pq->unknown_9 = gcnew array<unsigned char>(5);
 		}
 
-		br->ReadBytes(5);
+		pq->unknown_10 = br->ReadBytes(5);
 	}
+	else
+	{
+		pq->script_info_count = 0;
+		pq->unknown_1 = gcnew array<unsigned char>(12);
+		pq->unknown_2 = 0;
+		pq->unknown_3 = gcnew array<unsigned char>(15);
+		pq->script_count = 0;
+		pq->unknown_4 = gcnew array<unsigned char>(8);
+		pq->unknown_5 = gcnew array<unsigned char>(1);
+		pq->unknown_6 = gcnew array<unsigned char>(1);
+		pq->chase_count = 0;
+		pq->unknown_7 = gcnew array<unsigned char>(4);
+		pq->unknown_8 = gcnew array<unsigned char>(5);
+		pq->unknown_9 = gcnew array<unsigned char>(5);
+		pq->unknown_10 = gcnew array<unsigned char>(5);
+	}
+	pq->script_infos = gcnew array<PQ_AuditScriptInfo^>(pq->script_info_count);
+	pq->scripts = gcnew array<PQ_AuditScript^>(pq->script_count);
+	pq->chases = gcnew array<PQ_AuditChase^>(pq->chase_count);
 
 	level_min = br->ReadInt32();
 	level_max = br->ReadInt32();
@@ -395,44 +489,64 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	{
 		required_quests_done[i] = br->ReadInt32();
 	}
+
 	if(version >= 90)
 	{
-		br->ReadBytes(60);
+		UNKNOWN_011_1 = br->ReadBytes(60);
 	}
+	else
+	{
+		UNKNOWN_011_1 = gcnew array<unsigned char>(60);
+	}
+
 	UNKNOWN_011_1a = br->ReadBytes(1);
+
 	if(version >= 90)
 	{
-		br->ReadBytes(4);
+		UNKNOWN_011_1ab = br->ReadInt32();
 	}
+	else
+	{
+		UNKNOWN_011_1ab = 0;
+	}
+
 	UNKNOWN_011_1b = br->ReadBytes(10);
 	required_gender = br->ReadInt32();
 	UNKNOWN_011_2 = br->ReadBytes(1);
-	required_occupations_count = br->ReadInt32();
-	required_occupations = gcnew array<int>(8);
-	for(int i=0; i<required_occupations->Length; i++)
-	{
-		required_occupations[i] = br->ReadInt32();
-	}
 
 	if(version >= 89)
 	{
-		if(br->ReadInt32() > 0) // occupation 9
-		{
-			required_occupations_count--;
-		}
-		if(br->ReadInt32() > 0) // occupation 10
-		{
-			required_occupations_count--;
-		}
+		required_occupations = gcnew array<int>(10);
+	}
+	else
+	{
+		required_occupations = gcnew array<int>(8);
+	}
+	required_occupations_count = br->ReadInt32();
+	for(int i=0; i<required_occupations->Length; i++)
+	{
+		required_occupations[i] = br->ReadInt32();
 	}
 
 	UNKNOWN_011_a2 = br->ReadBytes(5);
 
 	if(version >= 89)
 	{
-		br->ReadBytes(19);
-		ReadDate(version, br);
-		br->ReadBytes(5);	
+		UNKNOWN_011_a3 = br->ReadBytes(19);
+		unknown_date = ReadDate(version, br);
+		UNKNOWN_011_a4 = br->ReadBytes(5);	
+	}
+	else
+	{
+		UNKNOWN_011_a3 = gcnew array<unsigned char>(19);
+		unknown_date = gcnew Date();
+		unknown_date->year = 0;
+		unknown_date->month = 0;
+		unknown_date->day = 0;
+		unknown_date->weekday = 0;
+		unknown_date->hour = 0;
+		unknown_date->minute = 0;
+		UNKNOWN_011_a4 = gcnew array<unsigned char>(5);
 	}
 
 	UNKNOWN_011_b = br->ReadBytes(7);
@@ -450,7 +564,11 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		br->ReadBytes(3);
+		UNKNOWN_012 = br->ReadBytes(3);
+	}
+	else
+	{
+		UNKNOWN_012 = gcnew array<unsigned char>(3);
 	}
 
 	required_team_member_groups_count = br->ReadInt32();
@@ -459,12 +577,21 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		br->ReadBytes(9);
-		br->ReadInt32(); // Script ID
-		br->ReadInt32();
-		br->ReadInt32();
-		br->ReadInt32();
-		br->ReadBytes(20);
+		UNKNOWN_012_a1 = br->ReadBytes(9);
+		resource_pq_audit_id = br->ReadInt32();
+		UNKNOWN_012_a2 = br->ReadInt32();
+		UNKNOWN_012_a3 = br->ReadInt32();
+		required_pq_contribution = br->ReadInt32();
+		UNKNOWN_012_a4 = br->ReadBytes(20);
+	}
+	else
+	{
+		UNKNOWN_012_a1 = gcnew array<unsigned char>(9);
+		resource_pq_audit_id = 0;
+		UNKNOWN_012_a2 = 0;
+		UNKNOWN_012_a3 = 0;
+		required_pq_contribution = br->ReadInt32();
+		UNKNOWN_012_a4 = gcnew array<unsigned char>(20);
 	}
 
 	UNKNOWN_012_b = br->ReadBytes(8);
@@ -477,41 +604,74 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		br->ReadBytes(12);
-	}
-
-	if(version >= 89)
-	{
-		required_reach_location = gcnew LocationSpan();
-		v89_Required_Reach_Location_Count = br->ReadInt32();
-		required_reach_location->map_id = br->ReadInt32();
+		UNKNOWN_015a = br->ReadBytes(12);
 	}
 	else
 	{
-		required_reach_location = ReadLocationSpan(version, br, true);
+		UNKNOWN_015a = gcnew array<unsigned char>(12);
 	}
+
+	required_reach_locations = gcnew LocationSpan();
+	if(version >= 89)
+	{
+		required_reach_locations->count = br->ReadInt32();
+		required_reach_locations->spans = gcnew array<Span^>(required_reach_locations->count);
+	}
+	else
+	{
+		required_reach_locations->count = 1;
+		required_reach_locations->spans = gcnew array<Span^>(required_reach_locations->count);
+		required_reach_locations->spans[0] = ReadSpan(version, br);
+	}
+	required_reach_locations->map_id = br->ReadInt32();
+
 	required_wait_time = br->ReadInt32();
 
 	// At this place the v89 positions must be guessed due to leak of informations...
 
+	pq->leave_area = gcnew PQ_AuditExitArea();
+	pq->leave_area->location = gcnew LocationSpan();
+
 	if(version >= 89)
 	{
-		br->ReadBytes(4);
-		br->ReadInt32(); // unknown map id
-		v89_Unknown_Location_3_Count = br->ReadInt32();
-		br->ReadInt32();
-		br->ReadBytes(5);
-		br->ReadInt32(); // ID
-		br->ReadInt32();
-		br->ReadInt32();
-		br->ReadInt32();
-		br->ReadBytes(20);
-		v79_Public_Count_3 = br->ReadInt32();
-		br->ReadBytes(4);
-		br->ReadBytes(4);
-		v79_Public_Count_5 = br->ReadInt32();
-		br->ReadBytes(4);
+		pq->leave_area->unknown_1 = br->ReadBytes(4);
+		pq->leave_area->location->map_id = br->ReadInt32();
+		pq->leave_area->location->count = br->ReadInt32();
+		pq->leave_area->unknown_2 = br->ReadInt32();
+		pq->leave_area->unknown_3 = br->ReadBytes(5);
+		pq->leave_area->id_script = br->ReadInt32();
+		pq->leave_area->unknown_4 = br->ReadInt32();
+		pq->leave_area->unknown_5 = br->ReadInt32();
+		pq->leave_area->unknown_6 = br->ReadInt32();
+		pq->leave_area->unknown_7 = br->ReadBytes(20);
+		pq->leave_area->script_count = br->ReadInt32();
+		pq->leave_area->unknown_8 = br->ReadBytes(4);
+		pq->leave_area->unknown_9 = br->ReadBytes(4);
+		pq->leave_area->message_count = br->ReadInt32();
+		pq->leave_area->unknown_10 = br->ReadBytes(4);
 	}
+	else
+	{
+		pq->leave_area->unknown_1 = gcnew array<unsigned char>(4);
+		pq->leave_area->location->map_id = 0;
+		pq->leave_area->location->count = 0;
+		pq->leave_area->unknown_2 = 0;
+		pq->leave_area->unknown_3 = gcnew array<unsigned char>(5);
+		pq->leave_area->id_script = 0;
+		pq->leave_area->unknown_4 = 0;
+		pq->leave_area->unknown_5 = 0;
+		pq->leave_area->unknown_6 = 0;
+		pq->leave_area->unknown_7 = gcnew array<unsigned char>(20);
+		pq->leave_area->script_count = 0;
+		pq->leave_area->unknown_8 = gcnew array<unsigned char>(4);
+		pq->leave_area->unknown_9 = gcnew array<unsigned char>(4);
+		pq->leave_area->message_count = 0;
+		pq->leave_area->unknown_10 = gcnew array<unsigned char>(4);
+	}
+
+	pq->leave_area->location->spans = gcnew array<Span^>(pq->leave_area->location->count);
+	pq->leave_area->scripts = gcnew array<PQ_AuditScript^>(pq->leave_area->script_count);
+	pq->leave_area->messages = gcnew array<array<unsigned char>^>(pq->leave_area->message_count);
 
 	// Need to checked if contains something != 0
 	UNKNOWN_016_b = br->ReadBytes(8);
@@ -523,7 +683,8 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		br->ReadBytes(5);
+		UNKNOWN_016_d = br->ReadBoolean();
+		UNKNOWN_016_e = br->ReadBytes(4);
 	}
 
 // ################# AUTHOR TEXT #############################
@@ -546,14 +707,14 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		for(int m=0; m<v89_Unknown_Location_1_Count; m++)
+		for(int m=0; m<quest_unknown_locations_1->count; m++)
 		{
-			br->ReadBytes(24);
+			quest_unknown_locations_1->spans[m] = ReadSpan(version, br);
 		}
 
-		for(int m=0; m<v89_Unknown_Location_2_Count; m++)
+		for(int m=0; m<quest_valid_locations->count; m++)
 		{
-			br->ReadBytes(24);
+			quest_valid_locations->spans[m] = ReadSpan(version, br);
 		}
 	}
 
@@ -561,44 +722,48 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		for(int i=0; i<v79_Public_Count_1; i++)
+		for(int i=0; i<pq->script_info_count; i++)
 		{
-			br->ReadInt32(); // Script ID
-			br->ReadInt32(); // ?
-			br->ReadBytes(1); // 
+			pq->script_infos[i] = gcnew PQ_AuditScriptInfo();
+			pq->script_infos[i]->id = br->ReadInt32();
+			pq->script_infos[i]->unknown_1 = br->ReadInt32();
+			pq->script_infos[i]->unknown_2 = br->ReadBytes(1);
 		}
 
-		for(int i=0; i<v79_Public_Count_2; i++)
+		for(int i=0; i<pq->script_count; i++)
 		{
-			br->ReadBytes(64); // Text
-			br->ReadInt32(); // Count
-			br->ReadSingle(); // Script ID
-			br->ReadBytes(4); // Seperator
-			br->ReadSingle(); // Some kind of link?
-			br->ReadBytes(496); // Code
+			pq->scripts[i] = gcnew PQ_AuditScript();
+			pq->scripts[i]->name = br->ReadBytes(64);
+			pq->scripts[i]->count = br->ReadInt32();
+			pq->scripts[i]->id = br->ReadSingle();
+			pq->scripts[i]->seperator = br->ReadBytes(4);
+			pq->scripts[i]->reference_id = br->ReadSingle();
+			pq->scripts[i]->code = br->ReadBytes(496);
 		}
 
-		for(int i=0; i<v79_Public_Count_4; i++)
+		for(int i=0; i<pq->chase_count; i++)
 		{
-			br->ReadInt32(); // Mob ID
-			br->ReadBytes(4); // Unknown
-			br->ReadInt32(); // Amount ?
-			br->ReadBytes(4); // Unknown
+			pq->chases[i] = gcnew PQ_AuditChase();
+			pq->chases[i]->id_monster = br->ReadInt32();
+			pq->chases[i]->amount_1 = br->ReadInt32();
+			pq->chases[i]->amount_2 = br->ReadInt32();
+			pq->chases[i]->amount_3 = br->ReadInt32();
 		}
 
-		for(int i=0; i<v79_Public_Count_3; i++)
+		for(int i=0; i<pq->leave_area->script_count; i++)
 		{
-			br->ReadBytes(64); // Text
-			br->ReadInt32(); // Count
-			br->ReadSingle(); // Script ID
-			br->ReadBytes(4); // Seperator
-			br->ReadSingle(); // Some kind of link?
-			br->ReadBytes(496); // Code
+			pq->leave_area->scripts[i] = gcnew PQ_AuditScript();
+			pq->leave_area->scripts[i]->name = br->ReadBytes(64);
+			pq->leave_area->scripts[i]->count = br->ReadInt32();
+			pq->leave_area->scripts[i]->id = br->ReadSingle();
+			pq->leave_area->scripts[i]->seperator = br->ReadBytes(4);
+			pq->leave_area->scripts[i]->reference_id = br->ReadSingle();
+			pq->leave_area->scripts[i]->code = br->ReadBytes(496);
 		}
 
-		for(int i=0; i<v79_Public_Count_5; i++)
+		for(int i=0; i<pq->leave_area->message_count; i++)
 		{
-			br->ReadBytes(128); // Text
+			pq->leave_area->messages[i] = br->ReadBytes(128);
 		}
 	}
 
@@ -606,46 +771,19 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		for(int m=0; m<v89_Trigger_Location_Count; m++)
+		for(int m=0; m<quest_trigger_locations->count; m++)
 		{
-			// use the first location span for v56
-			if(m == 0)
-			{
-				quest_trigger_location->east = br->ReadSingle();
-				quest_trigger_location->bottom = br->ReadSingle();
-				quest_trigger_location->south = br->ReadSingle();
-				quest_trigger_location->west = br->ReadSingle();
-				quest_trigger_location->top = br->ReadSingle();
-				quest_trigger_location->north = br->ReadSingle();
-			}
-			else
-			{
-				br->ReadBytes(24);
-			}
+			quest_trigger_locations->spans[m] = ReadSpan(version, br);
 		}
 
-		for(int m=0; m<v89_Required_Reach_Location_Count;m++)
+		for(int m=0; m<required_reach_locations->count;m++)
 		{
-			// use the first location span for v56
-			if(m == 0)
-			{
-				required_reach_location->east = br->ReadSingle();
-				required_reach_location->bottom = br->ReadSingle();
-				required_reach_location->south = br->ReadSingle();
-				required_reach_location->west = br->ReadSingle();
-				required_reach_location->top = br->ReadSingle();
-				required_reach_location->north = br->ReadSingle();
-			}
-			else
-			{
-				br->ReadBytes(24);
-			}
+			required_reach_locations->spans[m] = ReadSpan(version, br);
 		}
 
-		// another v89 location...
-		for(int m=0; m<v89_Unknown_Location_3_Count; m++)
+		for(int m=0; m<pq->leave_area->location->count; m++)
 		{
-			br->ReadBytes(24);
+			pq->leave_area->location->spans[m] = ReadSpan(version, br);
 		}
 	}
 

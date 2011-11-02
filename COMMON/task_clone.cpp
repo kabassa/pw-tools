@@ -22,6 +22,7 @@ Task^ Task::Clone()
 	result->repeatable = this->repeatable;
 	result->repeatable_after_failure = this->repeatable_after_failure;
 	result->UNKNOWN_004 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_004));
+	/*
 	result->quest_trigger_location = gcnew LocationSpan();
 	result->quest_trigger_location->map_id = this->quest_trigger_location->map_id;
 	result->quest_trigger_location->north = this->quest_trigger_location->north;
@@ -30,6 +31,7 @@ Task^ Task::Clone()
 	result->quest_trigger_location->east = this->quest_trigger_location->east;
 	result->quest_trigger_location->top = this->quest_trigger_location->top;
 	result->quest_trigger_location->bottom = this->quest_trigger_location->bottom;
+	*/
 	result->UNKNOWN_005a_1 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_005a_1));
 	result->instant_teleport_location = gcnew Location();
 	result->instant_teleport_location->map_id = this->instant_teleport_location->map_id;
@@ -96,6 +98,7 @@ Task^ Task::Clone()
 	result->required_get_items_unknown = HexString_to_ByteArray(ByteArray_to_HexString(this->required_get_items_unknown));
 	result->required_coins = this->required_coins;
 	result->UNKNOWN_015 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_015));
+	/*
 	result->required_reach_location = gcnew LocationSpan();
 	result->required_reach_location->map_id = this->required_reach_location->map_id;
 	result->required_reach_location->north = this->required_reach_location->north;
@@ -104,6 +107,7 @@ Task^ Task::Clone()
 	result->required_reach_location->east = this->required_reach_location->east;
 	result->required_reach_location->top = this->required_reach_location->top;
 	result->required_reach_location->bottom = this->required_reach_location->bottom;
+	*/
 	result->required_wait_time = this->required_wait_time;
 	result->UNKNOWN_016_b = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_016_b));
 	result->UNKNOWN_016_c = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_016_c));
@@ -222,7 +226,8 @@ Task^ Task::Clone()
 	result->reward_success->teleport->altitude = this->reward_success->teleport->altitude;
 	result->reward_success->teleport->z = this->reward_success->teleport->z;
 	result->reward_success->aiTrigger = this->reward_success->aiTrigger;
-	result->reward_success->UNKNOWN_2 = HexString_to_ByteArray(ByteArray_to_HexString(this->reward_success->UNKNOWN_2));
+	result->reward_success->UNKNOWN_2a = HexString_to_ByteArray(ByteArray_to_HexString(this->reward_success->UNKNOWN_2a));
+	result->reward_success->UNKNOWN_2b = HexString_to_ByteArray(ByteArray_to_HexString(this->reward_success->UNKNOWN_2b));
 	result->reward_success->item_groups_count = this->reward_success->item_groups_count;
 	result->reward_success->SEPERATOR = HexString_to_ByteArray(ByteArray_to_HexString(this->reward_success->SEPERATOR));
 	result->reward_success->item_groups = gcnew array<ItemGroup^>(this->reward_success->item_groups_count);
@@ -262,7 +267,8 @@ Task^ Task::Clone()
 	result->reward_failed->teleport->altitude = this->reward_failed->teleport->altitude;
 	result->reward_failed->teleport->z = this->reward_failed->teleport->z;
 	result->reward_failed->aiTrigger = this->reward_failed->aiTrigger;
-	result->reward_failed->UNKNOWN_2 = HexString_to_ByteArray(ByteArray_to_HexString(this->reward_failed->UNKNOWN_2));
+	result->reward_failed->UNKNOWN_2a = HexString_to_ByteArray(ByteArray_to_HexString(this->reward_failed->UNKNOWN_2a));
+	result->reward_failed->UNKNOWN_2b = HexString_to_ByteArray(ByteArray_to_HexString(this->reward_failed->UNKNOWN_2b));
 	result->reward_failed->item_groups_count = this->reward_failed->item_groups_count;
 	result->reward_failed->SEPERATOR = HexString_to_ByteArray(ByteArray_to_HexString(this->reward_failed->SEPERATOR));
 	result->reward_failed->item_groups = gcnew array<ItemGroup^>(this->reward_failed->item_groups_count);
@@ -312,7 +318,8 @@ Task^ Task::Clone()
 		result->rewards_timed[r]->teleport->altitude = this->rewards_timed[r]->teleport->altitude;
 		result->rewards_timed[r]->teleport->z = this->rewards_timed[r]->teleport->z;
 		result->rewards_timed[r]->aiTrigger = this->rewards_timed[r]->aiTrigger;
-		result->rewards_timed[r]->UNKNOWN_2 = HexString_to_ByteArray(ByteArray_to_HexString(this->rewards_timed[r]->UNKNOWN_2));
+		result->rewards_timed[r]->UNKNOWN_2a = HexString_to_ByteArray(ByteArray_to_HexString(this->rewards_timed[r]->UNKNOWN_2a));
+		result->rewards_timed[r]->UNKNOWN_2b = HexString_to_ByteArray(ByteArray_to_HexString(this->rewards_timed[r]->UNKNOWN_2b));
 		result->rewards_timed[r]->item_groups_count = this->rewards_timed[r]->item_groups_count;
 		result->rewards_timed[r]->SEPERATOR = HexString_to_ByteArray(ByteArray_to_HexString(this->rewards_timed[r]->SEPERATOR));
 		result->rewards_timed[r]->item_groups = gcnew array<ItemGroup^>(this->rewards_timed[r]->item_groups_count);
