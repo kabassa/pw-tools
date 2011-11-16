@@ -510,7 +510,18 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		UNKNOWN_011_1ab = 0;
 	}
 
-	UNKNOWN_011_1b = br->ReadBytes(10);
+	UNKNOWN_011_1ba = br->ReadBytes(9);
+
+	if(version >= 93)
+	{
+		UNKNOWN_011_1bb = br->ReadInt32();
+	}
+	else
+	{
+		UNKNOWN_011_1bb = 0;
+	}
+
+	UNKNOWN_011_1bc = br->ReadBytes(1);
 	required_gender = br->ReadInt32();
 	UNKNOWN_011_2 = br->ReadBytes(1);
 

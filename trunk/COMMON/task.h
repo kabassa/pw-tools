@@ -437,7 +437,9 @@ public ref class Task
 	public: array<unsigned char>^ UNKNOWN_011_1; // 60 Byte
 	public: array<unsigned char>^ UNKNOWN_011_1a; // 1 Byte
 	public: int UNKNOWN_011_1ab;
-	public: array<unsigned char>^ UNKNOWN_011_1b; // 10 Byte
+	public: array<unsigned char>^ UNKNOWN_011_1ba; // 9 Byte
+	public: int UNKNOWN_011_1bb; // int32
+	public: array<unsigned char>^ UNKNOWN_011_1bc; // 1 Byte
 	public: int required_gender;
 	public: array<unsigned char>^ UNKNOWN_011_2; // 1 Byte
 	public: int required_occupations_count;
