@@ -338,7 +338,14 @@ void Task::Save(int version, BinaryWriter^ bw)
 		bw->Write(UNKNOWN_011_1ab);
 	}
 
-	bw->Write(UNKNOWN_011_1b);
+	bw->Write(UNKNOWN_011_1ba);
+
+	if(version >= 93)
+	{
+		bw->Write(UNKNOWN_011_1bb);
+	}
+
+	bw->Write(UNKNOWN_011_1bc);
 	bw->Write(required_gender);
 	bw->Write(UNKNOWN_011_2);
 
