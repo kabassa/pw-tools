@@ -4,24 +4,25 @@
 
 Task^ Task::Clone()
 {
+//CLONE v93
 	Task^ result = gcnew Task();
 	result->id = this->id;
 	result->Name = this->Name; // clone this array, no pointers !!!
 	result->author_mode = this->author_mode;
-	result->UNKNOWN_001a = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_001a));
+	result->UNKNOWN_01 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_01));
 	result->type = this->type;
 	result->time_limit = this->time_limit;
-	result->UNKNOWN_002 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_002));
+	result->has_date_spans = this->has_date_spans;
 	result->date_spans_count = this->date_spans_count;
-	result->UNKNOWN_EVENT = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_EVENT));
-	result->UNKNOWN_ZEROS = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_ZEROS));
-	result->date_unknown = HexString_to_ByteArray(ByteArray_to_HexString(this->date_unknown));
-	result->UNKNOWN_FLAGS_1 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_FLAGS_1));
-	result->UNKNOWN_FLAGS_2 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_FLAGS_2));
+	result->UNKNOWN_04 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_04));
+	result->UNKNOWN_05 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_05));
+	result->UNKNOWN_07 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_07));
+	result->UNKNOWN_08 = this->UNKNOWN_08;
+//	result->UNKNOWN_FLAGS_2 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_FLAGS_2));
 	result->can_give_up = this->can_give_up;
 	result->repeatable = this->repeatable;
 	result->repeatable_after_failure = this->repeatable_after_failure;
-	result->UNKNOWN_004 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_004));
+//	result->UNKNOWN_004 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_004));
 	/*
 	result->quest_trigger_location = gcnew LocationSpan();
 	result->quest_trigger_location->map_id = this->quest_trigger_location->map_id;
@@ -32,28 +33,29 @@ Task^ Task::Clone()
 	result->quest_trigger_location->top = this->quest_trigger_location->top;
 	result->quest_trigger_location->bottom = this->quest_trigger_location->bottom;
 	*/
-	result->UNKNOWN_005a_1 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_005a_1));
+	result->has_instant_teleport = this->has_instant_teleport;
 	result->instant_teleport_location = gcnew Location();
 	result->instant_teleport_location->map_id = this->instant_teleport_location->map_id;
 	result->instant_teleport_location->x = this->instant_teleport_location->x;
 	result->instant_teleport_location->altitude = this->instant_teleport_location->altitude;
 	result->instant_teleport_location->z = this->instant_teleport_location->z;
 	result->ai_trigger = this->ai_trigger;
-	result->UNKNOWN_005a_3 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_005a_3));
-	result->UNKNOWN_005b = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_005b));
+//	result->UNKNOWN_005a_3 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_005a_3));
+	result->UNKNOWN_23 = this->UNKNOWN_23;
 	result->UNKNOWN_LEVEL = this->UNKNOWN_LEVEL;
-	result->UNKNOWN_005c = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_005c));
+//	result->UNKNOWN_005c = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_005c));
 	result->quest_npc = this->quest_npc;
 	result->reward_npc = this->reward_npc;
-	result->UNKNOWN_006 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_006));
+//	result->UNKNOWN_006 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_006));
 	result->level_min = this->level_min;
 	result->level_max = this->level_max;
-	result->UNKNOWN_007 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_007));
+	result->UNKNOWN_27 = this->UNKNOWN_27;
 	result->required_items_count = this->required_items_count;
 	result->required_items_unknown = HexString_to_ByteArray(ByteArray_to_HexString(this->required_items_unknown));
-	result->UNKNOWN_008_ = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_008_));
+	result->UNKNOWN_28 = this->UNKNOWN_28;
 	result->given_items_count = this->given_items_count;
-	result->GIVEN_UNKNOWN_INTEGERS = HexString_to_ByteArray(ByteArray_to_HexString(this->GIVEN_UNKNOWN_INTEGERS));
+	result->UNKNOWN_29 = this->UNKNOWN_29;
+	result->UNKNOWN_30 = this->UNKNOWN_30;
 	result->given_items_unknown = HexString_to_ByteArray(ByteArray_to_HexString(this->given_items_unknown));
 	result->instant_pay_coins = this->instant_pay_coins;
 	result->UNKNOWN_009b = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_009b));
