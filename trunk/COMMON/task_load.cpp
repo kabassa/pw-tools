@@ -306,19 +306,21 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	id = br->ReadInt32();
 	name = br->ReadBytes(60);
 	author_mode = br->ReadBoolean();
-	UNKNOWN_001a = br->ReadBytes(4);
+	UNKNOWN_01 = br->ReadBytes(4);
 	type = br->ReadInt32();
 	time_limit = br->ReadInt32();
 
 	if(version >= 89)
 	{
-		UNKNOWN_001b = br->ReadBytes(2);
+		UNKNOWN_02 = br->ReadBytes(1);
+		has_date_fail = br->ReadBoolean();
 		date_fail = ReadDate(version, br);
-		UNKNOWN_001c = br->ReadBytes(1);	
+		UNKNOWN_03 = br->ReadBytes(1);
 	}
 	else
 	{
-		UNKNOWN_001b = gcnew array<unsigned char>(2);
+		UNKNOWN_02 = gcnew array<unsigned char>(1);
+		has_date_fail = false;
 		date_fail = gcnew Date();
 		date_fail->year = 0;
 		date_fail->month = 0;
@@ -326,41 +328,51 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		date_fail->hour = 0;
 		date_fail->minute = 0;
 		date_fail->weekday = 0;
-		UNKNOWN_001c = gcnew array<unsigned char>(1);
+		UNKNOWN_03 = gcnew array<unsigned char>(1);
 	}
 
-	UNKNOWN_002 = br->ReadBytes(1);
+	has_date_spans = br->ReadBoolean();
 	date_spans_count = br->ReadInt32();
-	UNKNOWN_EVENT = br->ReadBytes(4);
-	UNKNOWN_ZEROS = br->ReadBytes(8);
+	UNKNOWN_04 = br->ReadBytes(4);
+	UNKNOWN_05 = br->ReadBytes(8);
 
 	if(version >= 89)
 	{
-		UNKNOWN_ZEROS_a = br->ReadBytes(12);
+		UNKNOWN_06 = br->ReadBytes(12);
 	}
 	else
 	{
-		UNKNOWN_ZEROS_a = gcnew array<unsigned char>(12);
+		UNKNOWN_06 = gcnew array<unsigned char>(12);
 	}
 
-	date_unknown = br->ReadBytes(8);
-	UNKNOWN_FLAGS_1 = br->ReadBytes(4);
+	UNKNOWN_07 = br->ReadBytes(8);
+	UNKNOWN_08 = br->ReadInt32();
 
 	if(version >= 89)
 	{
-		UNKNOWN_FLAGS_1a = br->ReadBytes(4);
+		UNKNOWN_09 = br->ReadInt32();
 	}
 	else
 	{
-		UNKNOWN_FLAGS_1a = gcnew array<unsigned char>(4);
+		UNKNOWN_09 = 0;
 	}
 
-	UNKNOWN_FLAGS_2 = br->ReadBytes(5);
+	activate_first_subquest = br->ReadBoolean();
+	activate_random_subquest = br->ReadBoolean();
+	activate_next_subquest = br->ReadBoolean();
+	on_give_up_parent_fails = br->ReadBoolean();
+	on_success_parent_success = br->ReadBoolean();
 	can_give_up = br->ReadBoolean();
 	repeatable = br->ReadBoolean();
 	repeatable_after_failure = br->ReadBoolean();
-	UNKNOWN_004 = br->ReadBytes(8);
-
+	fail_on_death = br->ReadBoolean();
+	on_fail_parent_fail = br->ReadBoolean();
+	UNKNOWN_10 = br->ReadBoolean();
+	UNKNOWN_11 = br->ReadBoolean();
+	UNKNOWN_12 = br->ReadBoolean();
+	UNKNOWN_13 = br->ReadBoolean();
+	UNKNOWN_14 = br->ReadBoolean();
+	has_trigger = br->ReadBoolean();
 	quest_trigger_locations = gcnew LocationSpan();
 	quest_trigger_locations->map_id = br->ReadInt32();
 	if(version >= 89)
@@ -379,49 +391,57 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	quest_valid_locations = gcnew LocationSpan();
 	if(version >= 89)
 	{
-		UNKNOWN_004a = br->ReadBytes(5);
+		UNKNOWN_15 = br->ReadBytes(5);
 		quest_unknown_locations_1->map_id = br->ReadInt32();
 		quest_unknown_locations_1->count = br->ReadInt32();
 		quest_unknown_locations_1->spans = gcnew array<Span^>(quest_unknown_locations_1->count);
-		UNKNOWN_004b = br->ReadBytes(5);
+		UNKNOWN_16 = br->ReadBytes(5);
 		quest_valid_locations->map_id = br->ReadInt32();
 		quest_valid_locations->count = br->ReadInt32();
 		quest_valid_locations->spans = gcnew array<Span^>(quest_valid_locations->count);
-		UNKNOWN_004c = br->ReadBytes(4);
+		UNKNOWN_17 = br->ReadBytes(4);
 	}
 	else
 	{
-		UNKNOWN_004a = gcnew array<unsigned char>(5);
+		UNKNOWN_15 = gcnew array<unsigned char>(5);
 		quest_unknown_locations_1->map_id = 0;
 		quest_unknown_locations_1->count = 0;
 		quest_unknown_locations_1->spans = gcnew array<Span^>(0);
-		UNKNOWN_004b = gcnew array<unsigned char>(5);
+		UNKNOWN_16 = gcnew array<unsigned char>(5);
 		quest_valid_locations->map_id = 0;
 		quest_valid_locations->count = 0;
 		quest_valid_locations->spans = gcnew array<Span^>(0);
-		UNKNOWN_004c = gcnew array<unsigned char>(4);
+		UNKNOWN_17 = gcnew array<unsigned char>(4);
 	}
 
-	UNKNOWN_005a_1 = br->ReadBytes(1);
+	has_instant_teleport = br->ReadBoolean();
 	instant_teleport_location = ReadLocation(version, br);
 	ai_trigger = br->ReadInt32();
-	UNKNOWN_005a_3 = br->ReadBytes(3);
+	UNKNOWN_18 = br->ReadBoolean();
+	UNKNOWN_19 = br->ReadBoolean();
+	UNKNOWN_20 = br->ReadBoolean();
 
 	if(version >= 89)
 	{
-		UNKNOWN_005a_4 = br->ReadBytes(2);
+		UNKNOWN_21 = br->ReadBoolean();
+		UNKNOWN_22 = br->ReadBoolean();
 	}
 	else
 	{
-		UNKNOWN_005a_4 = gcnew array<unsigned char>(2);
+		UNKNOWN_21 = false;
+		UNKNOWN_22 = false;
 	}
 
-	UNKNOWN_005b = br->ReadBytes(1);
+	UNKNOWN_23 = br->ReadBoolean();
 	UNKNOWN_LEVEL = br->ReadInt32();
-	UNKNOWN_005c = br->ReadBytes(2);
+	mark_available_icon = br->ReadBoolean();
+	mark_available_point = br->ReadBoolean();
 	quest_npc = br->ReadInt32();
 	reward_npc = br->ReadInt32();
-	UNKNOWN_006 = br->ReadBytes(4);
+	craft_skill = br->ReadBoolean();
+	UNKNOWN_24 = br->ReadBoolean();
+	UNKNOWN_25 = br->ReadBoolean();
+	UNKNOWN_26 = br->ReadBoolean();
 
 	pq = gcnew PQ_Audit();
 	if(version >= 89)
@@ -472,12 +492,13 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	level_min = br->ReadInt32();
 	level_max = br->ReadInt32();
-	UNKNOWN_007 = br->ReadBytes(1);
+	UNKNOWN_27 = br->ReadBoolean();
 	required_items_count = br->ReadInt32();
 	required_items_unknown = br->ReadBytes(4);
-	UNKNOWN_008_ = br->ReadBytes(1);
+	UNKNOWN_28 = br->ReadBoolean();
 	given_items_count = br->ReadInt32();
-	GIVEN_UNKNOWN_INTEGERS = br->ReadBytes(8);
+	UNKNOWN_29 = br->ReadInt32();
+	UNKNOWN_30 = br->ReadInt32();
 	given_items_unknown = br->ReadBytes(4);
 	instant_pay_coins = br->ReadInt32();
 	UNKNOWN_009b = br->ReadBytes(1);

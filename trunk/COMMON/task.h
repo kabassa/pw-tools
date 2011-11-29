@@ -381,52 +381,72 @@ public ref class Task
 		}
 	}
 	public: bool author_mode;
-	public: array<unsigned char>^ UNKNOWN_001a; // 4 Byte
+	public: array<unsigned char>^ UNKNOWN_01; // 4 Byte
 	public: int type;
 	public: int time_limit;
-	public: array<unsigned char>^ UNKNOWN_001b; // 2 Byte
+	public: array<unsigned char>^ UNKNOWN_02; // 1 Byte
+	public: bool has_date_fail;
 	public: Date^ date_fail;
-	public: array<unsigned char>^ UNKNOWN_001c; // 1 Byte
-	public: array<unsigned char>^ UNKNOWN_002; // 1 Byte
+	public: array<unsigned char>^ UNKNOWN_03; // 1 Byte
+	public: bool has_date_spans;
 	public: int date_spans_count;
-	public: array<unsigned char>^ UNKNOWN_EVENT; // 4 Bytes
-	public: array<unsigned char>^ UNKNOWN_ZEROS; // 8 Bytes -> All Zeros
-	public: array<unsigned char>^ UNKNOWN_ZEROS_a; // 12 Bytes -> All Zeros
+	public: array<unsigned char>^ UNKNOWN_04; // 4 Bytes
+	public: array<unsigned char>^ UNKNOWN_05; // 8 Bytes -> All Zeros
+	public: array<unsigned char>^ UNKNOWN_06; // 12 Bytes -> All Zeros
 
-	public: array<unsigned char>^ date_unknown; // 8 Bytes
-	public: array<unsigned char>^ UNKNOWN_FLAGS_1; // 6 Bytes
-	public: array<unsigned char>^ UNKNOWN_FLAGS_1a; // 4 Bytes
-	public: array<unsigned char>^ UNKNOWN_FLAGS_2; // 3 Bytes
+	public: array<unsigned char>^ UNKNOWN_07; // 8 Bytes
+	public: int UNKNOWN_08; // couple_type
+	public: int UNKNOWN_09;
+	public: bool activate_first_subquest;
+	public: bool activate_random_subquest;
+	public: bool activate_next_subquest;
+	public: bool on_give_up_parent_fails;
+	public: bool on_success_parent_success;
 	public: bool can_give_up;
 	public: bool repeatable;
 	public: bool repeatable_after_failure;
-	public: array<unsigned char>^ UNKNOWN_004; // 8 Byte
+	public: bool fail_on_death;
+	public: bool on_fail_parent_fail;
+	public: bool UNKNOWN_10;
+	public: bool UNKNOWN_11;
+	public: bool UNKNOWN_12;
+	public: bool UNKNOWN_13;
+	public: bool UNKNOWN_14;
+	public: bool has_trigger;
 	public: LocationSpan^ quest_trigger_locations;
-	public: array<unsigned char>^ UNKNOWN_004a; // 5 Byte
+	public: array<unsigned char>^ UNKNOWN_15; // 5 Byte
 	public: LocationSpan^ quest_unknown_locations_1;
-	public: array<unsigned char>^ UNKNOWN_004b; // 5 Byte
+	public: array<unsigned char>^ UNKNOWN_16; // 5 Byte
 	public: LocationSpan^ quest_valid_locations;
-	public: array<unsigned char>^ UNKNOWN_004c; // 4 Byte
-	public: array<unsigned char>^ UNKNOWN_005a_1; // 1 Byte
+	public: array<unsigned char>^ UNKNOWN_17; // 4 Byte
+	public: bool has_instant_teleport;
 	public: Location^ instant_teleport_location;
 	public: int ai_trigger;
-	public: array<unsigned char>^ UNKNOWN_005a_3; // 3 Byte
-	public: array<unsigned char>^ UNKNOWN_005a_4; // 3 Byte
-	public: array<unsigned char>^ UNKNOWN_005b; // 1 Byte
+	public: bool UNKNOWN_18; // start/stop ai trigger ?
+	public: bool UNKNOWN_19;
+	public: bool UNKNOWN_20;
+	public: bool UNKNOWN_21;
+	public: bool UNKNOWN_22; // suicide required ?
+	public: bool UNKNOWN_23;
 	public: int UNKNOWN_LEVEL;
-	public: array<unsigned char>^ UNKNOWN_005c; // 2 Byte
+	public: bool mark_available_icon;
+	public: bool mark_available_point;
 	public: int quest_npc;
 	public: int reward_npc;
-	public: array<unsigned char>^ UNKNOWN_006; // 4 Byte
+	public: bool craft_skill;
+	public: bool UNKNOWN_24;
+	public: bool UNKNOWN_25;
+	public: bool UNKNOWN_26;
 	public: PQ_Audit^ pq;
 	public: int level_min;
 	public: int level_max;
-	public: array<unsigned char>^ UNKNOWN_007; // 1 Byte
+	public: bool UNKNOWN_27; // required items?
 	public: int required_items_count;
 	public: array<unsigned char>^ required_items_unknown;
-	public: array<unsigned char>^ UNKNOWN_008_; // 1 Byte
+	public: bool UNKNOWN_28; // given items?
 	public: int given_items_count;
-	public: array<unsigned char>^ GIVEN_UNKNOWN_INTEGERS; // 8 Byte
+	public: int UNKNOWN_29;
+	public: int UNKNOWN_30;
 	public: array<unsigned char>^ given_items_unknown; // 4 Byte
 	public: int instant_pay_coins;
 	public: array<unsigned char>^ UNKNOWN_009b; // 1 Byte

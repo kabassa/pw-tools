@@ -212,42 +212,54 @@ void Task::Save(int version, BinaryWriter^ bw)
 	bw->Write(id);
 	bw->Write(name);
 	bw->Write(author_mode);
-	bw->Write(UNKNOWN_001a);
+	bw->Write(UNKNOWN_01);
 	bw->Write(type);
 	bw->Write(time_limit);
 
 	if(version >= 89)
 	{
-		bw->Write(UNKNOWN_001b);
+		bw->Write(UNKNOWN_02);
+		bw->Write(has_date_fail);
 		WriteDate(version, bw, date_fail);
-		bw->Write(UNKNOWN_001c);	
+		bw->Write(UNKNOWN_03);	
 	}
 
-	bw->Write(UNKNOWN_002);
+	bw->Write(has_date_spans);
 	bw->Write(date_spans_count);
-	bw->Write(UNKNOWN_EVENT);
-	bw->Write(UNKNOWN_ZEROS);
+	bw->Write(UNKNOWN_04);
+	bw->Write(UNKNOWN_05);
 
 	if(version >= 89)
 	{
-		bw->Write(UNKNOWN_ZEROS_a);
+		bw->Write(UNKNOWN_06);
 	}
 
-	bw->Write(date_unknown);
-	bw->Write(UNKNOWN_FLAGS_1);
+	bw->Write(UNKNOWN_07);
+	bw->Write(UNKNOWN_08);
 
 	if(version >= 89)
 	{
-		bw->Write(UNKNOWN_FLAGS_1a);
+		bw->Write(UNKNOWN_09);
 	}
 
-	bw->Write(UNKNOWN_FLAGS_2);
+	bw->Write(activate_first_subquest);
+	bw->Write(activate_random_subquest);
+	bw->Write(activate_next_subquest);
+	bw->Write(on_give_up_parent_fails);
+	bw->Write(on_success_parent_success);
 	bw->Write(can_give_up);
 	bw->Write(repeatable);
 	bw->Write(repeatable_after_failure);
-	bw->Write(UNKNOWN_004);
-
+	bw->Write(fail_on_death);
+	bw->Write(on_fail_parent_fail);
+	bw->Write(UNKNOWN_10);
+	bw->Write(UNKNOWN_11);
+	bw->Write(UNKNOWN_12);
+	bw->Write(UNKNOWN_13);
+	bw->Write(UNKNOWN_14);
+	bw->Write(has_trigger);
 	bw->Write(quest_trigger_locations->map_id);
+
 	if(version >= 89)
 	{
 		bw->Write(quest_trigger_locations->count);
@@ -259,31 +271,38 @@ void Task::Save(int version, BinaryWriter^ bw)
 
 	if(version >= 89)
 	{
-		bw->Write(UNKNOWN_004a);
+		bw->Write(UNKNOWN_15);
 		bw->Write(quest_unknown_locations_1->map_id);
 		bw->Write(quest_unknown_locations_1->count);
-		bw->Write(UNKNOWN_004b);
+		bw->Write(UNKNOWN_16);
 		bw->Write(quest_valid_locations->map_id);
 		bw->Write(quest_valid_locations->count);
-		bw->Write(UNKNOWN_004c);
+		bw->Write(UNKNOWN_17);
 	}
 
-	bw->Write(UNKNOWN_005a_1);
+	bw->Write(has_instant_teleport);
 	WriteLocation(version, bw, instant_teleport_location);
 	bw->Write(ai_trigger);
-	bw->Write(UNKNOWN_005a_3);
+	bw->Write(UNKNOWN_18);
+	bw->Write(UNKNOWN_19);
+	bw->Write(UNKNOWN_20);
 
 	if(version >= 89)
 	{
-		bw->Write(UNKNOWN_005a_4);
+		bw->Write(UNKNOWN_21);
+		bw->Write(UNKNOWN_22);
 	}
 
-	bw->Write(UNKNOWN_005b);
+	bw->Write(UNKNOWN_23);
 	bw->Write(UNKNOWN_LEVEL);
-	bw->Write(UNKNOWN_005c);
+	bw->Write(mark_available_icon);
+	bw->Write(mark_available_point);
 	bw->Write(quest_npc);
 	bw->Write(reward_npc);
-	bw->Write(UNKNOWN_006);
+	bw->Write(craft_skill);
+	bw->Write(UNKNOWN_24);
+	bw->Write(UNKNOWN_25);
+	bw->Write(UNKNOWN_26);
 
 	if(version >= 89)
 	{
@@ -309,12 +328,13 @@ void Task::Save(int version, BinaryWriter^ bw)
 
 	bw->Write(level_min);
 	bw->Write(level_max);
-	bw->Write(UNKNOWN_007);
+	bw->Write(UNKNOWN_27);
 	bw->Write(required_items_count);
 	bw->Write(required_items_unknown);
-	bw->Write(UNKNOWN_008_);
+	bw->Write(UNKNOWN_28);
 	bw->Write(given_items_count);
-	bw->Write(GIVEN_UNKNOWN_INTEGERS);
+	bw->Write(UNKNOWN_29);
+	bw->Write(UNKNOWN_30);
 	bw->Write(given_items_unknown);
 	bw->Write(instant_pay_coins);
 	bw->Write(UNKNOWN_009b);
