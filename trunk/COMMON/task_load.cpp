@@ -312,14 +312,14 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		UNKNOWN_02 = br->ReadBytes(1);
+		UNKNOWN_02 = br->ReadBoolean();
 		has_date_fail = br->ReadBoolean();
 		date_fail = ReadDate(version, br);
-		UNKNOWN_03 = br->ReadBytes(1);
+		UNKNOWN_03 = br->ReadBoolean();
 	}
 	else
 	{
-		UNKNOWN_02 = gcnew array<unsigned char>(1);
+		UNKNOWN_02 = false;
 		has_date_fail = false;
 		date_fail = gcnew Date();
 		date_fail->year = 0;
@@ -328,7 +328,7 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		date_fail->hour = 0;
 		date_fail->minute = 0;
 		date_fail->weekday = 0;
-		UNKNOWN_03 = gcnew array<unsigned char>(1);
+		UNKNOWN_03 = false;
 	}
 
 	has_date_spans = br->ReadBoolean();
@@ -501,9 +501,10 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	UNKNOWN_30 = br->ReadInt32();
 	given_items_unknown = br->ReadBytes(4);
 	instant_pay_coins = br->ReadInt32();
-	UNKNOWN_009b = br->ReadBytes(1);
+	UNKNOWN_31 = br->ReadBoolean();
 	required_reputation = br->ReadInt32();
-	UNKNOWN_010 = br->ReadBytes(5);
+	UNKNOWN_32 = br->ReadBytes(4);
+	UNKNOWN_33 = br->ReadBoolean();
 	required_quests_done_count = br->ReadInt32();
 	required_quests_done = gcnew array<int>(5);
 	for(int i=0; i<required_quests_done->Length; i++)
@@ -513,38 +514,39 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 90)
 	{
-		UNKNOWN_011_1 = br->ReadBytes(60);
+		UNKNOWN_34 = br->ReadBytes(60);
 	}
 	else
 	{
-		UNKNOWN_011_1 = gcnew array<unsigned char>(60);
+		UNKNOWN_34 = gcnew array<unsigned char>(60);
 	}
 
-	UNKNOWN_011_1a = br->ReadBytes(1);
+	UNKNOWN_35 = br->ReadBoolean();
 
 	if(version >= 90)
 	{
-		UNKNOWN_011_1ab = br->ReadInt32();
+		UNKNOWN_36 = br->ReadInt32();
 	}
 	else
 	{
-		UNKNOWN_011_1ab = 0;
+		UNKNOWN_36 = 0;
 	}
 
-	UNKNOWN_011_1ba = br->ReadBytes(9);
+	UNKNOWN_37 = br->ReadBytes(9);
 
 	if(version >= 93)
 	{
-		UNKNOWN_011_1bb = br->ReadInt32();
+		UNKNOWN_38 = br->ReadInt32();
 	}
 	else
 	{
-		UNKNOWN_011_1bb = 0;
+		UNKNOWN_38 = 0;
 	}
 
-	UNKNOWN_011_1bc = br->ReadBytes(1);
+	UNKNOWN_39 = br->ReadBoolean();
+
 	required_gender = br->ReadInt32();
-	UNKNOWN_011_2 = br->ReadBytes(1);
+	UNKNOWN_40 = br->ReadBoolean();
 
 	if(version >= 89)
 	{
@@ -560,17 +562,22 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		required_occupations[i] = br->ReadInt32();
 	}
 
-	UNKNOWN_011_a2 = br->ReadBytes(5);
+	UNKNOWN_41 = br->ReadBoolean();
+	required_be_married = br->ReadBoolean();
+	UNKNOWN_42 = br->ReadBoolean();
+	required_be_gm = br->ReadBoolean();
+	UNKNOWN_43 = br->ReadBoolean();
 
 	if(version >= 89)
 	{
-		UNKNOWN_011_a3 = br->ReadBytes(19);
+		UNKNOWN_44 = br->ReadBytes(19);
 		unknown_date = ReadDate(version, br);
-		UNKNOWN_011_a4 = br->ReadBytes(5);	
+		UNKNOWN_45 = br->ReadInt32();
+		UNKNOWN_46 = br->ReadBoolean();
 	}
 	else
 	{
-		UNKNOWN_011_a3 = gcnew array<unsigned char>(19);
+		UNKNOWN_44 = gcnew array<unsigned char>(19);
 		unknown_date = gcnew Date();
 		unknown_date->year = 0;
 		unknown_date->month = 0;
@@ -578,10 +585,11 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		unknown_date->weekday = 0;
 		unknown_date->hour = 0;
 		unknown_date->minute = 0;
-		UNKNOWN_011_a4 = gcnew array<unsigned char>(5);
+		UNKNOWN_45 = 0;
+		UNKNOWN_46 = false;
 	}
 
-	UNKNOWN_011_b = br->ReadBytes(7);
+	UNKNOWN_47 = br->ReadBytes(7);
 	required_quests_undone_count = br->ReadInt32();
 	required_quests_undone = gcnew array<int>(5);
 	for(int i=0; i<required_quests_undone->Length; i++)
@@ -592,55 +600,57 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	required_tailor_level = br->ReadInt32();
 	required_craftsman_level = br->ReadInt32();
 	required_apothecary_level = br->ReadInt32();
-	TEAM_MEMBER_REQUIREMENT = br->ReadBytes(32);
+	UNKNOWN_48 = br->ReadBytes(32);
 
 	if(version >= 89)
 	{
-		UNKNOWN_012 = br->ReadBytes(3);
+		UNKNOWN_49 = br->ReadBytes(3);
 	}
 	else
 	{
-		UNKNOWN_012 = gcnew array<unsigned char>(3);
+		UNKNOWN_49 = gcnew array<unsigned char>(3);
 	}
 
 	required_team_member_groups_count = br->ReadInt32();
-	required_team_member_groups_unknown = br->ReadBytes(4);
-	UNKNOWN_012_a = br->ReadBytes(1);
+	UNKNOWN_50 = br->ReadBytes(4);
+	UNKNOWN_51 = br->ReadBoolean();
 
 	if(version >= 89)
 	{
-		UNKNOWN_012_a1 = br->ReadBytes(9);
+		UNKNOWN_52 = br->ReadBytes(9);
 		resource_pq_audit_id = br->ReadInt32();
-		UNKNOWN_012_a2 = br->ReadInt32();
-		UNKNOWN_012_a3 = br->ReadInt32();
+		UNKNOWN_53 = br->ReadInt32();
+		UNKNOWN_54 = br->ReadInt32();
 		required_pq_contribution = br->ReadInt32();
-		UNKNOWN_012_a4 = br->ReadBytes(20);
+		UNKNOWN_55 = br->ReadBytes(20);
 	}
 	else
 	{
-		UNKNOWN_012_a1 = gcnew array<unsigned char>(9);
+		UNKNOWN_52 = gcnew array<unsigned char>(9);
 		resource_pq_audit_id = 0;
-		UNKNOWN_012_a2 = 0;
-		UNKNOWN_012_a3 = 0;
+		UNKNOWN_53 = 0;
+		UNKNOWN_54 = 0;
 		required_pq_contribution = br->ReadInt32();
-		UNKNOWN_012_a4 = gcnew array<unsigned char>(20);
+		UNKNOWN_55 = gcnew array<unsigned char>(20);
 	}
 
-	UNKNOWN_012_b = br->ReadBytes(8);
+	required_success_type = br->ReadInt32();
+	required_npc_type = br->ReadInt32();
+
 	required_chases_count = br->ReadInt32();
 	required_chases_unknown = br->ReadBytes(4);
 	required_get_items_count = br->ReadInt32();
 	required_get_items_unknown = br->ReadBytes(4);
 	required_coins = br->ReadInt32();
-	UNKNOWN_015 = br->ReadBytes(16);
+	UNKNOWN_56 = br->ReadBytes(16);
 
 	if(version >= 89)
 	{
-		UNKNOWN_015a = br->ReadBytes(12);
+		UNKNOWN_57 = br->ReadBytes(12);
 	}
 	else
 	{
-		UNKNOWN_015a = gcnew array<unsigned char>(12);
+		UNKNOWN_57 = gcnew array<unsigned char>(12);
 	}
 
 	required_reach_locations = gcnew LocationSpan();
@@ -706,8 +716,8 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	pq->leave_area->messages = gcnew array<array<unsigned char>^>(pq->leave_area->message_count);
 
 	// Need to checked if contains something != 0
-	UNKNOWN_016_b = br->ReadBytes(8);
-	UNKNOWN_016_c = br->ReadBytes(24);
+	UNKNOWN_58 = br->ReadBytes(8);
+	UNKNOWN_59 = br->ReadBytes(24);
 	parent_quest = br->ReadInt32();
 	previous_quest = br->ReadInt32();
 	next_quest = br->ReadInt32();
@@ -715,8 +725,13 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		UNKNOWN_016_d = br->ReadBoolean();
-		UNKNOWN_016_e = br->ReadBytes(4);
+		UNKNOWN_60 = br->ReadBoolean();
+		receive_quest_probability = br->ReadSingle();
+	}
+	else
+	{
+		UNKNOWN_60 = false;
+		receive_quest_probability = 0.0f;
 	}
 
 // ################# AUTHOR TEXT #############################
@@ -883,7 +898,7 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 // ################# UNKNOWN REWARDS ??? #############################
 
-	UNKNOWN_025 = br->ReadBytes(80); //REWARD_UNKNOWN = ReadReward(version, br);
+	UNKNOWN_61 = br->ReadBytes(80); //REWARD_UNKNOWN = ReadReward(version, br);
 
 // ################# CONVERSATION #############################
 

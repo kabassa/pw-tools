@@ -38,13 +38,17 @@ int main(array<System::String ^> ^args)
 	if(args->Length > 0 && File::Exists(args[0]) && args[0]->EndsWith("skillstr.txt"))
 	{
 		StreamReader^ sr = gcnew StreamReader(args[0]);
-		// skip first five lines (file description)
-		for(int i=0; i<5; i++)
+		String^ line = "";
+		// skip lines with '#', '//', and blank lines
+		//while(line->StartsWith("#") || line->StartsWith("//") || line=="")
 		{
-			sr->ReadLine();
+			//line = sr->ReadLine();
 		}
 		array<String^>^ skills = sr->ReadToEnd()->Split(gcnew array<wchar_t>{'\"'});
 		sr->Close();
+
+		array<String^>^ temp = skills[0]->Split(gcnew array<wchar_t>{'\n'});
+		skills[0] = temp[temp->Length-1];
 
 		// remove leading and tailing whitespaces
 		for(int i=0; i<skills->Length-1; i+=4)

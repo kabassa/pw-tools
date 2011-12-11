@@ -337,9 +337,10 @@ void Task::Save(int version, BinaryWriter^ bw)
 	bw->Write(UNKNOWN_30);
 	bw->Write(given_items_unknown);
 	bw->Write(instant_pay_coins);
-	bw->Write(UNKNOWN_009b);
+	bw->Write(UNKNOWN_31);
 	bw->Write(required_reputation);
-	bw->Write(UNKNOWN_010);
+	bw->Write(UNKNOWN_32);
+	bw->Write(UNKNOWN_33);
 	bw->Write(required_quests_done_count);
 	for(int i=0; i<required_quests_done->Length; i++)
 	{
@@ -348,26 +349,26 @@ void Task::Save(int version, BinaryWriter^ bw)
 
 	if(version >= 90)
 	{
-		bw->Write(UNKNOWN_011_1);
+		bw->Write(UNKNOWN_34);
 	}
 
-	bw->Write(UNKNOWN_011_1a);
+	bw->Write(UNKNOWN_35);
 
 	if(version >= 90)
 	{
-		bw->Write(UNKNOWN_011_1ab);
+		bw->Write(UNKNOWN_36);
 	}
 
-	bw->Write(UNKNOWN_011_1ba);
+	bw->Write(UNKNOWN_37);
 
 	if(version >= 93)
 	{
-		bw->Write(UNKNOWN_011_1bb);
+		bw->Write(UNKNOWN_38);
 	}
 
-	bw->Write(UNKNOWN_011_1bc);
+	bw->Write(UNKNOWN_39);
 	bw->Write(required_gender);
-	bw->Write(UNKNOWN_011_2);
+	bw->Write(UNKNOWN_40);
 
 	if(version < 89 && required_occupations->Length > 8)
 	{
@@ -397,16 +398,21 @@ void Task::Save(int version, BinaryWriter^ bw)
 		}
 	}
 
-	bw->Write(UNKNOWN_011_a2);
+	bw->Write(UNKNOWN_41);
+	bw->Write(required_be_married);
+	bw->Write(UNKNOWN_42);
+	bw->Write(required_be_gm);
+	bw->Write(UNKNOWN_43);
 
 	if(version >= 89)
 	{
-		bw->Write(UNKNOWN_011_a3);
-		WriteDate(version, bw, unknown_date );
-		bw->Write(UNKNOWN_011_a4 );	
+		bw->Write(UNKNOWN_44);
+		WriteDate(version, bw, unknown_date);
+		bw->Write(UNKNOWN_45);
+		bw->Write(UNKNOWN_46);
 	}
 
-	bw->Write(UNKNOWN_011_b);
+	bw->Write(UNKNOWN_47);
 	bw->Write(required_quests_undone_count);
 	for(int i=0; i<required_quests_undone->Length; i++)
 	{
@@ -416,38 +422,39 @@ void Task::Save(int version, BinaryWriter^ bw)
 	bw->Write(required_tailor_level);
 	bw->Write(required_craftsman_level);
 	bw->Write(required_apothecary_level);
-	bw->Write(TEAM_MEMBER_REQUIREMENT);
+	bw->Write(UNKNOWN_48);
 
 	if(version >= 89)
 	{
-		bw->Write(UNKNOWN_012);
+		bw->Write(UNKNOWN_49);
 	}
 
 	bw->Write(required_team_member_groups_count);
-	bw->Write(required_team_member_groups_unknown);
-	bw->Write(UNKNOWN_012_a);
+	bw->Write(UNKNOWN_50);
+	bw->Write(UNKNOWN_51);
 
 	if(version >= 89)
 	{
-		bw->Write(UNKNOWN_012_a1);
+		bw->Write(UNKNOWN_52);
 		bw->Write(resource_pq_audit_id);
-		bw->Write(UNKNOWN_012_a2);
-		bw->Write(UNKNOWN_012_a3);
+		bw->Write(UNKNOWN_53);
+		bw->Write(UNKNOWN_54);
 		bw->Write(required_pq_contribution);
-		bw->Write(UNKNOWN_012_a4);
+		bw->Write(UNKNOWN_55);
 	}
 
-	bw->Write(UNKNOWN_012_b);
+	bw->Write(required_success_type);
+	bw->Write(required_npc_type);
 	bw->Write(required_chases_count);
 	bw->Write(required_chases_unknown);
 	bw->Write(required_get_items_count);
 	bw->Write(required_get_items_unknown);
 	bw->Write(required_coins);
-	bw->Write(UNKNOWN_015);
+	bw->Write(UNKNOWN_56);
 
 	if(version >= 89)
 	{
-		bw->Write(UNKNOWN_015a);
+		bw->Write(UNKNOWN_57);
 	}
 
 	if(version >= 89)
@@ -481,8 +488,8 @@ void Task::Save(int version, BinaryWriter^ bw)
 		bw->Write(pq->leave_area->unknown_10);
 	}
 
-	bw->Write(UNKNOWN_016_b);
-	bw->Write(UNKNOWN_016_c);
+	bw->Write(UNKNOWN_58);
+	bw->Write(UNKNOWN_59);
 	bw->Write(parent_quest);
 	bw->Write(previous_quest);
 	bw->Write(next_quest);
@@ -490,8 +497,8 @@ void Task::Save(int version, BinaryWriter^ bw)
 
 	if(version >= 89)
 	{
-		bw->Write(UNKNOWN_016_d);
-		bw->Write(UNKNOWN_016_e);
+		bw->Write(UNKNOWN_60);
+		bw->Write(receive_quest_probability);
 	}
 
 	if(author_mode)
@@ -644,7 +651,7 @@ void Task::Save(int version, BinaryWriter^ bw)
 
 // ################# UNKNOWN REWARDS #############################
 
-	bw->Write(UNKNOWN_025);
+	bw->Write(UNKNOWN_61);
 
 // ################# CONVERSATION #############################
 
