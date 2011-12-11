@@ -366,7 +366,51 @@ public ref class Task
 	{
 	}
 
-	public: int id;
+	private: int id;
+	public: property int ID
+	{
+		int get()
+		{
+			return id;
+		}
+		void set(int value)
+		{
+			// Load strings with old encryption key
+			String^ tmp_name = this->Name;
+			String^ tmp_author = this->AuthorText;
+			String^ tmp_prompt = this->conversation->PromptText;
+			String^ tmp_general = this->conversation->GeneralText;
+
+			// Change id / encryption key
+			this->id = value;
+			this->conversation->crypt_key = value;
+
+			// Recode strings with new encryption key
+			this->Name = tmp_name;
+			this->AuthorText = tmp_author;
+			this->conversation->PromptText = tmp_prompt;
+			this->conversation->GeneralText = tmp_general;
+
+			for(int d=0; d<this->conversation->dialogs->Length; d++)
+			{
+				String^ tmp_dialog = this->conversation->dialogs[d]->DialogText;
+				this->conversation->dialogs[d]->crypt_key = value;
+				this->conversation->dialogs[d]->DialogText = tmp_dialog;
+				for(int q=0; q<this->conversation->dialogs[d]->questions->Length; q++)
+				{
+					String^ tmp_question = this->conversation->dialogs[d]->questions[q]->QuestionText;
+					this->conversation->dialogs[d]->questions[q]->crypt_key = value;
+					this->conversation->dialogs[d]->questions[q]->QuestionText = tmp_question;
+					for(int a=0; a<this->conversation->dialogs[d]->questions[q]->answers->Length; a++)
+					{
+						String^ tmp_answer = this->conversation->dialogs[d]->questions[q]->answers[a]->AnswerText;
+						this->conversation->dialogs[d]->questions[q]->answers[a]->crypt_key = value;
+						this->conversation->dialogs[d]->questions[q]->answers[a]->AnswerText = tmp_answer;
+					}
+				}
+			}
+		}
+	}
 	public: array<unsigned char>^ name;
 	// 60 Byte Unicode
 	public: property String^ Name
@@ -382,12 +426,25 @@ public ref class Task
 	}
 	public: bool author_mode;
 	public: array<unsigned char>^ UNKNOWN_01; // 4 Byte
+	// [0] Normal
+	// [1] Cycle
+	// [2] Spiritual Cultivation
+	// [3] Hero
+	// [4] Challenge
+	// [5] Adventure
+	// [6] Errand
+	// [7] Legendary
+	// [8] Battle
+	// [9] Public
+	// [10] Divine Order?
+	// [11] Guild Base?
+	// [12] ?
 	public: int type;
 	public: int time_limit;
-	public: array<unsigned char>^ UNKNOWN_02; // 1 Byte
+	public: bool UNKNOWN_02;
 	public: bool has_date_fail;
 	public: Date^ date_fail;
-	public: array<unsigned char>^ UNKNOWN_03; // 1 Byte
+	public: bool UNKNOWN_03;
 	public: bool has_date_spans;
 	public: int date_spans_count;
 	public: array<unsigned char>^ UNKNOWN_04; // 4 Bytes
@@ -449,65 +506,80 @@ public ref class Task
 	public: int UNKNOWN_30;
 	public: array<unsigned char>^ given_items_unknown; // 4 Byte
 	public: int instant_pay_coins;
-	public: array<unsigned char>^ UNKNOWN_009b; // 1 Byte
+	public: bool UNKNOWN_31;
 	public: int required_reputation;
-	public: array<unsigned char>^ UNKNOWN_010; // 5 Byte
+	public: array<unsigned char>^ UNKNOWN_32; // 4 Byte
+	public: bool UNKNOWN_33;
 	public: int required_quests_done_count;
 	public: array<int>^ required_quests_done;
-	public: array<unsigned char>^ UNKNOWN_011_1; // 60 Byte
-	public: array<unsigned char>^ UNKNOWN_011_1a; // 1 Byte
-	public: int UNKNOWN_011_1ab;
-	public: array<unsigned char>^ UNKNOWN_011_1ba; // 9 Byte
-	public: int UNKNOWN_011_1bb; // int32
-	public: array<unsigned char>^ UNKNOWN_011_1bc; // 1 Byte
+	public: array<unsigned char>^ UNKNOWN_34; // 60 Byte
+	public: bool UNKNOWN_35;
+	public: int UNKNOWN_36;
+	public: array<unsigned char>^ UNKNOWN_37; // 9 Byte
+	public: int UNKNOWN_38;
+	public: bool UNKNOWN_39;
 	public: int required_gender;
-	public: array<unsigned char>^ UNKNOWN_011_2; // 1 Byte
+	public: bool UNKNOWN_40;
 	public: int required_occupations_count;
 	public: array<int>^ required_occupations;
-	public: array<unsigned char>^ UNKNOWN_011_a2; // 5 Byte
-	public: array<unsigned char>^ UNKNOWN_011_a3; // 19 Byte
+	public: bool UNKNOWN_41;
+	public: bool required_be_married;
+	public: bool UNKNOWN_42;
+	public: bool required_be_gm;
+	public: bool UNKNOWN_43;
+	public: array<unsigned char>^ UNKNOWN_44; // 19 Byte
 	public: Date^ unknown_date;
-	public: array<unsigned char>^ UNKNOWN_011_a4; // 5 Byte
-	public: array<unsigned char>^ UNKNOWN_011_b; // 7 Byte -> All Zeros
+	public: int UNKNOWN_45;
+	public: bool UNKNOWN_46;
+	public: array<unsigned char>^ UNKNOWN_47; // 7 Byte -> All Zeros
 	public: int required_quests_undone_count;
 	public: array<int>^ required_quests_undone;
-	// Married, Occupation, Reputation?, ...
-
 	public: int required_blacksmith_level;
 	public: int required_tailor_level;
 	public: int required_craftsman_level;
 	public: int required_apothecary_level;
-	public: array<unsigned char>^ TEAM_MEMBER_REQUIREMENT; // 32 Byte
-	public: array<unsigned char>^ UNKNOWN_012; // 3 Byte
+	public: array<unsigned char>^ UNKNOWN_48; // 32 Byte (team member requirements?)
+	public: array<unsigned char>^ UNKNOWN_49; // 3 Byte (team member requirements?)
 	public: int required_team_member_groups_count;
-	public: array<unsigned char>^ required_team_member_groups_unknown; // 4 Byte
-	public: array<unsigned char>^ UNKNOWN_012_a; // 1 Byte
+	public: array<unsigned char>^ UNKNOWN_50; // 4 Byte
+	public: bool UNKNOWN_51;
 
-	public: array<unsigned char>^ UNKNOWN_012_a1; // 9 Byte
+	public: array<unsigned char>^ UNKNOWN_52; // 9 Byte
 	public: int resource_pq_audit_id;
-	public: int UNKNOWN_012_a2;
-	public: int UNKNOWN_012_a3;
+	public: int UNKNOWN_53;
+	public: int UNKNOWN_54;
 	public: int required_pq_contribution;
-	public: array<unsigned char>^ UNKNOWN_012_a4; // 20 Byte
+	public: array<unsigned char>^ UNKNOWN_55; // 20 Byte
 
-	public: array<unsigned char>^ UNKNOWN_012_b; // 8 Byte
+	// 0 - ?
+	// 1 - Chase
+	// 2 - Get
+	// 3 - Requires (done, unactivated) quests, race, class and gender requirements
+	// 4 - Reach Coordinate
+	// 5 - Auto Success
+	// ...
+	// 11 - Leave Coordinate
+	public: int required_success_type;
+	// 0 - None (Gift Box Reward)
+	// 1 - Reward NPC
+	public: int required_npc_type;
 	public: int required_chases_count;
 	public: array<unsigned char>^ required_chases_unknown; // 4 Byte
 	public: int required_get_items_count;
 	public: array<unsigned char>^ required_get_items_unknown; // 4 Byte
 	public: int required_coins;
-	public: array<unsigned char>^ UNKNOWN_015; // 16 Byte
-	public: array<unsigned char>^ UNKNOWN_015a; // 12 Byte
+	public: array<unsigned char>^ UNKNOWN_56; // 16 Byte
+	public: array<unsigned char>^ UNKNOWN_57; // 12 Byte
 	public: LocationSpan^ required_reach_locations;
 	public: int required_wait_time;
-	public: array<unsigned char>^ UNKNOWN_016_b; // 8 Byte
-	public: array<unsigned char>^ UNKNOWN_016_c; // 24 Byte
+	public: array<unsigned char>^ UNKNOWN_58; // 8 Byte
+	public: array<unsigned char>^ UNKNOWN_59; // 24 Byte
 	public: int parent_quest;
 	public: int previous_quest;
 	public: int next_quest;
 	public: int sub_quest_first;
-	public: bool UNKNOWN_016_d;
-	public: array<unsigned char>^ UNKNOWN_016_e;
+	public: bool UNKNOWN_60; // is divine quest with probability?
+	public: float receive_quest_probability;
 	public: array<unsigned char>^ author_text;
 	// 60 Byte Unicode
 	public: property String^ AuthorText
@@ -534,7 +606,7 @@ public ref class Task
 	public: array<Reward^>^ rewards_timed;
 
 // Another Rewards section?
-	public: array<unsigned char>^ UNKNOWN_025; // 80 Byte //public: Reward^ REWARD_UNKNOWN;
+	public: array<unsigned char>^ UNKNOWN_61; // 80 Byte //public: Reward^ REWARD_UNKNOWN;
 	
 	Conversation^ conversation;
 	int sub_quest_count;

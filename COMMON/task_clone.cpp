@@ -58,29 +58,34 @@ Task^ Task::Clone()
 	result->UNKNOWN_30 = this->UNKNOWN_30;
 	result->given_items_unknown = HexString_to_ByteArray(ByteArray_to_HexString(this->given_items_unknown));
 	result->instant_pay_coins = this->instant_pay_coins;
-	result->UNKNOWN_009b = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_009b));
+	result->UNKNOWN_31 = this->UNKNOWN_31;
 	result->required_reputation = this->required_reputation;
-	result->UNKNOWN_010 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_010));
+	result->UNKNOWN_32 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_32));
+	result->UNKNOWN_33 = this->UNKNOWN_33;
 	result->required_quests_done_count = this->required_quests_done_count;
 	result->required_quests_done = gcnew array<int>(this->required_quests_done->Length);
 	for(int i=0; i<this->required_quests_done->Length; i++)
 	{
 		result->required_quests_done[i] = this->required_quests_done[i];
 	}
-	result->UNKNOWN_011_1a = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_011_1a));
-	result->UNKNOWN_011_1ba = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_011_1ba));
-	result->UNKNOWN_011_1bb = this->UNKNOWN_011_1bb;
-	result->UNKNOWN_011_1bc = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_011_1bc));
+	result->UNKNOWN_35 = this->UNKNOWN_35;
+	result->UNKNOWN_37 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_37));
+	result->UNKNOWN_38 = this->UNKNOWN_38;
+	result->UNKNOWN_39 = this->UNKNOWN_39;
 	result->required_gender = this->required_gender;
-	result->UNKNOWN_011_2 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_011_2));
+	result->UNKNOWN_40 = this->UNKNOWN_40;
 	result->required_occupations_count = this->required_occupations_count;
 	result->required_occupations = gcnew array<int>(this->required_occupations->Length);
 	for(int i=0; i<this->required_occupations->Length; i++)
 	{
 		result->required_occupations[i] = this->required_occupations[i];
 	}
-	result->UNKNOWN_011_a2 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_011_a2));
-	result->UNKNOWN_011_b = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_011_b));
+	result->UNKNOWN_41 = this->UNKNOWN_41;
+	result->required_be_married = this->required_be_married;
+	result->UNKNOWN_42 = this->UNKNOWN_42;
+	result->required_be_gm = this->required_be_gm;
+	result->UNKNOWN_43 = this->UNKNOWN_43;
+	result->UNKNOWN_47 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_47));
 	result->required_quests_undone_count = this->required_quests_undone_count;
 	result->required_quests_undone = gcnew array<int>(this->required_quests_undone->Length);
 	for(int i=0; i<this->required_quests_undone->Length; i++)
@@ -91,17 +96,17 @@ Task^ Task::Clone()
 	result->required_tailor_level = this->required_tailor_level;
 	result->required_craftsman_level = this->required_craftsman_level;
 	result->required_apothecary_level = this->required_apothecary_level;
-	result->TEAM_MEMBER_REQUIREMENT = HexString_to_ByteArray(ByteArray_to_HexString(this->TEAM_MEMBER_REQUIREMENT));
+	result->UNKNOWN_48 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_48));
 	result->required_team_member_groups_count = this->required_team_member_groups_count;
-	result->required_team_member_groups_unknown = this->required_team_member_groups_unknown;
-	result->UNKNOWN_012_a = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_012_a));
-	result->UNKNOWN_012_b = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_012_b));
+	result->UNKNOWN_50 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_50));
+	result->UNKNOWN_51 = this->UNKNOWN_51;
+//	result->UNKNOWN_012_b = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_012_b));
 	result->required_chases_count = this->required_chases_count;
 	result->required_chases_unknown = HexString_to_ByteArray(ByteArray_to_HexString(this->required_chases_unknown));
 	result->required_get_items_count = this->required_get_items_count;
 	result->required_get_items_unknown = HexString_to_ByteArray(ByteArray_to_HexString(this->required_get_items_unknown));
 	result->required_coins = this->required_coins;
-	result->UNKNOWN_015 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_015));
+	result->UNKNOWN_56 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_56));
 	/*
 	result->required_reach_location = gcnew LocationSpan();
 	result->required_reach_location->map_id = this->required_reach_location->map_id;
@@ -113,8 +118,8 @@ Task^ Task::Clone()
 	result->required_reach_location->bottom = this->required_reach_location->bottom;
 	*/
 	result->required_wait_time = this->required_wait_time;
-	result->UNKNOWN_016_b = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_016_b));
-	result->UNKNOWN_016_c = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_016_c));
+	result->UNKNOWN_58 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_58));
+	result->UNKNOWN_59 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_59));
 	result->parent_quest = this->parent_quest;
 	result->previous_quest = this->previous_quest;
 	result->next_quest = this->next_quest;
@@ -346,7 +351,7 @@ Task^ Task::Clone()
 
 // ################# UNKNOWN REWARDS ??? #############################
 
-	result->UNKNOWN_025 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_025));
+	result->UNKNOWN_61 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_61));
 
 // ################# CONVERSATION #############################
 
