@@ -450,7 +450,6 @@ public ref class Task
 	public: array<unsigned char>^ UNKNOWN_04; // 4 Bytes
 	public: array<unsigned char>^ UNKNOWN_05; // 8 Bytes -> All Zeros
 	public: array<unsigned char>^ UNKNOWN_06; // 12 Bytes -> All Zeros
-
 	public: array<unsigned char>^ UNKNOWN_07; // 8 Bytes
 	public: int UNKNOWN_08; // couple_type
 	public: int UNKNOWN_09;
@@ -543,14 +542,12 @@ public ref class Task
 	public: int required_team_member_groups_count;
 	public: array<unsigned char>^ UNKNOWN_50; // 4 Byte
 	public: bool UNKNOWN_51;
-
 	public: array<unsigned char>^ UNKNOWN_52; // 9 Byte
 	public: int resource_pq_audit_id;
 	public: int UNKNOWN_53;
 	public: int UNKNOWN_54;
 	public: int required_pq_contribution;
 	public: array<unsigned char>^ UNKNOWN_55; // 20 Byte
-
 	// 0 - ?
 	// 1 - Chase
 	// 2 - Get
@@ -605,7 +602,7 @@ public ref class Task
 	public: array<float>^ rewards_timed_factors;
 	public: array<Reward^>^ rewards_timed;
 
-// Another Rewards section?
+	// Another Rewards section?
 	public: array<unsigned char>^ UNKNOWN_61; // 80 Byte //public: Reward^ REWARD_UNKNOWN;
 	
 	Conversation^ conversation;
