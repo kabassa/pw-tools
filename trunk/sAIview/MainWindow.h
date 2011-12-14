@@ -100,6 +100,8 @@ public ref class MainWindow : public System::Windows::Forms::Form
 		private: System::Windows::Forms::ComboBox^  comboBox_cat;
 		private: System::Windows::Forms::Label^  label5;
 		private: System::Windows::Forms::ToolStripMenuItem^  createDebug136ToolStripMenuItem;
+private: System::Windows::Forms::ToolStripMenuItem^  analyzeToolStripMenuItem;
+
 
 		private:
 		/// <summary>
@@ -136,6 +138,7 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			this->comboBox_language = (gcnew System::Windows::Forms::ComboBox());
 			this->textBox_translation = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->analyzeToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuStrip_mainMenu->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->groupBox2->SuspendLayout();
@@ -156,8 +159,8 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			// toolStripMenuItem1
 			// 
 			this->toolStripMenuItem1->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
-			this->toolStripMenuItem1->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->loadToolStripMenuItem, 
-				this->saveToolStripMenuItem, this->createDebug136ToolStripMenuItem});
+			this->toolStripMenuItem1->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {this->loadToolStripMenuItem, 
+				this->analyzeToolStripMenuItem, this->saveToolStripMenuItem, this->createDebug136ToolStripMenuItem});
 			this->toolStripMenuItem1->ImageScaling = System::Windows::Forms::ToolStripItemImageScaling::None;
 			this->toolStripMenuItem1->Name = L"toolStripMenuItem1";
 			this->toolStripMenuItem1->Padding = System::Windows::Forms::Padding(0);
@@ -389,6 +392,13 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			this->label5->TabIndex = 9;
 			this->label5->Text = L"Controllers:";
 			// 
+			// analyzeToolStripMenuItem
+			// 
+			this->analyzeToolStripMenuItem->Name = L"analyzeToolStripMenuItem";
+			this->analyzeToolStripMenuItem->Size = System::Drawing::Size(202, 22);
+			this->analyzeToolStripMenuItem->Text = L"Analyze";
+			this->analyzeToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainWindow::click_analyze);
+			// 
 			// MainWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -513,6 +523,7 @@ public ref class MainWindow : public System::Windows::Forms::Form
 			{
 				return "SELF";
 			}
+// ---------- following target types are > 1.3.6 Server -----------------
 			return "?";
 		}
 		/*
@@ -1661,6 +1672,27 @@ public ref class MainWindow : public System::Windows::Forms::Form
 				}
 			}
 			MessageBox::Show("Search reached End of File without Result!");
+		}
+		private: System::Void click_analyze(System::Object^  sender, System::EventArgs^  e)
+		{
+			int condition_type = 0;
+			int procedure_type = 0;
+			int procedure_target = 0;
+
+			for(int ac=0; ac<AI->action_controllers->Length; ac++)
+			{
+				for(int as=0; as<AI->action_controllers[ac]->action_sets->Length; as++)
+				{
+					condition_type = Math::Max(condition_type, AI->action_controllers[ac]->action_sets[as]->conditions->operator_id);
+					for(int p=0; p<AI->action_controllers[ac]->action_sets[as]->procedures->Length; p++)
+					{
+						procedure_type = Math::Max(procedure_type, AI->action_controllers[ac]->action_sets[as]->procedures[p]->type);
+						procedure_target = Math::Max(procedure_target, AI->action_controllers[ac]->action_sets[as]->procedures[p]->target);
+					}
+				}
+			}
+
+			MessageBox::Show("Condition [18]: " + condition_type + "\nProcedure [19]: " + procedure_type + "\nTarget [7]: " + procedure_target, "Analyzer");
 		}
 		private: System::Void click_exportDebug(System::Object^  sender, System::EventArgs^  e)
 		{
