@@ -814,11 +814,18 @@ private: System::Windows::Forms::ToolStripMenuItem^  analyzeToolStripMenuItem;
 			}
 			if(p->type == 14)
 			{
+				String^ gen;
+				if(((int)p->parameters[1])%2 < 1)
+				{
+					gen = "start";
+				}
+				else
+				{
+					gen = "stop";
+				}
 				expression = "NPC_Generator(";
 				expression += ((int)p->parameters[0]).ToString() + ", ";
-				expression += Convert::ToBoolean(((unsigned char)p->parameters[1])).ToString() + ", ";
-				expression += ((unsigned short)p->parameters[2]).ToString() + ", ";
-				expression += ((unsigned char)p->parameters[3]).ToString();
+				expression += ((int)p->parameters[1]).ToString() + "[" + gen + "]";
 				expression += ")";
 			}
 // ---------- following procedure types are > 1.3.6 Server -----------------
@@ -939,7 +946,7 @@ private: System::Windows::Forms::ToolStripMenuItem^  analyzeToolStripMenuItem;
 			}
 			if(type == 14)
 			{
-				return gcnew array<Object^>{br->ReadInt32(), br->ReadByte(), br->ReadUInt16(), br->ReadByte()}; // NPC Generator
+				return gcnew array<Object^>{br->ReadInt32(), br->ReadInt32()}; // NPC Generator
 			}
 // ---------- following procedure types are > 1.3.6 Server -----------------
 			if(type == 15)
@@ -1013,9 +1020,7 @@ private: System::Windows::Forms::ToolStripMenuItem^  analyzeToolStripMenuItem;
 			if(type == 14)
 			{
 				bw->Write((int)Parameters[0]);
-				bw->Write((unsigned char)Parameters[1]);
-				bw->Write((unsigned short)Parameters[2]);
-				bw->Write((unsigned char)Parameters[3]);
+				bw->Write((int)Parameters[1]);
 			}
 // ---------- following procedure types are > 1.3.6 Server -----------------
 			if(type == 15)
@@ -1387,10 +1392,8 @@ private: System::Windows::Forms::ToolStripMenuItem^  analyzeToolStripMenuItem;
 						// using i as unifier to prevent multiple npc_generator() with same id's in the same action set
 						int creature_builder_id = (GUID*1000000 + (int)p[i]->parameters[0]);
 						GUID++;
-						unsigned char stop = 0; // 0: start, 1: stop
-						unsigned short unk1 = 0;
-						unsigned char unk2 = 0;
-						result[count]->parameters = gcnew array<Object^>{creature_builder_id, stop, unk1, unk2};
+						int options = 0; // even(0): start, odd(1): stop
+						result[count]->parameters = gcnew array<Object^>{creature_builder_id, options};
 						result[count]->target = 0;
 						result[count]->extra = 0;
 					}
