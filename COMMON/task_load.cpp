@@ -375,6 +375,7 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	has_trigger = br->ReadBoolean();
 	quest_trigger_locations = gcnew LocationSpan();
 	quest_trigger_locations->map_id = br->ReadInt32();
+
 	if(version >= 89)
 	{
 		quest_trigger_locations->count = br->ReadInt32();
@@ -386,7 +387,10 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		quest_trigger_locations->spans = gcnew array<Span^>(quest_trigger_locations->count);
 		quest_trigger_locations->spans[0] = ReadSpan(version, br);
 	}
-
+if(has_trigger && quest_trigger_locations->count == 0)
+{
+	int debug = 1;
+}
 	quest_unknown_locations_1 = gcnew LocationSpan();
 	quest_valid_locations = gcnew LocationSpan();
 	if(version >= 89)
