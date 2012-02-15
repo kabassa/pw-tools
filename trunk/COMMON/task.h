@@ -88,6 +88,7 @@ public ref struct TeamMembers
 	int amount_min;
 	int amount_max;
 	int quest;
+	int unknown_4;
 };
 
 public ref struct PQ_Chase
@@ -173,6 +174,10 @@ public ref struct Reward
 	int item_groups_count;
 	array<unsigned char>^ SEPERATOR; // 4 Byte
 	PQ_Reward^ pq;
+	int UNKNOWN_3;
+	int UNKNOWN_4;
+	int UNKNOWN_5;
+	int UNKNOWN_6;
 	array<ItemGroup^>^ item_groups;
 };
 
@@ -475,6 +480,7 @@ public ref class Task
 	public: array<unsigned char>^ UNKNOWN_16; // 5 Byte
 	public: LocationSpan^ quest_valid_locations;
 	public: array<unsigned char>^ UNKNOWN_17; // 4 Byte
+	public: bool UNKNOWN_17_01; // 1 Byte
 	public: bool has_instant_teleport;
 	public: Location^ instant_teleport_location;
 	public: int ai_trigger;
@@ -494,12 +500,14 @@ public ref class Task
 	public: bool UNKNOWN_25;
 	public: bool UNKNOWN_26;
 	public: PQ_Audit^ pq;
+	public: array<unsigned char>^ UNKNOWN_26_01;
 	public: int level_min;
 	public: int level_max;
 	public: bool UNKNOWN_27; // required items?
 	public: int required_items_count;
 	public: array<unsigned char>^ required_items_unknown;
 	public: bool UNKNOWN_28; // given items?
+	public: bool UNKNOWN_28_01;
 	public: int given_items_count;
 	public: int UNKNOWN_29;
 	public: int UNKNOWN_30;
@@ -548,6 +556,7 @@ public ref class Task
 	public: int UNKNOWN_54;
 	public: int required_pq_contribution;
 	public: array<unsigned char>^ UNKNOWN_55; // 20 Byte
+	public: array<unsigned char>^ UNKNOWN_55_01; // 31 Byte
 	// 0 - ?
 	// 1 - Chase
 	// 2 - Get
@@ -569,6 +578,7 @@ public ref class Task
 	public: array<unsigned char>^ UNKNOWN_57; // 12 Byte
 	public: LocationSpan^ required_reach_locations;
 	public: int required_wait_time;
+	public: array<unsigned char>^ UNKNOWN_57_01; // 15 Byte
 	public: array<unsigned char>^ UNKNOWN_58; // 8 Byte
 	public: array<unsigned char>^ UNKNOWN_59; // 24 Byte
 	public: int parent_quest;
@@ -577,6 +587,7 @@ public ref class Task
 	public: int sub_quest_first;
 	public: bool UNKNOWN_60; // is divine quest with probability?
 	public: float receive_quest_probability;
+	public: bool UNKNOWN_60_01; 
 	public: array<unsigned char>^ author_text;
 	// 60 Byte Unicode
 	public: property String^ AuthorText
