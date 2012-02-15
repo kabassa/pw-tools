@@ -51,6 +51,10 @@ void WriteTeamMembers(int version, BinaryWriter^ bw, TeamMembers^ team_member_gr
 	bw->Write(team_member_group->amount_min);
 	bw->Write(team_member_group->amount_max);
 	bw->Write(team_member_group->quest);
+	if(version >= 100)
+	{
+		bw->Write(team_member_group->unknown_4);
+	}
 }
 
 void WriteChase(int version, BinaryWriter^ bw, Chase^ chase)
@@ -139,6 +143,14 @@ void WriteReward(int version, BinaryWriter^ bw, Reward^ reward)
 		bw->Write(reward->pq->unknown_6);
 		bw->Write(reward->pq->message_count);
 		bw->Write(reward->pq->unknown_7);
+	}
+
+	if(version >= 100)
+	{
+		bw->Write(reward->UNKNOWN_3);
+		bw->Write(reward->UNKNOWN_4);
+		bw->Write(reward->UNKNOWN_5);
+		bw->Write(reward->UNKNOWN_6);
 	}
 
 	for(int i=0; i<reward->item_groups->Length; i++)
@@ -280,6 +292,11 @@ void Task::Save(int version, BinaryWriter^ bw)
 		bw->Write(UNKNOWN_17);
 	}
 
+	if(version >= 100)
+	{
+		bw->Write(UNKNOWN_17_01);
+	}
+
 	bw->Write(has_instant_teleport);
 	WriteLocation(version, bw, instant_teleport_location);
 	bw->Write(ai_trigger);
@@ -326,12 +343,21 @@ void Task::Save(int version, BinaryWriter^ bw)
 		bw->Write(pq->unknown_10);
 	}
 
+	if(version >= 100)
+	{
+		bw->Write(UNKNOWN_26_01);
+	}
+
 	bw->Write(level_min);
 	bw->Write(level_max);
 	bw->Write(UNKNOWN_27);
 	bw->Write(required_items_count);
 	bw->Write(required_items_unknown);
 	bw->Write(UNKNOWN_28);
+	if(version >= 100)
+	{
+		bw->Write(UNKNOWN_28_01);
+	}
 	bw->Write(given_items_count);
 	bw->Write(UNKNOWN_29);
 	bw->Write(UNKNOWN_30);
@@ -443,6 +469,11 @@ void Task::Save(int version, BinaryWriter^ bw)
 		bw->Write(UNKNOWN_55);
 	}
 
+	if(version >= 100)
+	{
+		bw->Write(UNKNOWN_55_01);
+	}
+
 	bw->Write(required_success_type);
 	bw->Write(required_npc_type);
 	bw->Write(required_chases_count);
@@ -468,6 +499,11 @@ void Task::Save(int version, BinaryWriter^ bw)
 	bw->Write(required_reach_locations->map_id);
 
 	bw->Write(required_wait_time);
+
+	if(version >= 100)
+	{
+		bw->Write(UNKNOWN_57_01);
+	}
 
 	if(version >= 89)
 	{
@@ -499,6 +535,11 @@ void Task::Save(int version, BinaryWriter^ bw)
 	{
 		bw->Write(UNKNOWN_60);
 		bw->Write(receive_quest_probability);
+	}
+
+	if(version >= 100)
+	{
+		bw->Write(UNKNOWN_60_01);
 	}
 
 	if(author_mode)

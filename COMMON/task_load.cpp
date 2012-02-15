@@ -73,6 +73,15 @@ TeamMembers^ ReadTeamMembers(int version, BinaryReader^ br)
 	team_member_group->amount_max = br->ReadInt32();
 	team_member_group->quest = br->ReadInt32();
 
+	if(version >= 100)
+	{
+		team_member_group->unknown_4 = br->ReadInt32();
+	}
+	else
+	{
+		team_member_group->unknown_4 = 0;
+	}
+
 	return team_member_group;
 }
 
@@ -220,6 +229,21 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 
 		reward->pq->scripts = gcnew array<array<unsigned char>^>(0);
 		reward->pq->messages = gcnew array<array<unsigned char>^>(0);
+	}
+
+	if(version >= 100)
+	{
+		reward->UNKNOWN_3 = br->ReadInt32();
+		reward->UNKNOWN_4 = br->ReadInt32();
+		reward->UNKNOWN_5 = br->ReadInt32();
+		reward->UNKNOWN_6 = br->ReadInt32();
+	}
+	else
+	{
+		reward->UNKNOWN_3 = 0;
+		reward->UNKNOWN_4 = 0;
+		reward->UNKNOWN_5 = 0;
+		reward->UNKNOWN_6 = 0;
 	}
 
 	reward->item_groups = gcnew array<ItemGroup^>(reward->item_groups_count);
@@ -387,10 +411,7 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		quest_trigger_locations->spans = gcnew array<Span^>(quest_trigger_locations->count);
 		quest_trigger_locations->spans[0] = ReadSpan(version, br);
 	}
-if(has_trigger && quest_trigger_locations->count == 0)
-{
-	int debug = 1;
-}
+
 	quest_unknown_locations_1 = gcnew LocationSpan();
 	quest_valid_locations = gcnew LocationSpan();
 	if(version >= 89)
@@ -416,6 +437,15 @@ if(has_trigger && quest_trigger_locations->count == 0)
 		quest_valid_locations->count = 0;
 		quest_valid_locations->spans = gcnew array<Span^>(0);
 		UNKNOWN_17 = gcnew array<unsigned char>(4);
+	}
+
+	if(version >= 100)
+	{
+		UNKNOWN_17_01 = br->ReadBoolean();
+	}
+	else
+	{
+		UNKNOWN_17_01 = false;
 	}
 
 	has_instant_teleport = br->ReadBoolean();
@@ -494,12 +524,31 @@ if(has_trigger && quest_trigger_locations->count == 0)
 	pq->scripts = gcnew array<PQ_AuditScript^>(pq->script_count);
 	pq->chases = gcnew array<PQ_AuditChase^>(pq->chase_count);
 
+	if(version >= 100)
+	{
+		UNKNOWN_26_01 = br->ReadBytes(2);
+	}
+	else
+	{
+		UNKNOWN_26_01 = gcnew array<unsigned char>(2);
+	}
+
 	level_min = br->ReadInt32();
 	level_max = br->ReadInt32();
 	UNKNOWN_27 = br->ReadBoolean();
 	required_items_count = br->ReadInt32();
 	required_items_unknown = br->ReadBytes(4);
 	UNKNOWN_28 = br->ReadBoolean();
+
+	if(version >= 100)
+	{
+		UNKNOWN_28_01 = br->ReadBoolean();
+	}
+	else
+	{
+		UNKNOWN_28_01 = false;
+	}
+
 	given_items_count = br->ReadInt32();
 	UNKNOWN_29 = br->ReadInt32();
 	UNKNOWN_30 = br->ReadInt32();
@@ -638,6 +687,18 @@ if(has_trigger && quest_trigger_locations->count == 0)
 		UNKNOWN_55 = gcnew array<unsigned char>(20);
 	}
 
+	// need to verify correct position
+	// between required_pq_contribution <-> required_success_type
+	// inside unknown_55 ?
+	if(version >= 100)
+	{
+		UNKNOWN_55_01 = br->ReadBytes(31);
+	}
+	else
+	{
+		UNKNOWN_55_01 = gcnew array<unsigned char>(31);
+	}
+
 	required_success_type = br->ReadInt32();
 	required_npc_type = br->ReadInt32();
 
@@ -672,6 +733,15 @@ if(has_trigger && quest_trigger_locations->count == 0)
 	required_reach_locations->map_id = br->ReadInt32();
 
 	required_wait_time = br->ReadInt32();
+
+	if(version >= 100)
+	{
+		UNKNOWN_57_01 = br->ReadBytes(15);
+	}
+	else
+	{
+		UNKNOWN_57_01 = gcnew array<unsigned char>(15);
+	}
 
 	// At this place the v89 positions must be guessed due to leak of informations...
 
@@ -736,6 +806,15 @@ if(has_trigger && quest_trigger_locations->count == 0)
 	{
 		UNKNOWN_60 = false;
 		receive_quest_probability = 0.0f;
+	}
+
+	if(version >= 100)
+	{
+		UNKNOWN_60_01 = br->ReadBoolean();
+	}
+	else
+	{
+		UNKNOWN_60_01 = false;
 	}
 
 // ################# AUTHOR TEXT #############################
