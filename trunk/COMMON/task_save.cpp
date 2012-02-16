@@ -147,8 +147,8 @@ void WriteReward(int version, BinaryWriter^ bw, Reward^ reward)
 
 	if(version >= 100)
 	{
-		bw->Write(reward->UNKNOWN_3);
-		bw->Write(reward->UNKNOWN_4);
+		bw->Write(reward->influence);
+		bw->Write(reward->prestige);
 		bw->Write(reward->UNKNOWN_5);
 		bw->Write(reward->UNKNOWN_6);
 	}

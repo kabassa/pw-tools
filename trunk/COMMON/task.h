@@ -174,8 +174,8 @@ public ref struct Reward
 	int item_groups_count;
 	array<unsigned char>^ SEPERATOR; // 4 Byte
 	PQ_Reward^ pq;
-	int UNKNOWN_3;
-	int UNKNOWN_4;
+	int influence;
+	int prestige;
 	int UNKNOWN_5;
 	int UNKNOWN_6;
 	array<ItemGroup^>^ item_groups;

@@ -233,19 +233,22 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 
 	if(version >= 100)
 	{
-		reward->UNKNOWN_3 = br->ReadInt32();
-		reward->UNKNOWN_4 = br->ReadInt32();
+		reward->influence = br->ReadInt32();
+		reward->prestige = br->ReadInt32();
 		reward->UNKNOWN_5 = br->ReadInt32();
 		reward->UNKNOWN_6 = br->ReadInt32();
 	}
 	else
 	{
-		reward->UNKNOWN_3 = 0;
-		reward->UNKNOWN_4 = 0;
+		reward->influence = 0;
+		reward->prestige = 0;
 		reward->UNKNOWN_5 = 0;
 		reward->UNKNOWN_6 = 0;
 	}
-
+if(reward->UNKNOWN_5 > 0)
+{
+	int debug = 1;
+}
 	reward->item_groups = gcnew array<ItemGroup^>(reward->item_groups_count);
 
 	for(int i=0; i<reward->item_groups->Length; i++)
