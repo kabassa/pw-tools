@@ -245,10 +245,7 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 		reward->UNKNOWN_5 = 0;
 		reward->UNKNOWN_6 = 0;
 	}
-if(reward->UNKNOWN_5 > 0)
-{
-	int debug = 1;
-}
+
 	reward->item_groups = gcnew array<ItemGroup^>(reward->item_groups_count);
 
 	for(int i=0; i<reward->item_groups->Length; i++)
@@ -399,56 +396,74 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	UNKNOWN_12 = br->ReadBoolean();
 	UNKNOWN_13 = br->ReadBoolean();
 	UNKNOWN_14 = br->ReadBoolean();
-	has_trigger = br->ReadBoolean();
-	quest_trigger_locations = gcnew LocationSpan();
-	quest_trigger_locations->map_id = br->ReadInt32();
 
+	// this location is available in version 55+
+	// but location structure has been updated in version 89+
+	// required to read old format and new format
+	quest_trigger_locations = gcnew LocationSpan();
 	if(version >= 89)
 	{
+		quest_trigger_locations->has_location = br->ReadBoolean();
+		quest_trigger_locations->map_id = br->ReadInt32();
 		quest_trigger_locations->count = br->ReadInt32();
 		quest_trigger_locations->spans = gcnew array<Span^>(quest_trigger_locations->count);
+		quest_trigger_locations->unknown_1 = br->ReadBytes(4);
 	}
 	else
 	{
+		quest_trigger_locations->has_location = br->ReadBoolean();
+		quest_trigger_locations->map_id = br->ReadInt32();
 		quest_trigger_locations->count = 1;
 		quest_trigger_locations->spans = gcnew array<Span^>(quest_trigger_locations->count);
 		quest_trigger_locations->spans[0] = ReadSpan(version, br);
+		quest_trigger_locations->unknown_1 = gcnew array<unsigned char>(4);
 	}
 
-	quest_unknown_locations_1 = gcnew LocationSpan();
-	quest_valid_locations = gcnew LocationSpan();
+	// this location is only available in version 89+
+	quest_unknown_locations = gcnew LocationSpan();
 	if(version >= 89)
 	{
-		UNKNOWN_15 = br->ReadBytes(5);
-		quest_unknown_locations_1->map_id = br->ReadInt32();
-		quest_unknown_locations_1->count = br->ReadInt32();
-		quest_unknown_locations_1->spans = gcnew array<Span^>(quest_unknown_locations_1->count);
-		UNKNOWN_16 = br->ReadBytes(5);
-		quest_valid_locations->map_id = br->ReadInt32();
-		quest_valid_locations->count = br->ReadInt32();
-		quest_valid_locations->spans = gcnew array<Span^>(quest_valid_locations->count);
-		UNKNOWN_17 = br->ReadBytes(4);
+		quest_unknown_locations->has_location = br->ReadBoolean();
+		quest_unknown_locations->map_id = br->ReadInt32();
+		quest_unknown_locations->count = br->ReadInt32();
+		quest_unknown_locations->spans = gcnew array<Span^>(quest_unknown_locations->count);
+		quest_unknown_locations->unknown_1 = br->ReadBytes(4);
 	}
 	else
 	{
-		UNKNOWN_15 = gcnew array<unsigned char>(5);
-		quest_unknown_locations_1->map_id = 0;
-		quest_unknown_locations_1->count = 0;
-		quest_unknown_locations_1->spans = gcnew array<Span^>(0);
-		UNKNOWN_16 = gcnew array<unsigned char>(5);
+		quest_unknown_locations->has_location = false;
+		quest_unknown_locations->map_id = 0;
+		quest_unknown_locations->count = 0;
+		quest_unknown_locations->spans = gcnew array<Span^>(0);
+		quest_unknown_locations->unknown_1 = gcnew array<unsigned char>(4);
+	}
+
+	// this location is only available in version 89+
+	quest_valid_locations = gcnew LocationSpan();
+	if(version >= 89)
+	{
+		quest_valid_locations->has_location = br->ReadBoolean();
+		quest_valid_locations->map_id = br->ReadInt32();
+		quest_valid_locations->count = br->ReadInt32();
+		quest_valid_locations->spans = gcnew array<Span^>(quest_valid_locations->count);
+		quest_valid_locations->unknown_1 = br->ReadBytes(4);
+	}
+	else
+	{
+		quest_valid_locations->has_location = false;
 		quest_valid_locations->map_id = 0;
 		quest_valid_locations->count = 0;
 		quest_valid_locations->spans = gcnew array<Span^>(0);
-		UNKNOWN_17 = gcnew array<unsigned char>(4);
+		quest_valid_locations->unknown_1 = gcnew array<unsigned char>(4);
 	}
 
 	if(version >= 100)
 	{
-		UNKNOWN_17_01 = br->ReadBoolean();
+		UNKNOWN_17 = br->ReadBoolean();
 	}
 	else
 	{
-		UNKNOWN_17_01 = false;
+		UNKNOWN_17 = false;
 	}
 
 	has_instant_teleport = br->ReadBoolean();
@@ -724,16 +739,23 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	required_reach_locations = gcnew LocationSpan();
 	if(version >= 89)
 	{
+		// required_reach_locations->has_location = br->ReadBoolean();
+			required_reach_locations->has_location = false;
 		required_reach_locations->count = br->ReadInt32();
 		required_reach_locations->spans = gcnew array<Span^>(required_reach_locations->count);
+		required_reach_locations->map_id = br->ReadInt32();
+		// required_reach_locations->unknown_1 = br->ReadBytes(4);
+			required_reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 	}
 	else
 	{
+		required_reach_locations->has_location = false;
 		required_reach_locations->count = 1;
 		required_reach_locations->spans = gcnew array<Span^>(required_reach_locations->count);
 		required_reach_locations->spans[0] = ReadSpan(version, br);
+		required_reach_locations->map_id = br->ReadInt32();
+		required_reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 	}
-	required_reach_locations->map_id = br->ReadInt32();
 
 	required_wait_time = br->ReadInt32();
 
@@ -840,9 +862,9 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	if(version >= 89)
 	{
-		for(int m=0; m<quest_unknown_locations_1->count; m++)
+		for(int m=0; m<quest_unknown_locations->count; m++)
 		{
-			quest_unknown_locations_1->spans[m] = ReadSpan(version, br);
+			quest_unknown_locations->spans[m] = ReadSpan(version, br);
 		}
 
 		for(int m=0; m<quest_valid_locations->count; m++)

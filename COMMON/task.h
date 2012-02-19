@@ -73,9 +73,11 @@ public ref struct Span
 
 public ref struct LocationSpan
 {
+	bool has_location;
 	int map_id;
 	int count;
 	array<Span^>^ spans;
+	array<unsigned char>^ unknown_1; // 4 Byte
 };
 
 public ref struct TeamMembers
@@ -473,14 +475,10 @@ public ref class Task
 	public: bool UNKNOWN_12;
 	public: bool UNKNOWN_13;
 	public: bool UNKNOWN_14;
-	public: bool has_trigger;
 	public: LocationSpan^ quest_trigger_locations;
-	public: array<unsigned char>^ UNKNOWN_15; // 5 Byte
-	public: LocationSpan^ quest_unknown_locations_1;
-	public: array<unsigned char>^ UNKNOWN_16; // 5 Byte
+	public: LocationSpan^ quest_unknown_locations;
 	public: LocationSpan^ quest_valid_locations;
-	public: array<unsigned char>^ UNKNOWN_17; // 4 Byte
-	public: bool UNKNOWN_17_01; // 1 Byte
+	public: bool UNKNOWN_17; // 1 Byte
 	public: bool has_instant_teleport;
 	public: Location^ instant_teleport_location;
 	public: int ai_trigger;
