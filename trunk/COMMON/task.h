@@ -475,9 +475,9 @@ public ref class Task
 	public: bool UNKNOWN_12;
 	public: bool UNKNOWN_13;
 	public: bool UNKNOWN_14;
-	public: LocationSpan^ quest_trigger_locations;
-	public: LocationSpan^ quest_unknown_locations;
-	public: LocationSpan^ quest_valid_locations;
+	public: LocationSpan^ trigger_locations;
+	public: LocationSpan^ unknown_locations;
+	public: LocationSpan^ valid_locations;
 	public: bool UNKNOWN_17; // 1 Byte
 	public: bool has_instant_teleport;
 	public: Location^ instant_teleport_location;
@@ -574,7 +574,7 @@ public ref class Task
 	public: int required_coins;
 	public: array<unsigned char>^ UNKNOWN_56; // 16 Byte
 	public: array<unsigned char>^ UNKNOWN_57; // 12 Byte
-	public: LocationSpan^ required_reach_locations;
+	public: LocationSpan^ reach_locations;
 	public: int required_wait_time;
 	public: array<unsigned char>^ UNKNOWN_57_01; // 15 Byte
 	public: array<unsigned char>^ UNKNOWN_58; // 8 Byte

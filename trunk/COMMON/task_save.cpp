@@ -273,34 +273,34 @@ void Task::Save(int version, BinaryWriter^ bw)
 	// trigger location old and new format
 	if(version >= 89)
 	{
-		bw->Write(quest_trigger_locations->has_location);
-		bw->Write(quest_trigger_locations->map_id);
-		bw->Write(quest_trigger_locations->count);
-		bw->Write(quest_trigger_locations->unknown_1);
+		bw->Write(trigger_locations->has_location);
+		bw->Write(trigger_locations->map_id);
+		bw->Write(trigger_locations->count);
+		bw->Write(trigger_locations->unknown_1);
 	}
 	else
 	{
-		bw->Write(quest_trigger_locations->has_location);
-		bw->Write(quest_trigger_locations->map_id);
-		WriteSpan(version, bw, quest_trigger_locations->spans[0]); // write only location [0]
+		bw->Write(trigger_locations->has_location);
+		bw->Write(trigger_locations->map_id);
+		WriteSpan(version, bw, trigger_locations->spans[0]); // write only location [0]
 	}
 
 	// unknown location only version 89+
 	if(version >= 89)
 	{
-		bw->Write(quest_unknown_locations->has_location);
-		bw->Write(quest_unknown_locations->map_id);
-		bw->Write(quest_unknown_locations->count);
-		bw->Write(quest_unknown_locations->unknown_1);
+		bw->Write(unknown_locations->has_location);
+		bw->Write(unknown_locations->map_id);
+		bw->Write(unknown_locations->count);
+		bw->Write(unknown_locations->unknown_1);
 	}
 
 	// valid location only version 89+
 	if(version >= 89)
 	{
-		bw->Write(quest_valid_locations->has_location);
-		bw->Write(quest_valid_locations->map_id);
-		bw->Write(quest_valid_locations->count);
-		bw->Write(quest_valid_locations->unknown_1);
+		bw->Write(valid_locations->has_location);
+		bw->Write(valid_locations->map_id);
+		bw->Write(valid_locations->count);
+		bw->Write(valid_locations->unknown_1);
 	}
 
 	if(version >= 100)
@@ -501,15 +501,15 @@ void Task::Save(int version, BinaryWriter^ bw)
 
 	if(version >= 89)
 	{
-		// bw->Write(required_reach_locations->has_location);
-		bw->Write(required_reach_locations->count);
-		bw->Write(required_reach_locations->map_id);
-		// bw->Write(required_reach_locations->unknown_1);
+		// bw->Write(reach_locations->has_location);
+		bw->Write(reach_locations->count);
+		bw->Write(reach_locations->map_id);
+		// bw->Write(reach_locations->unknown_1);
 	}
 	else
 	{
-		WriteSpan(version, bw, required_reach_locations->spans[0]);
-		bw->Write(required_reach_locations->map_id);
+		WriteSpan(version, bw, reach_locations->spans[0]);
+		bw->Write(reach_locations->map_id);
 	}
 
 	bw->Write(required_wait_time);
@@ -572,14 +572,14 @@ void Task::Save(int version, BinaryWriter^ bw)
 
 	if(version >= 89)
 	{
-		for(int m=0; m<quest_unknown_locations->count; m++)
+		for(int m=0; m<unknown_locations->count; m++)
 		{
-			WriteSpan(version, bw, quest_unknown_locations->spans[m]);
+			WriteSpan(version, bw, unknown_locations->spans[m]);
 		}
 
-		for(int m=0; m<quest_valid_locations->count; m++)
+		for(int m=0; m<valid_locations->count; m++)
 		{
-			WriteSpan(version, bw, quest_valid_locations->spans[m]);
+			WriteSpan(version, bw, valid_locations->spans[m]);
 		}
 	}
 
@@ -632,14 +632,14 @@ void Task::Save(int version, BinaryWriter^ bw)
 
 	if(version >= 89)
 	{
-		for(int m=0; m<quest_trigger_locations->count; m++)
+		for(int m=0; m<trigger_locations->count; m++)
 		{
-			WriteSpan(version, bw, quest_trigger_locations->spans[m]);
+			WriteSpan(version, bw, trigger_locations->spans[m]);
 		}
 
-		for(int m=0; m<required_reach_locations->count;m++)
+		for(int m=0; m<reach_locations->count;m++)
 		{
-			WriteSpan(version, bw, required_reach_locations->spans[m]);
+			WriteSpan(version, bw, reach_locations->spans[m]);
 		}
 
 		for(int m=0; m<pq->leave_area->location->count; m++)
