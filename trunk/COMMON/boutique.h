@@ -21,6 +21,10 @@ public ref struct SaleOption
 
 public ref struct Item
 {
+	// for internal DB usage
+	// if true the item will be exported to server file
+	bool activate;
+
     int shop_id;
     int cat_index;
     int sub_cat_index;
