@@ -619,18 +619,23 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	required_gender = br->ReadInt32();
 	UNKNOWN_40 = br->ReadBoolean();
 
+	required_occupations = gcnew array<int>(10);
+
+	required_occupations_count = br->ReadInt32();
+
 	if(version >= 89)
 	{
-		required_occupations = gcnew array<int>(10);
+		for(int i=0; i<10; i++)
+		{
+			required_occupations[i] = br->ReadInt32();
+		}
 	}
 	else
 	{
-		required_occupations = gcnew array<int>(8);
-	}
-	required_occupations_count = br->ReadInt32();
-	for(int i=0; i<required_occupations->Length; i++)
-	{
-		required_occupations[i] = br->ReadInt32();
+		for(int i=0; i<8; i++)
+		{
+			required_occupations[i] = br->ReadInt32();
+		}
 	}
 
 	UNKNOWN_41 = br->ReadBoolean();

@@ -407,9 +407,11 @@ void Task::Save(int version, BinaryWriter^ bw)
 	bw->Write(required_gender);
 	bw->Write(UNKNOWN_40);
 
-	if(version < 89 && required_occupations->Length > 8)
+	if(version < 89)
 	{
-		// remove occupations [8] & [9] if exist
+// ToDo: remove entries with new classes (mystic & seeker)
+// i.e. copy valid occupations to temp array
+		// remove occupations [8] & [9]
 		for(int i=8; i<required_occupations->Length; i++)
 		{
 			if(required_occupations[i] > 0)
