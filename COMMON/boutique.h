@@ -13,7 +13,7 @@ public ref struct SaleOption
 	unsigned int expire_date;
 	unsigned int duration;
 	unsigned int start_date;
-	int type;
+	int control_type;
 	unsigned int day;
 	unsigned int status;
 	unsigned int flags;
