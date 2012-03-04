@@ -745,12 +745,12 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	if(version >= 89)
 	{
 		// reach_locations->has_location = br->ReadBoolean();
-			reach_locations->has_location = false;
+reach_locations->has_location = false;
 		reach_locations->count = br->ReadInt32();
 		reach_locations->spans = gcnew array<Span^>(reach_locations->count);
 		reach_locations->map_id = br->ReadInt32();
 		// reach_locations->unknown_1 = br->ReadBytes(4);
-			reach_locations->unknown_1 = gcnew array<unsigned char>(4);
+reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 	}
 	else
 	{
