@@ -144,6 +144,15 @@ public ref class eList
 		}
 		return;
 	}
+	// return the type of the field in string representation
+	public: String^ GetType(int FieldIndex)
+	{
+		if(FieldIndex > -1)
+		{
+			return elementTypes[FieldIndex];
+		}
+		return "";
+	}
 	// delete Item
 	public: void RemoveItem(int itemIndex)
 	{

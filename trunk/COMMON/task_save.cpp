@@ -127,6 +127,8 @@ void WriteReward(int version, BinaryWriter^ bw, Reward^ reward)
 	if(version >= 89)
 	{
 		bw->Write(reward->pq->chase_count);
+		bw->Write(reward->pq->unknown_0);
+		bw->Write(reward->pq->event_gold);
 		bw->Write(reward->pq->unknown_1);
 		bw->Write(reward->pq->unknown_quest);
 		bw->Write(reward->pq->unknown_2);

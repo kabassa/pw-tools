@@ -16,6 +16,7 @@ public ref class ReplaceWindow : public System::Windows::Forms::Form
 	{
 		eLC = ListCollection;
 		InitializeComponent();
+		comboBox_operation->SelectedIndex = 0;
 	}
 
 	protected:
@@ -33,24 +34,25 @@ public ref class ReplaceWindow : public System::Windows::Forms::Form
 	eListCollection^ eLC;
 
 	private: System::Windows::Forms::Label^  label1;
-private: System::Windows::Forms::TextBox^  textBox_list;
-private: System::Windows::Forms::TextBox^  textBox_item;
-
-
+	private: System::Windows::Forms::TextBox^  textBox_list;
+	private: System::Windows::Forms::TextBox^  textBox_item;
 	private: System::Windows::Forms::Label^  label2;
-private: System::Windows::Forms::TextBox^  textBox_field;
-
+	private: System::Windows::Forms::TextBox^  textBox_field;
 	private: System::Windows::Forms::Label^  label3;
-private: System::Windows::Forms::TextBox^  textBox_oldValue;
-
+	private: System::Windows::Forms::TextBox^  textBox_oldValue;
 	private: System::Windows::Forms::Label^  label4;
-private: System::Windows::Forms::TextBox^  textBox_newValue;
-
+	private: System::Windows::Forms::TextBox^  textBox_newValue;
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::Button^  button_replace;
 	private: System::Windows::Forms::Button^  button_cancel;
 	private: System::Windows::Forms::GroupBox^  groupBox1;
-	private:
+	private: System::Windows::Forms::GroupBox^  groupBox2;
+	private: System::Windows::Forms::RadioButton^  radioButton_replace;
+	private: System::Windows::Forms::RadioButton^  radioButton_recalculate;
+	private: System::Windows::Forms::GroupBox^  groupBox3;
+	private: System::Windows::Forms::NumericUpDown^  numericUpDown_operand;
+	private: System::Windows::Forms::ComboBox^  comboBox_operation;
+private:
 	/// <summary>
 	/// Required designer variable.
 	/// </summary>
@@ -76,7 +78,16 @@ private: System::Windows::Forms::TextBox^  textBox_newValue;
 		this->button_replace = (gcnew System::Windows::Forms::Button());
 		this->button_cancel = (gcnew System::Windows::Forms::Button());
 		this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+		this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
+		this->radioButton_replace = (gcnew System::Windows::Forms::RadioButton());
+		this->radioButton_recalculate = (gcnew System::Windows::Forms::RadioButton());
+		this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
+		this->numericUpDown_operand = (gcnew System::Windows::Forms::NumericUpDown());
+		this->comboBox_operation = (gcnew System::Windows::Forms::ComboBox());
 		this->groupBox1->SuspendLayout();
+		this->groupBox2->SuspendLayout();
+		this->groupBox3->SuspendLayout();
+		(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_operand))->BeginInit();
 		this->SuspendLayout();
 		// 
 		// label1
@@ -135,9 +146,8 @@ private: System::Windows::Forms::TextBox^  textBox_newValue;
 		// 
 		// textBox_oldValue
 		// 
-		this->textBox_oldValue->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left) 
-			| System::Windows::Forms::AnchorStyles::Right));
-		this->textBox_oldValue->Location = System::Drawing::Point(88, 118);
+		this->textBox_oldValue->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+		this->textBox_oldValue->Location = System::Drawing::Point(88, 19);
 		this->textBox_oldValue->Name = L"textBox_oldValue";
 		this->textBox_oldValue->Size = System::Drawing::Size(174, 20);
 		this->textBox_oldValue->TabIndex = 7;
@@ -145,9 +155,8 @@ private: System::Windows::Forms::TextBox^  textBox_newValue;
 		// 
 		// label4
 		// 
-		this->label4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
 		this->label4->AutoSize = true;
-		this->label4->Location = System::Drawing::Point(6, 121);
+		this->label4->Location = System::Drawing::Point(6, 22);
 		this->label4->Name = L"label4";
 		this->label4->Size = System::Drawing::Size(56, 13);
 		this->label4->TabIndex = 6;
@@ -155,9 +164,8 @@ private: System::Windows::Forms::TextBox^  textBox_newValue;
 		// 
 		// textBox_newValue
 		// 
-		this->textBox_newValue->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left) 
-			| System::Windows::Forms::AnchorStyles::Right));
-		this->textBox_newValue->Location = System::Drawing::Point(88, 144);
+		this->textBox_newValue->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+		this->textBox_newValue->Location = System::Drawing::Point(88, 45);
 		this->textBox_newValue->Name = L"textBox_newValue";
 		this->textBox_newValue->Size = System::Drawing::Size(174, 20);
 		this->textBox_newValue->TabIndex = 9;
@@ -165,9 +173,8 @@ private: System::Windows::Forms::TextBox^  textBox_newValue;
 		// 
 		// label5
 		// 
-		this->label5->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
 		this->label5->AutoSize = true;
-		this->label5->Location = System::Drawing::Point(6, 147);
+		this->label5->Location = System::Drawing::Point(6, 48);
 		this->label5->Name = L"label5";
 		this->label5->Size = System::Drawing::Size(62, 13);
 		this->label5->TabIndex = 8;
@@ -175,8 +182,8 @@ private: System::Windows::Forms::TextBox^  textBox_newValue;
 		// 
 		// button_replace
 		// 
-		this->button_replace->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
-		this->button_replace->Location = System::Drawing::Point(12, 188);
+		this->button_replace->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+		this->button_replace->Location = System::Drawing::Point(12, 302);
 		this->button_replace->Name = L"button_replace";
 		this->button_replace->Size = System::Drawing::Size(131, 23);
 		this->button_replace->TabIndex = 10;
@@ -186,10 +193,10 @@ private: System::Windows::Forms::TextBox^  textBox_newValue;
 		// 
 		// button_cancel
 		// 
-		this->button_cancel->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+		this->button_cancel->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
 		this->button_cancel->DialogResult = System::Windows::Forms::DialogResult::Cancel;
-		this->button_cancel->Location = System::Drawing::Point(149, 188);
-		this->button_cancel->Name = L"button_close";
+		this->button_cancel->Location = System::Drawing::Point(149, 302);
+		this->button_cancel->Name = L"button_cancel";
 		this->button_cancel->Size = System::Drawing::Size(131, 23);
 		this->button_cancel->TabIndex = 11;
 		this->button_cancel->Text = L"Close";
@@ -198,25 +205,89 @@ private: System::Windows::Forms::TextBox^  textBox_newValue;
 		// 
 		// groupBox1
 		// 
-		this->groupBox1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
-			| System::Windows::Forms::AnchorStyles::Left) 
+		this->groupBox1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left) 
 			| System::Windows::Forms::AnchorStyles::Right));
 		this->groupBox1->Controls->Add(this->label1);
 		this->groupBox1->Controls->Add(this->textBox_list);
 		this->groupBox1->Controls->Add(this->label2);
-		this->groupBox1->Controls->Add(this->textBox_newValue);
 		this->groupBox1->Controls->Add(this->textBox_item);
-		this->groupBox1->Controls->Add(this->label5);
 		this->groupBox1->Controls->Add(this->label3);
-		this->groupBox1->Controls->Add(this->textBox_oldValue);
 		this->groupBox1->Controls->Add(this->textBox_field);
-		this->groupBox1->Controls->Add(this->label4);
 		this->groupBox1->Location = System::Drawing::Point(12, 12);
 		this->groupBox1->Name = L"groupBox1";
-		this->groupBox1->Size = System::Drawing::Size(268, 170);
+		this->groupBox1->Size = System::Drawing::Size(268, 98);
 		this->groupBox1->TabIndex = 0;
 		this->groupBox1->TabStop = false;
-		this->groupBox1->Text = L"Replace Settings";
+		this->groupBox1->Text = L"Scan Settings";
+		// 
+		// groupBox2
+		// 
+		this->groupBox2->Controls->Add(this->textBox_oldValue);
+		this->groupBox2->Controls->Add(this->label5);
+		this->groupBox2->Controls->Add(this->label4);
+		this->groupBox2->Controls->Add(this->textBox_newValue);
+		this->groupBox2->Location = System::Drawing::Point(12, 139);
+		this->groupBox2->Name = L"groupBox2";
+		this->groupBox2->Size = System::Drawing::Size(268, 71);
+		this->groupBox2->TabIndex = 12;
+		this->groupBox2->TabStop = false;
+		this->groupBox2->Text = L"Replace Settings";
+		// 
+		// radioButton_replace
+		// 
+		this->radioButton_replace->AutoSize = true;
+		this->radioButton_replace->Checked = true;
+		this->radioButton_replace->Location = System::Drawing::Point(12, 116);
+		this->radioButton_replace->Name = L"radioButton_replace";
+		this->radioButton_replace->Size = System::Drawing::Size(65, 17);
+		this->radioButton_replace->TabIndex = 13;
+		this->radioButton_replace->TabStop = true;
+		this->radioButton_replace->Text = L"Replace";
+		this->radioButton_replace->UseVisualStyleBackColor = true;
+		// 
+		// radioButton_recalculate
+		// 
+		this->radioButton_recalculate->AutoSize = true;
+		this->radioButton_recalculate->Location = System::Drawing::Point(12, 216);
+		this->radioButton_recalculate->Name = L"radioButton_recalculate";
+		this->radioButton_recalculate->Size = System::Drawing::Size(172, 17);
+		this->radioButton_recalculate->TabIndex = 14;
+		this->radioButton_recalculate->Text = L"Re-Calculate (only for numbers)";
+		this->radioButton_recalculate->UseVisualStyleBackColor = true;
+		// 
+		// groupBox3
+		// 
+		this->groupBox3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left) 
+			| System::Windows::Forms::AnchorStyles::Right));
+		this->groupBox3->Controls->Add(this->numericUpDown_operand);
+		this->groupBox3->Controls->Add(this->comboBox_operation);
+		this->groupBox3->Location = System::Drawing::Point(12, 239);
+		this->groupBox3->Name = L"groupBox3";
+		this->groupBox3->Size = System::Drawing::Size(268, 48);
+		this->groupBox3->TabIndex = 15;
+		this->groupBox3->TabStop = false;
+		this->groupBox3->Text = L"Re-Calculate Settings";
+		// 
+		// numericUpDown_operand
+		// 
+		this->numericUpDown_operand->DecimalPlaces = 3;
+		this->numericUpDown_operand->Location = System::Drawing::Point(137, 19);
+		this->numericUpDown_operand->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1000000, 0, 0, 0});
+		this->numericUpDown_operand->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1000000, 0, 0, System::Int32::MinValue});
+		this->numericUpDown_operand->Name = L"numericUpDown_operand";
+		this->numericUpDown_operand->Size = System::Drawing::Size(125, 20);
+		this->numericUpDown_operand->TabIndex = 1;
+		this->numericUpDown_operand->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 0});
+		// 
+		// comboBox_operation
+		// 
+		this->comboBox_operation->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+		this->comboBox_operation->FormattingEnabled = true;
+		this->comboBox_operation->Items->AddRange(gcnew cli::array< System::Object^  >(4) {L"*", L"/", L"+", L"-"});
+		this->comboBox_operation->Location = System::Drawing::Point(9, 19);
+		this->comboBox_operation->Name = L"comboBox_operation";
+		this->comboBox_operation->Size = System::Drawing::Size(122, 21);
+		this->comboBox_operation->TabIndex = 0;
 		// 
 		// ReplaceWindow
 		// 
@@ -224,15 +295,19 @@ private: System::Windows::Forms::TextBox^  textBox_newValue;
 		this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 		this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 		this->CancelButton = this->button_cancel;
-		this->ClientSize = System::Drawing::Size(292, 223);
+		this->ClientSize = System::Drawing::Size(292, 337);
 		this->ControlBox = false;
+		this->Controls->Add(this->groupBox3);
+		this->Controls->Add(this->radioButton_recalculate);
+		this->Controls->Add(this->radioButton_replace);
+		this->Controls->Add(this->groupBox2);
 		this->Controls->Add(this->groupBox1);
 		this->Controls->Add(this->button_cancel);
 		this->Controls->Add(this->button_replace);
 		this->MaximizeBox = false;
-		this->MaximumSize = System::Drawing::Size(300, 250);
+		this->MaximumSize = System::Drawing::Size(300, 364);
 		this->MinimizeBox = false;
-		this->MinimumSize = System::Drawing::Size(300, 250);
+		this->MinimumSize = System::Drawing::Size(300, 364);
 		this->Name = L"ReplaceWindow";
 		this->ShowIcon = false;
 		this->ShowInTaskbar = false;
@@ -241,7 +316,12 @@ private: System::Windows::Forms::TextBox^  textBox_newValue;
 		this->Text = L" Logic Replace";
 		this->groupBox1->ResumeLayout(false);
 		this->groupBox1->PerformLayout();
+		this->groupBox2->ResumeLayout(false);
+		this->groupBox2->PerformLayout();
+		this->groupBox3->ResumeLayout(false);
+		(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown_operand))->EndInit();
 		this->ResumeLayout(false);
+		this->PerformLayout();
 
 	}
 #pragma endregion
@@ -259,6 +339,8 @@ private: System::Windows::Forms::TextBox^  textBox_newValue;
 		int v_max;
 		String^ oldValue = textBox_oldValue->Text;
 		String^ newValue = textBox_newValue->Text;
+		String^ operation = comboBox_operation->SelectedItem->ToString();
+		Decimal operand = numericUpDown_operand->Value;
 
 		if(textBox_list->Text == "*")
 		{
@@ -311,10 +393,137 @@ private: System::Windows::Forms::TextBox^  textBox_newValue;
 				}
 				for(v; v<v_max;v++)
 				{
-					if(oldValue == "*" || oldValue == eLC->GetValue(l, e, v)->Trim(gcnew array<wchar_t>{0}))
+					if(radioButton_replace->Checked)
 					{
-						eLC->SetValue(l, e, v, newValue);
-						replacementCount++;
+						if(oldValue == "*" || oldValue == eLC->GetValue(l, e, v)->Trim(gcnew array<wchar_t>{0}))
+						{
+							eLC->SetValue(l, e, v, newValue);
+							replacementCount++;
+						}
+					}
+					if(radioButton_recalculate->Checked)
+					{
+						String^ type = eLC->GetType(l, v);
+						if(type == "int16")
+						{
+							short op1 = Convert::ToInt16(eLC->GetValue(l, e, v));
+							short op2 = Convert::ToInt16(operand);
+							String^ result = "";
+							if(operation == "*")
+							{
+								result = (op1*op2).ToString();
+							}
+							if(operation == "/")
+							{
+								result = (op1/op2).ToString();
+							}
+							if(operation == "+")
+							{
+								result = (op1+op2).ToString();
+							}
+							if(operation == "-")
+							{
+								result = (op1-op2).ToString();
+							}
+							eLC->SetValue(l, e, v, result);
+							replacementCount++;
+						}
+						if(type == "int32")
+						{
+							int op1 = Convert::ToInt32(eLC->GetValue(l, e, v));
+							int op2 = Convert::ToInt32(operand);
+							String^ result = "";
+							if(operation == "*")
+							{
+								result = (op1*op2).ToString();
+							}
+							if(operation == "/")
+							{
+								result = (op1/op2).ToString();
+							}
+							if(operation == "+")
+							{
+								result = (op1+op2).ToString();
+							}
+							if(operation == "-")
+							{
+								result = (op1-op2).ToString();
+							}
+							eLC->SetValue(l, e, v, result);
+							replacementCount++;
+						}
+						if(type == "int64")
+						{
+							__int64 op1 = Convert::ToInt64(eLC->GetValue(l, e, v));
+							__int64 op2 = Convert::ToInt64(operand);
+							String^ result = "";
+							if(operation == "*")
+							{
+								result = (op1*op2).ToString();
+							}
+							if(operation == "/")
+							{
+								result = (op1/op2).ToString();
+							}
+							if(operation == "+")
+							{
+								result = (op1+op2).ToString();
+							}
+							if(operation == "-")
+							{
+								result = (op1-op2).ToString();
+							}
+							eLC->SetValue(l, e, v, result);
+							replacementCount++;
+						}
+						if(type == "float")
+						{
+							float op1 = Convert::ToSingle(eLC->GetValue(l, e, v));
+							float op2 = Convert::ToSingle(operand);
+							String^ result = "";
+							if(operation == "*")
+							{
+								result = (op1*op2).ToString("F3");
+							}
+							if(operation == "/")
+							{
+								result = (op1/op2).ToString("F3");
+							}
+							if(operation == "+")
+							{
+								result = (op1+op2).ToString("F3");
+							}
+							if(operation == "-")
+							{
+								result = (op1-op2).ToString("F3");
+							}
+							eLC->SetValue(l, e, v, result);
+							replacementCount++;
+						}
+						if(type == "double")
+						{
+							double op1 = Convert::ToDouble(eLC->GetValue(l, e, v));
+							double op2 = Convert::ToDouble(operand);
+							String^ result = "";
+							if(operation == "*")
+							{
+								result = (op1*op2).ToString("F3");
+							}
+							if(operation == "/")
+							{
+								result = (op1/op2).ToString("F3");
+							}
+							if(operation == "+")
+							{
+								result = (op1+op2).ToString("F3");
+							}
+							if(operation == "-")
+							{
+								result = (op1-op2).ToString("F3");
+							}
+							eLC->SetValue(l, e, v, result);
+							replacementCount++;
+						}
 					}
 				}
 			}

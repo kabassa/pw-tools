@@ -178,7 +178,9 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 	if(version >= 89)
 	{
 		reward->pq->chase_count = br->ReadInt32();
-		reward->pq->unknown_1 = br->ReadBytes(19);
+		reward->pq->unknown_0 = br->ReadBytes(6);
+		reward->pq->event_gold = br->ReadInt32();
+		reward->pq->unknown_1 = br->ReadBytes(9);
 		reward->pq->unknown_quest = br->ReadInt32();
 		reward->pq->unknown_2 = br->ReadBytes(4);
 		reward->pq->unknown_level = br->ReadInt32();
@@ -198,7 +200,9 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 	else
 	{
 		reward->pq->chase_count = 0;
-		reward->pq->unknown_1 = gcnew array<unsigned char>(19);
+		reward->pq->unknown_0 = gcnew array<unsigned char>(6);
+		reward->pq->event_gold = 0;
+		reward->pq->unknown_1 = gcnew array<unsigned char>(9);
 		reward->pq->unknown_quest = 0;
 		reward->pq->unknown_2 = gcnew array<unsigned char>(4);
 		reward->pq->unknown_level = 0;
