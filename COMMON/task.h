@@ -121,7 +121,9 @@ public ref struct PQ_Special
 public ref struct PQ_Reward
 {
 	int chase_count; // public reward chases count
-	array<unsigned char>^ unknown_1; // 19 Byte
+	array<unsigned char>^ unknown_0; // 6 Byte
+	int event_gold;
+	array<unsigned char>^ unknown_1; // 9 Byte
 	int unknown_quest; // New Quest ???
 	array<unsigned char>^ unknown_2; // 4 Byte
 	int unknown_level; // Level ???

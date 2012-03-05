@@ -38,6 +38,11 @@ public ref class eListCollection
 		Lists[ListIndex]->SetValue(ElementIndex, FieldIndex, Value);
 	}
 
+	public: String^ GetType(int ListIndex, int FieldIndex)
+	{
+		return Lists[ListIndex]->GetType(FieldIndex);
+	}
+
 	private: Object^ readValue(BinaryReader^ br, String^ type)
 	{
 		if(type == "int16")
