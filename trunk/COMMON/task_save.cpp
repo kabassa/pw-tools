@@ -53,7 +53,7 @@ void WriteTeamMembers(int version, BinaryWriter^ bw, TeamMembers^ team_member_gr
 	bw->Write(team_member_group->quest);
 	if(version >= 100)
 	{
-		bw->Write(team_member_group->unknown_4);
+		bw->Write(team_member_group->order);
 	}
 }
 

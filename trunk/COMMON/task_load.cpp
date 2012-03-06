@@ -75,11 +75,11 @@ TeamMembers^ ReadTeamMembers(int version, BinaryReader^ br)
 
 	if(version >= 100)
 	{
-		team_member_group->unknown_4 = br->ReadInt32();
+		team_member_group->order = br->ReadInt32();
 	}
 	else
 	{
-		team_member_group->unknown_4 = 0;
+		team_member_group->order = 0;
 	}
 
 	return team_member_group;

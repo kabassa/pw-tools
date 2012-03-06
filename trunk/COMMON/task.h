@@ -90,7 +90,7 @@ public ref struct TeamMembers
 	int amount_min;
 	int amount_max;
 	int quest;
-	int unknown_4;
+	int order;
 };
 
 public ref struct PQ_Chase
