@@ -424,22 +424,22 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	}
 
 	// this location is only available in version 89+
-	unknown_locations = gcnew LocationSpan();
+	fail_locations = gcnew LocationSpan();
 	if(version >= 89)
 	{
-		unknown_locations->has_location = br->ReadBoolean();
-		unknown_locations->map_id = br->ReadInt32();
-		unknown_locations->count = br->ReadInt32();
-		unknown_locations->spans = gcnew array<Span^>(unknown_locations->count);
-		unknown_locations->unknown_1 = br->ReadBytes(4);
+		fail_locations->has_location = br->ReadBoolean();
+		fail_locations->map_id = br->ReadInt32();
+		fail_locations->count = br->ReadInt32();
+		fail_locations->spans = gcnew array<Span^>(fail_locations->count);
+		fail_locations->unknown_1 = br->ReadBytes(4);
 	}
 	else
 	{
-		unknown_locations->has_location = false;
-		unknown_locations->map_id = 0;
-		unknown_locations->count = 0;
-		unknown_locations->spans = gcnew array<Span^>(0);
-		unknown_locations->unknown_1 = gcnew array<unsigned char>(4);
+		fail_locations->has_location = false;
+		fail_locations->map_id = 0;
+		fail_locations->count = 0;
+		fail_locations->spans = gcnew array<Span^>(0);
+		fail_locations->unknown_1 = gcnew array<unsigned char>(4);
 	}
 
 	// this location is only available in version 89+
@@ -867,22 +867,7 @@ reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 		date_spans[i] = ReadDateSpan(version, br);
 	}
 
-// ################# V89 DONT LEAVE LOCATIONS #############################
-
-	if(version >= 89)
-	{
-		for(int m=0; m<unknown_locations->count; m++)
-		{
-			unknown_locations->spans[m] = ReadSpan(version, br);
-		}
-
-		for(int m=0; m<valid_locations->count; m++)
-		{
-			valid_locations->spans[m] = ReadSpan(version, br);
-		}
-	}
-
-// ################# GROOVE AUDIT SCRIPTS #############################
+// ################# PQ AUDIT #############################
 
 	if(version >= 89)
 	{
@@ -904,34 +889,9 @@ reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 			pq->scripts[i]->reference_id = br->ReadSingle();
 			pq->scripts[i]->code = br->ReadBytes(496);
 		}
-
-		for(int i=0; i<pq->chase_count; i++)
-		{
-			pq->chases[i] = gcnew PQ_AuditChase();
-			pq->chases[i]->id_monster = br->ReadInt32();
-			pq->chases[i]->amount_1 = br->ReadInt32();
-			pq->chases[i]->amount_2 = br->ReadInt32();
-			pq->chases[i]->amount_3 = br->ReadInt32();
-		}
-
-		for(int i=0; i<pq->leave_area->script_count; i++)
-		{
-			pq->leave_area->scripts[i] = gcnew PQ_AuditScript();
-			pq->leave_area->scripts[i]->name = br->ReadBytes(64);
-			pq->leave_area->scripts[i]->count = br->ReadInt32();
-			pq->leave_area->scripts[i]->id = br->ReadSingle();
-			pq->leave_area->scripts[i]->seperator = br->ReadBytes(4);
-			pq->leave_area->scripts[i]->reference_id = br->ReadSingle();
-			pq->leave_area->scripts[i]->code = br->ReadBytes(496);
-		}
-
-		for(int i=0; i<pq->leave_area->message_count; i++)
-		{
-			pq->leave_area->messages[i] = br->ReadBytes(128);
-		}
 	}
 
-// ################# QUEST LOCATIONS #############################
+// ################# LOCATIONS #############################
 
 	if(version >= 89)
 	{
@@ -940,14 +900,14 @@ reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 			trigger_locations->spans[m] = ReadSpan(version, br);
 		}
 
-		for(int m=0; m<reach_locations->count;m++)
+		for(int m=0; m<fail_locations->count; m++)
 		{
-			reach_locations->spans[m] = ReadSpan(version, br);
+			fail_locations->spans[m] = ReadSpan(version, br);
 		}
 
-		for(int m=0; m<pq->leave_area->location->count; m++)
+		for(int m=0; m<valid_locations->count; m++)
 		{
-			pq->leave_area->location->spans[m] = ReadSpan(version, br);
+			valid_locations->spans[m] = ReadSpan(version, br);
 		}
 	}
 
@@ -957,6 +917,21 @@ reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 	for(int i=0; i<required_items->Length; i++)
 	{
 		required_items[i] = ReadItem(version, br);
+	}
+
+// ################# LOCATIONS #############################
+
+	if(version >= 89)
+	{
+		for(int m=0; m<reach_locations->count;m++)
+		{
+			reach_locations->spans[m] = ReadSpan(version, br);
+		}
+
+		for(int m=0; m<pq->leave_area->location->count; m++)
+		{
+			pq->leave_area->location->spans[m] = ReadSpan(version, br);
+		}
 	}
 
 // ################# GIVEN ITEMS #############################
@@ -989,6 +964,36 @@ reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 	for(int i=0; i<required_get_items->Length; i++)
 	{
 		required_get_items[i] = ReadItem(version, br);
+	}
+
+// ################# PQ AUDIT #############################
+
+	if(version >= 89)
+	{
+		for(int i=0; i<pq->chase_count; i++)
+		{
+			pq->chases[i] = gcnew PQ_AuditChase();
+			pq->chases[i]->id_monster = br->ReadInt32();
+			pq->chases[i]->amount_1 = br->ReadInt32();
+			pq->chases[i]->amount_2 = br->ReadInt32();
+			pq->chases[i]->amount_3 = br->ReadInt32();
+		}
+
+		for(int i=0; i<pq->leave_area->script_count; i++)
+		{
+			pq->leave_area->scripts[i] = gcnew PQ_AuditScript();
+			pq->leave_area->scripts[i]->name = br->ReadBytes(64);
+			pq->leave_area->scripts[i]->count = br->ReadInt32();
+			pq->leave_area->scripts[i]->id = br->ReadSingle();
+			pq->leave_area->scripts[i]->seperator = br->ReadBytes(4);
+			pq->leave_area->scripts[i]->reference_id = br->ReadSingle();
+			pq->leave_area->scripts[i]->code = br->ReadBytes(496);
+		}
+
+		for(int i=0; i<pq->leave_area->message_count; i++)
+		{
+			pq->leave_area->messages[i] = br->ReadBytes(128);
+		}
 	}
 
 // ################# SUCCESS REWARDS #############################
