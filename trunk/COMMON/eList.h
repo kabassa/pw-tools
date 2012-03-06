@@ -53,17 +53,17 @@ public ref class eList
 			{
 				// Convert from byte[] to Hex String
 				array<unsigned char>^ b = (array<unsigned char>^)value;
-				return BitConverter::ToString(b)->TrimEnd('\0');
+				return BitConverter::ToString(b);
 			}
 			if(type->Contains("wstring:"))
 			{
 				Encoding^ enc = Encoding::GetEncoding("Unicode");
-				return enc->GetString((array<unsigned char>^)value)->TrimEnd('\0');
+				return enc->GetString((array<unsigned char>^)value)->Split(gcnew array<wchar_t>{'\0'})[0];
 			}
 			if(type->Contains("string:"))
 			{
 				Encoding^ enc = Encoding::GetEncoding("GBK");
-				return enc->GetString((array<unsigned char>^)value)->TrimEnd('\0');
+				return enc->GetString((array<unsigned char>^)value)->Split(gcnew array<wchar_t>{'\0'})[0];
 			}
 		}
 		return "";

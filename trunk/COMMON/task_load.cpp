@@ -779,49 +779,48 @@ reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 
 	// At this place the v89 positions must be guessed due to leak of informations...
 
-	pq->leave_area = gcnew PQ_AuditExitArea();
-	pq->leave_area->location = gcnew LocationSpan();
+	pq->location = gcnew LocationSpan();
 
 	if(version >= 89)
 	{
-		pq->leave_area->unknown_1 = br->ReadBytes(4);
-		pq->leave_area->location->map_id = br->ReadInt32();
-		pq->leave_area->location->count = br->ReadInt32();
-		pq->leave_area->unknown_2 = br->ReadInt32();
-		pq->leave_area->unknown_3 = br->ReadBytes(5);
-		pq->leave_area->id_script = br->ReadInt32();
-		pq->leave_area->unknown_4 = br->ReadInt32();
-		pq->leave_area->unknown_5 = br->ReadInt32();
-		pq->leave_area->unknown_6 = br->ReadInt32();
-		pq->leave_area->unknown_7 = br->ReadBytes(20);
-		pq->leave_area->script_count = br->ReadInt32();
-		pq->leave_area->unknown_8 = br->ReadBytes(4);
-		pq->leave_area->unknown_9 = br->ReadBytes(4);
-		pq->leave_area->message_count = br->ReadInt32();
-		pq->leave_area->unknown_10 = br->ReadBytes(4);
+		pq->unknown_11 = br->ReadBytes(4);
+		pq->location->map_id = br->ReadInt32();
+		pq->location->count = br->ReadInt32();
+		pq->unknown_12 = br->ReadInt32();
+		pq->unknown_13 = br->ReadBytes(5);
+		pq->id_script = br->ReadInt32();
+		pq->unknown_14 = br->ReadInt32();
+		pq->unknown_15 = br->ReadInt32();
+		pq->unknown_16 = br->ReadInt32();
+		pq->unknown_17 = br->ReadBytes(20);
+		pq->special_script_count = br->ReadInt32();
+		pq->unknown_18 = br->ReadBytes(4);
+		pq->unknown_19 = br->ReadBytes(4);
+		pq->message_count = br->ReadInt32();
+		pq->unknown_20 = br->ReadBytes(4);
 	}
 	else
 	{
-		pq->leave_area->unknown_1 = gcnew array<unsigned char>(4);
-		pq->leave_area->location->map_id = 0;
-		pq->leave_area->location->count = 0;
-		pq->leave_area->unknown_2 = 0;
-		pq->leave_area->unknown_3 = gcnew array<unsigned char>(5);
-		pq->leave_area->id_script = 0;
-		pq->leave_area->unknown_4 = 0;
-		pq->leave_area->unknown_5 = 0;
-		pq->leave_area->unknown_6 = 0;
-		pq->leave_area->unknown_7 = gcnew array<unsigned char>(20);
-		pq->leave_area->script_count = 0;
-		pq->leave_area->unknown_8 = gcnew array<unsigned char>(4);
-		pq->leave_area->unknown_9 = gcnew array<unsigned char>(4);
-		pq->leave_area->message_count = 0;
-		pq->leave_area->unknown_10 = gcnew array<unsigned char>(4);
+		pq->unknown_11 = gcnew array<unsigned char>(4);
+		pq->location->map_id = 0;
+		pq->location->count = 0;
+		pq->unknown_12 = 0;
+		pq->unknown_13 = gcnew array<unsigned char>(5);
+		pq->id_script = 0;
+		pq->unknown_14 = 0;
+		pq->unknown_15 = 0;
+		pq->unknown_16 = 0;
+		pq->unknown_17 = gcnew array<unsigned char>(20);
+		pq->special_script_count = 0;
+		pq->unknown_18 = gcnew array<unsigned char>(4);
+		pq->unknown_19 = gcnew array<unsigned char>(4);
+		pq->message_count = 0;
+		pq->unknown_20 = gcnew array<unsigned char>(4);
 	}
 
-	pq->leave_area->location->spans = gcnew array<Span^>(pq->leave_area->location->count);
-	pq->leave_area->scripts = gcnew array<PQ_AuditScript^>(pq->leave_area->script_count);
-	pq->leave_area->messages = gcnew array<array<unsigned char>^>(pq->leave_area->message_count);
+	pq->location->spans = gcnew array<Span^>(pq->location->count);
+	pq->special_scripts = gcnew array<PQ_AuditScript^>(pq->special_script_count);
+	pq->messages = gcnew array<array<unsigned char>^>(pq->message_count);
 
 	// Need to checked if contains something != 0
 	UNKNOWN_58 = br->ReadBytes(8);
@@ -889,8 +888,36 @@ reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 			pq->scripts[i]->reference_id = br->ReadSingle();
 			pq->scripts[i]->code = br->ReadBytes(496);
 		}
+
+		// exact arrangement of pq->chase cannot be determined
+		// it would be guessed this data follows directly after pq->scripts
+		for(int i=0; i<pq->chase_count; i++)
+		{
+			pq->chases[i] = gcnew PQ_AuditChase();
+			pq->chases[i]->id_monster = br->ReadInt32();
+			pq->chases[i]->amount_1 = br->ReadInt32();
+			pq->chases[i]->amount_2 = br->ReadInt32();
+			pq->chases[i]->amount_3 = br->ReadInt32();
+		}
 	}
 
+if	(pq->chase_count > 0 && 
+	(
+		trigger_locations->count>0 || 
+		fail_locations->count>0 || 
+		valid_locations->count>0 || 
+		required_items_count>0 || 
+		reach_locations->count>0 || 
+		pq->location->count>0 || 
+		given_items_count>0 || 
+		required_team_member_groups_count>0 || 
+		required_chases_count>0 || 
+		required_get_items_count>0
+		)
+	)
+{
+	MessageBox::Show("Developer Note:\n\nfound task that will help with arrangemant of pq->chase\n\n" + id.ToString());
+}
 // ################# LOCATIONS #############################
 
 	if(version >= 89)
@@ -928,9 +955,11 @@ reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 			reach_locations->spans[m] = ReadSpan(version, br);
 		}
 
-		for(int m=0; m<pq->leave_area->location->count; m++)
+		// exact arrangement of pq->leave_area cannot be determined
+		// it would be guessed this data follows directly after reach_locations
+		for(int m=0; m<pq->location->count; m++)
 		{
-			pq->leave_area->location->spans[m] = ReadSpan(version, br);
+			pq->location->spans[m] = ReadSpan(version, br);
 		}
 	}
 
@@ -970,29 +999,20 @@ reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 
 	if(version >= 89)
 	{
-		for(int i=0; i<pq->chase_count; i++)
+		for(int i=0; i<pq->special_script_count; i++)
 		{
-			pq->chases[i] = gcnew PQ_AuditChase();
-			pq->chases[i]->id_monster = br->ReadInt32();
-			pq->chases[i]->amount_1 = br->ReadInt32();
-			pq->chases[i]->amount_2 = br->ReadInt32();
-			pq->chases[i]->amount_3 = br->ReadInt32();
+			pq->special_scripts[i] = gcnew PQ_AuditScript();
+			pq->special_scripts[i]->name = br->ReadBytes(64);
+			pq->special_scripts[i]->count = br->ReadInt32();
+			pq->special_scripts[i]->id = br->ReadSingle();
+			pq->special_scripts[i]->seperator = br->ReadBytes(4);
+			pq->special_scripts[i]->reference_id = br->ReadSingle();
+			pq->special_scripts[i]->code = br->ReadBytes(496);
 		}
 
-		for(int i=0; i<pq->leave_area->script_count; i++)
+		for(int i=0; i<pq->message_count; i++)
 		{
-			pq->leave_area->scripts[i] = gcnew PQ_AuditScript();
-			pq->leave_area->scripts[i]->name = br->ReadBytes(64);
-			pq->leave_area->scripts[i]->count = br->ReadInt32();
-			pq->leave_area->scripts[i]->id = br->ReadSingle();
-			pq->leave_area->scripts[i]->seperator = br->ReadBytes(4);
-			pq->leave_area->scripts[i]->reference_id = br->ReadSingle();
-			pq->leave_area->scripts[i]->code = br->ReadBytes(496);
-		}
-
-		for(int i=0; i<pq->leave_area->message_count; i++)
-		{
-			pq->leave_area->messages[i] = br->ReadBytes(128);
+			pq->messages[i] = br->ReadBytes(128);
 		}
 	}
 

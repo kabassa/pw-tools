@@ -525,21 +525,21 @@ void Task::Save(int version, BinaryWriter^ bw)
 
 	if(version >= 89)
 	{
-		bw->Write(pq->leave_area->unknown_1);
-		bw->Write(pq->leave_area->location->map_id);
-		bw->Write(pq->leave_area->location->count);
-		bw->Write(pq->leave_area->unknown_2);
-		bw->Write(pq->leave_area->unknown_3);
-		bw->Write(pq->leave_area->id_script);
-		bw->Write(pq->leave_area->unknown_4);
-		bw->Write(pq->leave_area->unknown_5);
-		bw->Write(pq->leave_area->unknown_6);
-		bw->Write(pq->leave_area->unknown_7);
-		bw->Write(pq->leave_area->script_count);
-		bw->Write(pq->leave_area->unknown_8);
-		bw->Write(pq->leave_area->unknown_9);
-		bw->Write(pq->leave_area->message_count );
-		bw->Write(pq->leave_area->unknown_10);
+		bw->Write(pq->unknown_11);
+		bw->Write(pq->location->map_id);
+		bw->Write(pq->location->count);
+		bw->Write(pq->unknown_12);
+		bw->Write(pq->unknown_13);
+		bw->Write(pq->id_script);
+		bw->Write(pq->unknown_14);
+		bw->Write(pq->unknown_15);
+		bw->Write(pq->unknown_16);
+		bw->Write(pq->unknown_17);
+		bw->Write(pq->special_script_count);
+		bw->Write(pq->unknown_18);
+		bw->Write(pq->unknown_19);
+		bw->Write(pq->message_count );
+		bw->Write(pq->unknown_20);
 	}
 
 	bw->Write(UNKNOWN_58);
@@ -592,6 +592,16 @@ void Task::Save(int version, BinaryWriter^ bw)
 			bw->Write(pq->scripts[i]->reference_id);
 			bw->Write(pq->scripts[i]->code);
 		}
+
+		// exact arrangement of pq->chase cannot be determined
+		// it would be guessed this data follows directly after pq->scripts
+		for(int i=0; i<pq->chase_count; i++)
+		{
+			bw->Write(pq->chases[i]->id_monster);
+			bw->Write(pq->chases[i]->amount_1);
+			bw->Write(pq->chases[i]->amount_2);
+			bw->Write(pq->chases[i]->amount_3);
+		}
 	}
 
 // ################# LOCATIONS #############################
@@ -630,9 +640,11 @@ void Task::Save(int version, BinaryWriter^ bw)
 			WriteSpan(version, bw, reach_locations->spans[m]);
 		}
 
-		for(int m=0; m<pq->leave_area->location->count; m++)
+		// exact arrangement of pq->leave_area cannot be determined
+		// it would be guessed this data follows directly after reach_locations
+		for(int m=0; m<pq->location->count; m++)
 		{
-			WriteSpan(version, bw, pq->leave_area->location->spans[m]);
+			WriteSpan(version, bw, pq->location->spans[m]);
 		}
 	}
 
@@ -668,27 +680,19 @@ void Task::Save(int version, BinaryWriter^ bw)
 
 	if(version >= 89)
 	{
-		for(int i=0; i<pq->chase_count; i++)
+		for(int i=0; i<pq->special_script_count; i++)
 		{
-			bw->Write(pq->chases[i]->id_monster);
-			bw->Write(pq->chases[i]->amount_1);
-			bw->Write(pq->chases[i]->amount_2);
-			bw->Write(pq->chases[i]->amount_3);
+			bw->Write(pq->special_scripts[i]->name);
+			bw->Write(pq->special_scripts[i]->count);
+			bw->Write(pq->special_scripts[i]->id);
+			bw->Write(pq->special_scripts[i]->seperator);
+			bw->Write(pq->special_scripts[i]->reference_id);
+			bw->Write(pq->special_scripts[i]->code);
 		}
 
-		for(int i=0; i<pq->leave_area->script_count; i++)
+		for(int i=0; i<pq->message_count; i++)
 		{
-			bw->Write(pq->leave_area->scripts[i]->name);
-			bw->Write(pq->leave_area->scripts[i]->count);
-			bw->Write(pq->leave_area->scripts[i]->id);
-			bw->Write(pq->leave_area->scripts[i]->seperator);
-			bw->Write(pq->leave_area->scripts[i]->reference_id);
-			bw->Write(pq->leave_area->scripts[i]->code);
-		}
-
-		for(int i=0; i<pq->leave_area->message_count; i++)
-		{
-			bw->Write(pq->leave_area->messages[i]);
+			bw->Write(pq->messages[i]);
 		}
 	}
 
