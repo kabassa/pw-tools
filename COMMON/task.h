@@ -477,9 +477,9 @@ public ref class Task
 	public: bool UNKNOWN_12;
 	public: bool UNKNOWN_13;
 	public: bool UNKNOWN_14;
-	public: LocationSpan^ trigger_locations;
-	public: LocationSpan^ unknown_locations;
-	public: LocationSpan^ valid_locations;
+	public: LocationSpan^ trigger_locations; // start on enter
+	public: LocationSpan^ fail_locations; // fail on enter
+	public: LocationSpan^ valid_locations; // fail on leave
 	public: bool UNKNOWN_17; // 1 Byte
 	public: bool has_instant_teleport;
 	public: Location^ instant_teleport_location;

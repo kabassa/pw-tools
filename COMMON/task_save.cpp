@@ -290,10 +290,10 @@ void Task::Save(int version, BinaryWriter^ bw)
 	// unknown location only version 89+
 	if(version >= 89)
 	{
-		bw->Write(unknown_locations->has_location);
-		bw->Write(unknown_locations->map_id);
-		bw->Write(unknown_locations->count);
-		bw->Write(unknown_locations->unknown_1);
+		bw->Write(fail_locations->has_location);
+		bw->Write(fail_locations->map_id);
+		bw->Write(fail_locations->count);
+		bw->Write(fail_locations->unknown_1);
 	}
 
 	// valid location only version 89+
@@ -572,22 +572,7 @@ void Task::Save(int version, BinaryWriter^ bw)
 		WriteDateSpan(version, bw, date_spans[i]);
 	}
 
-// ################# V89 DONT LEAVE LOCATIONS #############################
-
-	if(version >= 89)
-	{
-		for(int m=0; m<unknown_locations->count; m++)
-		{
-			WriteSpan(version, bw, unknown_locations->spans[m]);
-		}
-
-		for(int m=0; m<valid_locations->count; m++)
-		{
-			WriteSpan(version, bw, valid_locations->spans[m]);
-		}
-	}
-
-// ################# GROOVE AUDIT SCRIPTS #############################
+// ################# PQ AUDIT #############################
 
 	if(version >= 89)
 	{
@@ -607,32 +592,9 @@ void Task::Save(int version, BinaryWriter^ bw)
 			bw->Write(pq->scripts[i]->reference_id);
 			bw->Write(pq->scripts[i]->code);
 		}
-
-		for(int i=0; i<pq->chase_count; i++)
-		{
-			bw->Write(pq->chases[i]->id_monster);
-			bw->Write(pq->chases[i]->amount_1);
-			bw->Write(pq->chases[i]->amount_2);
-			bw->Write(pq->chases[i]->amount_3);
-		}
-
-		for(int i=0; i<pq->leave_area->script_count; i++)
-		{
-			bw->Write(pq->leave_area->scripts[i]->name);
-			bw->Write(pq->leave_area->scripts[i]->count);
-			bw->Write(pq->leave_area->scripts[i]->id);
-			bw->Write(pq->leave_area->scripts[i]->seperator);
-			bw->Write(pq->leave_area->scripts[i]->reference_id);
-			bw->Write(pq->leave_area->scripts[i]->code);
-		}
-
-		for(int i=0; i<pq->leave_area->message_count; i++)
-		{
-			bw->Write(pq->leave_area->messages[i]);
-		}
 	}
 
-// ################# QUEST LOCATIONS #############################
+// ################# LOCATIONS #############################
 
 	if(version >= 89)
 	{
@@ -641,6 +603,28 @@ void Task::Save(int version, BinaryWriter^ bw)
 			WriteSpan(version, bw, trigger_locations->spans[m]);
 		}
 
+		for(int m=0; m<fail_locations->count; m++)
+		{
+			WriteSpan(version, bw, fail_locations->spans[m]);
+		}
+
+		for(int m=0; m<valid_locations->count; m++)
+		{
+			WriteSpan(version, bw, valid_locations->spans[m]);
+		}
+	}
+
+// ################# REQUIRED ITEMS #############################
+
+	for(int i=0; i<required_items->Length; i++)
+	{
+		WriteItem(version, bw, required_items[i]);
+	}
+
+// ################# LOCATIONS #############################
+
+	if(version >= 89)
+	{
 		for(int m=0; m<reach_locations->count;m++)
 		{
 			WriteSpan(version, bw, reach_locations->spans[m]);
@@ -650,13 +634,6 @@ void Task::Save(int version, BinaryWriter^ bw)
 		{
 			WriteSpan(version, bw, pq->leave_area->location->spans[m]);
 		}
-	}
-
-// ################# REQUIRED ITEMS #############################
-
-	for(int i=0; i<required_items->Length; i++)
-	{
-		WriteItem(version, bw, required_items[i]);
 	}
 
 // ################# GIVEN ITEMS #############################
@@ -685,6 +662,34 @@ void Task::Save(int version, BinaryWriter^ bw)
 	for(int i=0; i<required_get_items->Length; i++)
 	{
 		WriteItem(version, bw, required_get_items[i]);
+	}
+
+// ################# PQ AUDIT #############################
+
+	if(version >= 89)
+	{
+		for(int i=0; i<pq->chase_count; i++)
+		{
+			bw->Write(pq->chases[i]->id_monster);
+			bw->Write(pq->chases[i]->amount_1);
+			bw->Write(pq->chases[i]->amount_2);
+			bw->Write(pq->chases[i]->amount_3);
+		}
+
+		for(int i=0; i<pq->leave_area->script_count; i++)
+		{
+			bw->Write(pq->leave_area->scripts[i]->name);
+			bw->Write(pq->leave_area->scripts[i]->count);
+			bw->Write(pq->leave_area->scripts[i]->id);
+			bw->Write(pq->leave_area->scripts[i]->seperator);
+			bw->Write(pq->leave_area->scripts[i]->reference_id);
+			bw->Write(pq->leave_area->scripts[i]->code);
+		}
+
+		for(int i=0; i<pq->leave_area->message_count; i++)
+		{
+			bw->Write(pq->leave_area->messages[i]);
+		}
 	}
 
 // ################# SUCCESS REWARDS #############################
