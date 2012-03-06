@@ -9,6 +9,9 @@ String^ decrypt(int key, array<unsigned char>^ text);
 array<unsigned char>^ encrypt(int key, String^ text, int length, bool appendZero);
 String^ ByteArray_to_HexString(array<unsigned char>^ value);
 array<unsigned char>^ HexString_to_ByteArray(String^ value);
+String^ ByteArray_to_GbkString(array<unsigned char>^ text);
+array<unsigned char>^ GbkString_to_ByteArray(String^ text, int length);
+
 public ref struct Item
 {
 	int id;
@@ -195,11 +198,33 @@ public ref struct PQ_AuditScriptInfo
 public ref struct PQ_AuditScript
 {
 	array<unsigned char>^ name; // 64 Byte
+	public: property String^ Name
+	{
+		String^ get()
+		{
+			return ByteArray_to_GbkString(name);
+		}
+		void set(String^ value)
+		{
+			name = GbkString_to_ByteArray(value, 64);
+		}
+	}
 	int count;
 	float id;
 	array<unsigned char>^ seperator; // 4 Byte
 	float reference_id;
 	array<unsigned char>^ code; // 496 Byte
+	public: property String^ Code
+	{
+		String^ get()
+		{
+			return ByteArray_to_GbkString(code);
+		}
+		void set(String^ value)
+		{
+			code = GbkString_to_ByteArray(value, 496);
+		}
+	}
 };
 
 public ref struct PQ_AuditChase
@@ -212,27 +237,7 @@ public ref struct PQ_AuditChase
 
 public ref struct PQ_AuditExitArea
 {
-	array<unsigned char>^ unknown_1; // 4 Byte
-	LocationSpan^ location;
-	/*
-	int id_map;
-	int location_count;
-	array<Span^>^ locations;
-	*/
-	int unknown_2;
-	array<unsigned char>^ unknown_3; // 4 Byte
-	int id_script;
-	int unknown_4;
-	int unknown_5;
-	int unknown_6;
-	array<unsigned char>^ unknown_7; // 20 Byte
-	int script_count;
-	array<PQ_AuditScript^>^ scripts;
-	array<unsigned char>^ unknown_8; // 4 Byte
-	array<unsigned char>^ unknown_9; // 4 Byte
-	int message_count;
-	array<array<unsigned char>^>^ messages; // 128 byte / message
-	array<unsigned char>^ unknown_10; // 4 Byte
+
 };
 
 public ref struct PQ_Audit
@@ -253,7 +258,22 @@ public ref struct PQ_Audit
 	array<unsigned char>^ unknown_8; // 5 Byte
 	array<unsigned char>^ unknown_9; // 5 Byte
 	array<unsigned char>^ unknown_10; // 5 Byte
-	PQ_AuditExitArea^ leave_area;
+	array<unsigned char>^ unknown_11; // 4 Byte
+	LocationSpan^ location;
+	int unknown_12;
+	array<unsigned char>^ unknown_13; // 4 Byte
+	int id_script;
+	int unknown_14;
+	int unknown_15;
+	int unknown_16;
+	array<unsigned char>^ unknown_17; // 20 Byte
+	int special_script_count;
+	array<PQ_AuditScript^>^ special_scripts;
+	array<unsigned char>^ unknown_18; // 4 Byte
+	array<unsigned char>^ unknown_19; // 4 Byte
+	int message_count;
+	array<array<unsigned char>^>^ messages; // 128 byte / message
+	array<unsigned char>^ unknown_20; // 4 Byte
 };
 
 public ref struct Answer
