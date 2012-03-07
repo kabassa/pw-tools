@@ -784,8 +784,10 @@ reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 	if(version >= 89)
 	{
 		pq->unknown_11 = br->ReadBytes(4);
+pq->location->has_location = false;
 		pq->location->map_id = br->ReadInt32();
 		pq->location->count = br->ReadInt32();
+pq->location->unknown_1 = gcnew array<unsigned char>(4);
 		pq->unknown_12 = br->ReadInt32();
 		pq->unknown_13 = br->ReadBytes(5);
 		pq->id_script = br->ReadInt32();
@@ -802,8 +804,10 @@ reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 	else
 	{
 		pq->unknown_11 = gcnew array<unsigned char>(4);
+pq->location->has_location = false;
 		pq->location->map_id = 0;
 		pq->location->count = 0;
+pq->location->unknown_1 = gcnew array<unsigned char>(4);
 		pq->unknown_12 = 0;
 		pq->unknown_13 = gcnew array<unsigned char>(5);
 		pq->id_script = 0;
@@ -896,11 +900,12 @@ reach_locations->unknown_1 = gcnew array<unsigned char>(4);
 			pq->chases[i] = gcnew PQ_AuditChase();
 			pq->chases[i]->id_monster = br->ReadInt32();
 			pq->chases[i]->amount_1 = br->ReadInt32();
-			pq->chases[i]->amount_2 = br->ReadInt32();
+			pq->chases[i]->contribution = br->ReadInt32();
 			pq->chases[i]->amount_3 = br->ReadInt32();
 		}
 	}
 
+//{ DEBUG
 if	(pq->chase_count > 0 && 
 	(
 		trigger_locations->count>0 || 
@@ -918,6 +923,8 @@ if	(pq->chase_count > 0 &&
 {
 	MessageBox::Show("Developer Note:\n\nfound task that will help with arrangemant of pq->chase\n\n" + id.ToString());
 }
+//} END DEBUG
+
 // ################# LOCATIONS #############################
 
 	if(version >= 89)

@@ -599,7 +599,7 @@ void Task::Save(int version, BinaryWriter^ bw)
 		{
 			bw->Write(pq->chases[i]->id_monster);
 			bw->Write(pq->chases[i]->amount_1);
-			bw->Write(pq->chases[i]->amount_2);
+			bw->Write(pq->chases[i]->contribution);
 			bw->Write(pq->chases[i]->amount_3);
 		}
 	}

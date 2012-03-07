@@ -11,6 +11,8 @@ String^ ByteArray_to_HexString(array<unsigned char>^ value);
 array<unsigned char>^ HexString_to_ByteArray(String^ value);
 String^ ByteArray_to_GbkString(array<unsigned char>^ text);
 array<unsigned char>^ GbkString_to_ByteArray(String^ text, int length);
+String^ ByteArray_to_UnicodeString(array<unsigned char>^ text);
+array<unsigned char>^ UnicodeString_to_ByteArray(String^ text, int length);
 
 public ref struct Item
 {
@@ -218,11 +220,13 @@ public ref struct PQ_AuditScript
 	{
 		String^ get()
 		{
-			return ByteArray_to_GbkString(code);
+			//return ByteArray_to_GbkString(code);
+			return ByteArray_to_HexString(code);
 		}
 		void set(String^ value)
 		{
-			code = GbkString_to_ByteArray(value, 496);
+			//code = GbkString_to_ByteArray(value, 496);
+			code = HexString_to_ByteArray(value);
 		}
 	}
 };
@@ -231,7 +235,7 @@ public ref struct PQ_AuditChase
 {
 	int id_monster;
 	int amount_1;
-	int amount_2;
+	int contribution;
 	int amount_3;
 };
 
