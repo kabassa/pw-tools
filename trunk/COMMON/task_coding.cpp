@@ -94,3 +94,25 @@ array<unsigned char>^ GbkString_to_ByteArray(String^ text, int length)
 	}
 	return target;
 }
+
+String^ ByteArray_to_UnicodeString(array<unsigned char>^ text)
+{
+	Encoding^ enc = Encoding::GetEncoding("Unicode");
+	return enc->GetString(text)->Split(gcnew array<wchar_t>{'\0'})[0];
+}
+
+array<unsigned char>^ UnicodeString_to_ByteArray(String^ text, int length)
+{
+	Encoding^ enc = Encoding::GetEncoding("Unicode");
+	array<unsigned char>^ target = gcnew array<unsigned char>(length);
+	array<unsigned char>^ source = enc->GetBytes(text);
+	if(target->Length > source->Length)
+	{
+		Array::Copy(source, target, source->Length);
+	}
+	else
+	{
+		Array::Copy(source, target, target->Length);
+	}
+	return target;
+}
