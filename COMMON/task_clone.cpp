@@ -4,7 +4,6 @@
 
 Task^ Task::Clone()
 {
-//CLONE v93
 	Task^ result = gcnew Task();
 	result->id = this->id;
 	result->Name = this->Name; // clone this array, no pointers !!!
@@ -398,7 +397,6 @@ Task^ Task::Clone()
 	{
 		result->sub_quests[i] = this->sub_quests[i]->Clone();
 	}
-
 
 	return result;
 }
