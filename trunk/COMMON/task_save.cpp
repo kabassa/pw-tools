@@ -267,10 +267,7 @@ void Task::Save(int version, BinaryWriter^ bw)
 	bw->Write(fail_on_death);
 	bw->Write(on_fail_parent_fail);
 	bw->Write(UNKNOWN_10);
-	bw->Write(UNKNOWN_11);
-	bw->Write(UNKNOWN_12);
-	bw->Write(UNKNOWN_13);
-	bw->Write(UNKNOWN_14);
+	bw->Write(player_limit);
 
 	// trigger location old and new format
 	if(version >= 89)
@@ -605,7 +602,9 @@ void Task::Save(int version, BinaryWriter^ bw)
 	}
 
 // ################# LOCATIONS #############################
-
+// before: 
+// after: 
+// unknown: 
 	if(version >= 89)
 	{
 		for(int m=0; m<trigger_locations->count; m++)
@@ -625,14 +624,48 @@ void Task::Save(int version, BinaryWriter^ bw)
 	}
 
 // ################# REQUIRED ITEMS #############################
-
+// before: given_items
+// after: valid_locaions
 	for(int i=0; i<required_items->Length; i++)
 	{
 		WriteItem(version, bw, required_items[i]);
 	}
 
-// ################# LOCATIONS #############################
+// ################# GIVEN ITEMS #############################
+// before: team_members
+// after: required_items
+	for(int i=0; i<given_items->Length; i++)
+	{
+		WriteItem(version, bw, given_items[i]);
+	}
 
+// ################# TEAM MEMBERS #############################
+// after: given_items
+// before: chase
+	for(int i=0; i<required_team_member_groups->Length; i++)
+	{
+		WriteTeamMembers(version, bw, required_team_member_groups[i]);
+	}
+
+// ################# CHASE #############################
+// after: team_members
+// before: pq->special_scripts
+	for(int i=0; i<required_chases->Length; i++)
+	{
+		WriteChase(version, bw, required_chases[i]);
+	}
+
+// ################# GET ITEMS #############################
+// after: team_members
+// before: pq->special_scripts
+	for(int i=0; i<required_get_items->Length; i++)
+	{
+		WriteItem(version, bw, required_get_items[i]);
+	}
+
+// ################# LOCATIONS #############################
+// after: team_members
+// before: reward_success
 	if(version >= 89)
 	{
 		for(int m=0; m<reach_locations->count;m++)
@@ -648,36 +681,9 @@ void Task::Save(int version, BinaryWriter^ bw)
 		}
 	}
 
-// ################# GIVEN ITEMS #############################
-
-	for(int i=0; i<given_items->Length; i++)
-	{
-		WriteItem(version, bw, given_items[i]);
-	}
-
-// ################# TEAM MEMBERS #############################
-
-	for(int i=0; i<required_team_member_groups->Length; i++)
-	{
-		WriteTeamMembers(version, bw, required_team_member_groups[i]);
-	}
-
-// ################# CHASE #############################
-
-	for(int i=0; i<required_chases->Length; i++)
-	{
-		WriteChase(version, bw, required_chases[i]);
-	}
-
-// ################# GET ITEMS #############################
-
-	for(int i=0; i<required_get_items->Length; i++)
-	{
-		WriteItem(version, bw, required_get_items[i]);
-	}
-
 // ################# PQ AUDIT #############################
-
+// after: chases, get_items
+// before: reward_success
 	if(version >= 89)
 	{
 		for(int i=0; i<pq->special_script_count; i++)
