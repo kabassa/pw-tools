@@ -497,10 +497,7 @@ public ref class Task
 	public: bool fail_on_death;
 	public: bool on_fail_parent_fail;
 	public: bool UNKNOWN_10;
-	public: bool UNKNOWN_11;
-	public: bool UNKNOWN_12;
-	public: bool UNKNOWN_13;
-	public: bool UNKNOWN_14;
+	public: int player_limit;
 	public: LocationSpan^ trigger_locations; // start on enter
 	public: LocationSpan^ fail_locations; // fail on enter
 	public: LocationSpan^ valid_locations; // fail on leave

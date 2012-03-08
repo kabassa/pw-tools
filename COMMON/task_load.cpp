@@ -396,10 +396,7 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	fail_on_death = br->ReadBoolean();
 	on_fail_parent_fail = br->ReadBoolean();
 	UNKNOWN_10 = br->ReadBoolean();
-	UNKNOWN_11 = br->ReadBoolean();
-	UNKNOWN_12 = br->ReadBoolean();
-	UNKNOWN_13 = br->ReadBoolean();
-	UNKNOWN_14 = br->ReadBoolean();
+	player_limit = br->ReadInt32();
 
 	// this location is available in version 55+
 	// but location structure has been updated in version 89+
@@ -926,7 +923,9 @@ if	(pq->chase_count > 0 &&
 //} END DEBUG
 
 // ################# LOCATIONS #############################
-
+// before: 
+// after: 
+// unknown: 
 	if(version >= 89)
 	{
 		for(int m=0; m<trigger_locations->count; m++)
@@ -946,15 +945,53 @@ if	(pq->chase_count > 0 &&
 	}
 
 // ################# REQUIRED ITEMS #############################
-
+// before: given_items
+// after: valid_locaions
 	required_items = gcnew array<Item^>(required_items_count);
 	for(int i=0; i<required_items->Length; i++)
 	{
 		required_items[i] = ReadItem(version, br);
 	}
 
-// ################# LOCATIONS #############################
+// ################# GIVEN ITEMS #############################
+// before: team_members
+// after: required_items
+	given_items = gcnew array<Item^>(given_items_count);
+	for(int i=0; i<given_items->Length; i++)
+	{
+		given_items[i] = ReadItem(version, br);
+	}
 
+// ################# TEAM MEMBERS #############################
+// after: given_items
+// before: chase
+	required_team_member_groups = gcnew array<TeamMembers^>(required_team_member_groups_count);
+	for(int i=0; i<required_team_member_groups->Length; i++)
+	{
+		required_team_member_groups[i] = ReadTeamMembers(version, br);
+	}
+
+// ################# CHASE #############################
+// after: team_members
+// before: pq->special_scripts
+	required_chases = gcnew array<Chase^>(required_chases_count);
+	for(int i=0; i<required_chases->Length; i++)
+	{
+		required_chases[i] = ReadChase(version, br);
+	}
+
+// ################# GET ITEMS #############################
+// after: team_members
+// before: pq->special_scripts
+	required_get_items = gcnew array<Item^>(required_get_items_count);
+	for(int i=0; i<required_get_items->Length; i++)
+	{
+		required_get_items[i] = ReadItem(version, br);
+	}
+
+// ################# LOCATIONS #############################
+// after: team_members
+// before: reward_success
 	if(version >= 89)
 	{
 		for(int m=0; m<reach_locations->count;m++)
@@ -970,40 +1007,9 @@ if	(pq->chase_count > 0 &&
 		}
 	}
 
-// ################# GIVEN ITEMS #############################
-
-	given_items = gcnew array<Item^>(given_items_count);
-	for(int i=0; i<given_items->Length; i++)
-	{
-		given_items[i] = ReadItem(version, br);
-	}
-
-// ################# TEAM MEMBERS #############################
-
-	required_team_member_groups = gcnew array<TeamMembers^>(required_team_member_groups_count);
-	for(int i=0; i<required_team_member_groups->Length; i++)
-	{
-		required_team_member_groups[i] = ReadTeamMembers(version, br);
-	}
-
-// ################# CHASE #############################
-
-	required_chases = gcnew array<Chase^>(required_chases_count);
-	for(int i=0; i<required_chases->Length; i++)
-	{
-		required_chases[i] = ReadChase(version, br);
-	}
-
-// ################# GET ITEMS #############################
-
-	required_get_items = gcnew array<Item^>(required_get_items_count);
-	for(int i=0; i<required_get_items->Length; i++)
-	{
-		required_get_items[i] = ReadItem(version, br);
-	}
-
 // ################# PQ AUDIT #############################
-
+// after: chases, get_items
+// before: reward_success
 	if(version >= 89)
 	{
 		for(int i=0; i<pq->special_script_count; i++)
