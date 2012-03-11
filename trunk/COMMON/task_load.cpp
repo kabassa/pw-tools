@@ -648,20 +648,20 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	if(version >= 89)
 	{
 		UNKNOWN_44 = br->ReadBytes(19);
-		unknown_date = ReadDate(version, br);
+		date_unknown = ReadDate(version, br);
 		UNKNOWN_45 = br->ReadInt32();
 		UNKNOWN_46 = br->ReadBoolean();
 	}
 	else
 	{
 		UNKNOWN_44 = gcnew array<unsigned char>(19);
-		unknown_date = gcnew Date();
-		unknown_date->year = 0;
-		unknown_date->month = 0;
-		unknown_date->day = 0;
-		unknown_date->weekday = 0;
-		unknown_date->hour = 0;
-		unknown_date->minute = 0;
+		date_unknown = gcnew Date();
+		date_unknown->year = 0;
+		date_unknown->month = 0;
+		date_unknown->day = 0;
+		date_unknown->weekday = 0;
+		date_unknown->hour = 0;
+		date_unknown->minute = 0;
 		UNKNOWN_45 = 0;
 		UNKNOWN_46 = false;
 	}
@@ -889,7 +889,6 @@ pq->location->unknown_1 = gcnew array<unsigned char>(4);
 			pq->scripts[i]->reference_id = br->ReadSingle();
 			pq->scripts[i]->code = br->ReadBytes(496);
 		}
-
 		// exact arrangement of pq->chase cannot be determined
 		// it would be guessed this data follows directly after pq->scripts
 		for(int i=0; i<pq->chase_count; i++)
@@ -901,26 +900,6 @@ pq->location->unknown_1 = gcnew array<unsigned char>(4);
 			pq->chases[i]->amount_3 = br->ReadInt32();
 		}
 	}
-
-//{ DEBUG
-if	(pq->chase_count > 0 && 
-	(
-		trigger_locations->count>0 || 
-		fail_locations->count>0 || 
-		valid_locations->count>0 || 
-		required_items_count>0 || 
-		reach_locations->count>0 || 
-		pq->location->count>0 || 
-		given_items_count>0 || 
-		required_team_member_groups_count>0 || 
-		required_chases_count>0 || 
-		required_get_items_count>0
-		)
-	)
-{
-	MessageBox::Show("Developer Note:\n\nfound task that will help with arrangemant of pq->chase\n\n" + id.ToString());
-}
-//} END DEBUG
 
 // ################# LOCATIONS #############################
 // before: 
@@ -1053,7 +1032,7 @@ if	(pq->chase_count > 0 &&
 
 // ################# UNKNOWN REWARDS ??? #############################
 
-	UNKNOWN_61 = br->ReadBytes(80); //REWARD_UNKNOWN = ReadReward(version, br);
+	UNKNOWN_61 = br->ReadBytes(80);
 
 // ################# CONVERSATION #############################
 

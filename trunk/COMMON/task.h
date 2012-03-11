@@ -105,7 +105,6 @@ public ref struct PQ_Chase
 	float probability;
 	int amount_unknown;
 };
-
 public ref struct PQ_Item
 {
 	int ranking_from;
@@ -237,11 +236,6 @@ public ref struct PQ_AuditChase
 	int amount_1;
 	int contribution;
 	int amount_3;
-};
-
-public ref struct PQ_AuditExitArea
-{
-
 };
 
 public ref struct PQ_Audit
@@ -556,7 +550,7 @@ public ref class Task
 	public: bool required_be_gm;
 	public: bool UNKNOWN_43;
 	public: array<unsigned char>^ UNKNOWN_44; // 19 Byte
-	public: Date^ unknown_date;
+	public: Date^ date_unknown;
 	public: int UNKNOWN_45;
 	public: bool UNKNOWN_46;
 	public: array<unsigned char>^ UNKNOWN_47; // 7 Byte -> All Zeros

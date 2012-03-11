@@ -445,7 +445,7 @@ void Task::Save(int version, BinaryWriter^ bw)
 	if(version >= 89)
 	{
 		bw->Write(UNKNOWN_44);
-		WriteDate(version, bw, unknown_date);
+		WriteDate(version, bw, date_unknown);
 		bw->Write(UNKNOWN_45);
 		bw->Write(UNKNOWN_46);
 	}
