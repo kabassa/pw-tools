@@ -145,7 +145,7 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 	reward->spirit = br->ReadInt32();
 	reward->reputation = br->ReadInt32();
 	reward->cultivation = br->ReadInt32();
-	reward->UNKNOWN_1 = br->ReadInt32();
+	reward->new_waypoint = br->ReadInt32();
 	reward->storage_slots = br->ReadInt32();
 
 	if(version >= 89)
@@ -159,7 +159,7 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 	reward->petbag_slots = br->ReadInt32();
 	reward->vigor = br->ReadInt32();
 	reward->teleport = ReadLocation(version, br);
-	reward->aiTrigger = br->ReadInt32();
+	reward->ai_trigger = br->ReadInt32();
 	reward->UNKNOWN_2a = br->ReadBytes(3);
 
 	if(version > 55)

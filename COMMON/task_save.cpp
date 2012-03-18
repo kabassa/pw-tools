@@ -99,7 +99,7 @@ void WriteReward(int version, BinaryWriter^ bw, Reward^ reward)
 	bw->Write(reward->spirit);
 	bw->Write(reward->reputation);
 	bw->Write(reward->cultivation);
-	bw->Write(reward->UNKNOWN_1);
+	bw->Write(reward->new_waypoint);
 	bw->Write(reward->storage_slots);
 
 	if(version >= 89)
@@ -113,7 +113,7 @@ void WriteReward(int version, BinaryWriter^ bw, Reward^ reward)
 	bw->Write(reward->petbag_slots);
 	bw->Write(reward->vigor);
 	WriteLocation(version, bw, reward->teleport);
-	bw->Write(reward->aiTrigger);
+	bw->Write(reward->ai_trigger);
 	bw->Write(reward->UNKNOWN_2a);
 
 	if(version > 55)
