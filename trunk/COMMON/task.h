@@ -167,7 +167,7 @@ public ref struct Reward
 	int spirit;
 	int reputation;
 	int cultivation;
-	int UNKNOWN_1; // 4 Byte
+	int new_waypoint; // 4 Byte
 	int storage_slots;
 	int cupboard_slots;
 	int wardrobe_slots;
@@ -176,7 +176,7 @@ public ref struct Reward
 	int petbag_slots;
 	int vigor;
 	Location^ teleport;
-	int aiTrigger;
+	int ai_trigger;
 	array<unsigned char>^ UNKNOWN_2a; // 3 Byte
 	array<unsigned char>^ UNKNOWN_2b; // 5 Byte
 	int item_groups_count;
@@ -628,7 +628,6 @@ public ref class Task
 	public: array<float>^ rewards_timed_factors;
 	public: array<Reward^>^ rewards_timed;
 
-	// Another Rewards section?
 	public: array<unsigned char>^ UNKNOWN_61; // 80 Byte //public: Reward^ REWARD_UNKNOWN;
 	
 	Conversation^ conversation;

@@ -223,7 +223,7 @@ Task^ Task::Clone()
 	result->reward_success->reputation = this->reward_success->reputation;
 	result->reward_success->new_quest = this->reward_success->new_quest;
 	result->reward_success->cultivation = this->reward_success->cultivation;
-	result->reward_success->UNKNOWN_1 = this->reward_success->UNKNOWN_1;
+	result->reward_success->new_waypoint = this->reward_success->new_waypoint;
 	result->reward_success->storage_slots = this->reward_success->storage_slots;
 	result->reward_success->inventory_slots = this->reward_success->inventory_slots;
 	result->reward_success->petbag_slots = this->reward_success->petbag_slots;
@@ -233,7 +233,7 @@ Task^ Task::Clone()
 	result->reward_success->teleport->x = this->reward_success->teleport->x;
 	result->reward_success->teleport->altitude = this->reward_success->teleport->altitude;
 	result->reward_success->teleport->z = this->reward_success->teleport->z;
-	result->reward_success->aiTrigger = this->reward_success->aiTrigger;
+	result->reward_success->ai_trigger = this->reward_success->ai_trigger;
 	result->reward_success->UNKNOWN_2a = HexString_to_ByteArray(ByteArray_to_HexString(this->reward_success->UNKNOWN_2a));
 	result->reward_success->UNKNOWN_2b = HexString_to_ByteArray(ByteArray_to_HexString(this->reward_success->UNKNOWN_2b));
 	result->reward_success->item_groups_count = this->reward_success->item_groups_count;
@@ -264,7 +264,7 @@ Task^ Task::Clone()
 	result->reward_failed->reputation = this->reward_failed->reputation;
 	result->reward_failed->new_quest = this->reward_failed->new_quest;
 	result->reward_failed->cultivation = this->reward_failed->cultivation;
-	result->reward_failed->UNKNOWN_1 = this->reward_failed->UNKNOWN_1;
+	result->reward_failed->new_waypoint = this->reward_failed->new_waypoint;
 	result->reward_failed->storage_slots = this->reward_failed->storage_slots;
 	result->reward_failed->inventory_slots = this->reward_failed->inventory_slots;
 	result->reward_failed->petbag_slots = this->reward_failed->petbag_slots;
@@ -274,7 +274,7 @@ Task^ Task::Clone()
 	result->reward_failed->teleport->x = this->reward_failed->teleport->x;
 	result->reward_failed->teleport->altitude = this->reward_failed->teleport->altitude;
 	result->reward_failed->teleport->z = this->reward_failed->teleport->z;
-	result->reward_failed->aiTrigger = this->reward_failed->aiTrigger;
+	result->reward_failed->ai_trigger = this->reward_failed->ai_trigger;
 	result->reward_failed->UNKNOWN_2a = HexString_to_ByteArray(ByteArray_to_HexString(this->reward_failed->UNKNOWN_2a));
 	result->reward_failed->UNKNOWN_2b = HexString_to_ByteArray(ByteArray_to_HexString(this->reward_failed->UNKNOWN_2b));
 	result->reward_failed->item_groups_count = this->reward_failed->item_groups_count;
@@ -315,7 +315,7 @@ Task^ Task::Clone()
 		result->rewards_timed[r]->reputation = this->rewards_timed[r]->reputation;
 		result->rewards_timed[r]->new_quest = this->rewards_timed[r]->new_quest;
 		result->rewards_timed[r]->cultivation = this->rewards_timed[r]->cultivation;
-		result->rewards_timed[r]->UNKNOWN_1 = this->rewards_timed[r]->UNKNOWN_1;
+		result->rewards_timed[r]->new_waypoint = this->rewards_timed[r]->new_waypoint;
 		result->rewards_timed[r]->storage_slots = this->rewards_timed[r]->storage_slots;
 		result->rewards_timed[r]->inventory_slots = this->rewards_timed[r]->inventory_slots;
 		result->rewards_timed[r]->petbag_slots = this->rewards_timed[r]->petbag_slots;
@@ -325,7 +325,7 @@ Task^ Task::Clone()
 		result->rewards_timed[r]->teleport->x = this->rewards_timed[r]->teleport->x;
 		result->rewards_timed[r]->teleport->altitude = this->rewards_timed[r]->teleport->altitude;
 		result->rewards_timed[r]->teleport->z = this->rewards_timed[r]->teleport->z;
-		result->rewards_timed[r]->aiTrigger = this->rewards_timed[r]->aiTrigger;
+		result->rewards_timed[r]->ai_trigger = this->rewards_timed[r]->ai_trigger;
 		result->rewards_timed[r]->UNKNOWN_2a = HexString_to_ByteArray(ByteArray_to_HexString(this->rewards_timed[r]->UNKNOWN_2a));
 		result->rewards_timed[r]->UNKNOWN_2b = HexString_to_ByteArray(ByteArray_to_HexString(this->rewards_timed[r]->UNKNOWN_2b));
 		result->rewards_timed[r]->item_groups_count = this->rewards_timed[r]->item_groups_count;

@@ -28,6 +28,29 @@ public ref class eListCollection
 	{
 		Lists[ListIndex]->AddItem(ItemValues);
 	}
+	public: String^ GetOffset(int ListIndex)
+	{
+		return BitConverter::ToString(Lists[ListIndex]->listOffset);
+	}
+
+	public: void SetOffset(int ListIndex, String^ Offset)
+	{
+		if(Offset != "")
+		{
+			// Convert from Hex to byte[]
+			array<String^>^ hex = Offset->Split(gcnew array<wchar_t>{'-'});
+			Lists[ListIndex]->listOffset = gcnew array<unsigned char>(hex->Length);
+			for(int i=0; i<hex->Length; i++)
+			{
+				Lists[ListIndex]->listOffset[i] = Convert::ToByte(hex[i], 16);
+			}
+		}
+		else
+		{
+			Lists[ListIndex]->listOffset = gcnew array<unsigned char>(0);
+		}
+	}
+
 	public: String^ GetValue(int ListIndex, int ElementIndex, int FieldIndex)
 	{
 		return Lists[ListIndex]->GetValue(ElementIndex, FieldIndex);
@@ -170,7 +193,12 @@ public ref class eListCollection
 			}
 			Li[i] = gcnew eList();
 			Li[i]->listName = line;
-			Li[i]->listOffset = gcnew array<unsigned char>(Convert::ToInt32(sr->ReadLine()));
+			Li[i]->listOffset = nullptr;
+			String^ offset = sr->ReadLine();
+			if(offset != "AUTO")
+			{
+				Li[i]->listOffset = gcnew array<unsigned char>(Convert::ToInt32(offset));
+			}
 			Li[i]->elementFields = sr->ReadLine()->Split(gcnew array<wchar_t>{';'});
 			Li[i]->elementTypes = sr->ReadLine()->Split(gcnew array<wchar_t>{';'});
 		}
@@ -185,11 +213,43 @@ public ref class eListCollection
 		{
 			System::Windows::Forms::Application::DoEvents();
 
-			if(Li[l]->listOffset->Length>0)
+			// read offset
+			if(Li[l]->listOffset)
 			{
-				Li[l]->listOffset = br->ReadBytes(Li[l]->listOffset->Length);
+				// offset > 0
+				if(Li[l]->listOffset->Length>0)
+				{
+					Li[l]->listOffset = br->ReadBytes(Li[l]->listOffset->Length);
+				}
+			}
+			// autodetect offset (for list 20 & 100)
+			else
+			{
+				if(l == 20)
+				{
+					array<unsigned char>^ head = br->ReadBytes(4);
+					array<unsigned char>^ count = br->ReadBytes(4);
+					array<unsigned char>^ body = br->ReadBytes(BitConverter::ToInt32(count, 0));
+					array<unsigned char>^ tail = br->ReadBytes(4);
+					Li[l]->listOffset = gcnew array<unsigned char>(head->Length + count->Length + body->Length + tail->Length);
+					Array::Copy(head, 0, Li[l]->listOffset, 0, head->Length);
+					Array::Copy(count, 0, Li[l]->listOffset, 4, count->Length);
+					Array::Copy(body, 0, Li[l]->listOffset, 8, body->Length);
+					Array::Copy(tail, 0, Li[l]->listOffset, 8+body->Length, tail->Length);
+				}
+				if(l == 100)
+				{
+					array<unsigned char>^ head = br->ReadBytes(4);
+					array<unsigned char>^ count = br->ReadBytes(4);
+					array<unsigned char>^ body = br->ReadBytes(BitConverter::ToInt32(count, 0));
+					Li[l]->listOffset = gcnew array<unsigned char>(head->Length + count->Length + body->Length);
+					Array::Copy(head, 0, Li[l]->listOffset, 0, head->Length);
+					Array::Copy(count, 0, Li[l]->listOffset, 4, count->Length);
+					Array::Copy(body, 0, Li[l]->listOffset, 8, body->Length);
+				}
 			}
 
+			// read list (58)
 			if(l==58)
 			{
 				if(Li[l]->elementTypes[0]->Contains("AUTO"))
@@ -219,6 +279,7 @@ public ref class eListCollection
 				Li[l]->elementValues[0] = gcnew array<Object^>(Li[l]->elementTypes->Length);
 				Li[l]->elementValues[0][0] = readValue(br, Li[l]->elementTypes[0]);
 			}
+			// read lists
 			else
 			{
 				Li[l]->elementValues = gcnew array<array<Object^>^>(br->ReadInt32());
