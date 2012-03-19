@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="sTASKedit"
 	ProjectGUID="{366A3894-0395-4CCE-A75D-ECF5C0CA0BB3}"
 	RootNamespace="sTools"

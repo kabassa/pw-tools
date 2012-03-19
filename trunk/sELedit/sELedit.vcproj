@@ -241,15 +241,6 @@
 				</File>
 			</File>
 			<File
-				RelativePath=".\DebugWindow.h"
-				FileType="3"
-				>
-				<File
-					RelativePath=".\DebugWindow.resx"
-					>
-				</File>
-			</File>
-			<File
 				RelativePath=".\JoinWindow.h"
 				FileType="3"
 				>
@@ -310,6 +301,15 @@
 		<Filter
 			Name="COMMON"
 			>
+			<File
+				RelativePath="..\COMMON\DebugWindow.h"
+				FileType="3"
+				>
+				<File
+					RelativePath="..\COMMON\DebugWindow.resx"
+					>
+				</File>
+			</File>
 			<File
 				RelativePath="..\COMMON\eList.h"
 				>
