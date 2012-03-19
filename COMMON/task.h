@@ -280,7 +280,7 @@ public ref struct Answer
 	int question_link;
 	array<unsigned char>^ answer_text;
 	// 128 Byte Unicode
-	property String^ AnswerText
+	public: property String^ AnswerText
 	{
 		String^ get()
 		{
@@ -302,7 +302,7 @@ public ref struct Question
 	int question_character_count;
 	array<unsigned char>^ question_text;
 	// 2*question_character_count Byte Unicode
-	property String^ QuestionText
+	public: property String^ QuestionText
 	{
 		String^ get()
 		{
@@ -325,7 +325,7 @@ public ref struct Dialog
 	int unknown;
 	array<unsigned char>^ dialog_text;
 	// 128 Byte Unicode
-	property String^ DialogText
+	public: property String^ DialogText
 	{
 		String^ get()
 		{
@@ -346,7 +346,7 @@ public ref struct Conversation
 	int prompt_character_count;
 	array<unsigned char>^ prompt_text;
 	// 2*prompt_character_count Byte Unicode
-	property String^ PromptText
+	public: property String^ PromptText
 	{
 		String^ get()
 		{
@@ -363,7 +363,7 @@ public ref struct Conversation
 	int general_character_count;
 	array<unsigned char>^ general_text;
 	// 2*general_character_count Byte Unicode
-	property String^ GeneralText
+	public: property String^ GeneralText
 	{
 		String^ get()
 		{
@@ -438,7 +438,7 @@ public ref class Task
 			}
 		}
 	}
-	public: array<unsigned char>^ name;
+	private: array<unsigned char>^ name;
 	// 60 Byte Unicode
 	public: property String^ Name
 	{
@@ -603,7 +603,7 @@ public ref class Task
 	public: bool UNKNOWN_60; // is divine quest with probability?
 	public: float receive_quest_probability;
 	public: bool UNKNOWN_60_01; 
-	public: array<unsigned char>^ author_text;
+	private: array<unsigned char>^ author_text;
 	// 60 Byte Unicode
 	public: property String^ AuthorText
 	{
