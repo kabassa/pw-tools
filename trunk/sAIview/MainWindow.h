@@ -100,8 +100,7 @@ public ref class MainWindow : public System::Windows::Forms::Form
 		private: System::Windows::Forms::ComboBox^  comboBox_cat;
 		private: System::Windows::Forms::Label^  label5;
 		private: System::Windows::Forms::ToolStripMenuItem^  createDebug136ToolStripMenuItem;
-private: System::Windows::Forms::ToolStripMenuItem^  analyzeToolStripMenuItem;
-
+		private: System::Windows::Forms::ToolStripMenuItem^  analyzeToolStripMenuItem;
 
 		private:
 		/// <summary>

@@ -289,7 +289,7 @@
     <value>True</value>
   </metadata>
   <metadata name="contextMenuStrip_valid_location.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>252, 54</value>
+    <value>640, 72</value>
   </metadata>
   <metadata name="dataGridViewTextBoxColumn43.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -310,7 +310,7 @@
     <value>True</value>
   </metadata>
   <metadata name="contextMenuStrip_fail_location.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>14, 45</value>
+    <value>208, 45</value>
   </metadata>
   <metadata name="dataGridViewTextBoxColumn37.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -361,7 +361,7 @@
     <value>True</value>
   </metadata>
   <metadata name="contextMenuStrip_team_members.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>173, 68</value>
+    <value>146, 73</value>
   </metadata>
   <metadata name="dataGridViewTextBoxColumn24.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -397,7 +397,7 @@
     <value>True</value>
   </metadata>
   <metadata name="contextMenuStrip_required_items.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>465, 54</value>
+    <value>483, 68</value>
   </metadata>
   <metadata name="dataGridViewTextBoxColumn16.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -496,7 +496,7 @@
     <value>True</value>
   </metadata>
   <metadata name="contextMenuStrip_reach_location.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>7, 67</value>
+    <value>-1, 43</value>
   </metadata>
   <metadata name="dataGridViewTextBoxColumn97.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
