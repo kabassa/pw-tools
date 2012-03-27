@@ -6,14 +6,24 @@ using namespace System::Text;
 using namespace System::Collections;
 using namespace System::Windows::Forms;
 
+/*
+operation
+{
+}
+*/
 ref struct Procedure
 {
 	int type;
 	array<Object^>^ parameters;
-	int target;
-	int extra;
+	int target_type;
+	array<Object^>^ target_parameters;
 };
 
+/*
+condition
+{
+}
+*/
 ref struct Condition
 {
 	int operator_id;
@@ -27,6 +37,17 @@ ref struct Condition
 	int subnode_3;
 };
 
+/*
+ai_trigger
+{
+	int _id;
+	struct condition *_cond;
+	struct operation *_ops;
+	bool _enable;
+	bool _default_enable;
+	bool _battle_trigger;
+}
+*/
 ref struct ActionSet
 {
 	int version;
@@ -61,6 +82,11 @@ ref struct ActionSet
 	array<Procedure^>^ procedures;
 };
 
+/*
+ai_task
+{
+}
+*/
 ref struct ActionController
 {
 	int signature;
@@ -69,6 +95,11 @@ ref struct ActionController
 	array<ActionSet^>^ action_sets;
 };
 
+/*
+ai_policy
+{
+}
+*/
 ref struct AIPolicy
 {
 	int signature;
