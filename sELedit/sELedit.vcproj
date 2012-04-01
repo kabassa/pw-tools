@@ -315,11 +315,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\COMMON\eList58.h"
+				RelativePath="..\COMMON\eListCollection.h"
 				>
 			</File>
 			<File
-				RelativePath="..\COMMON\eListCollection.h"
+				RelativePath="..\COMMON\eListConversation.h"
 				>
 			</File>
 		</Filter>

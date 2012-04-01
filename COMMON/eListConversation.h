@@ -77,9 +77,9 @@ public ref struct eDialog
 	public: array<eQuestion^>^ Questions;
 };
 
-public ref class eList58
+public ref class eListConversation
 {
-	public: eList58(array<unsigned char>^ Bytes)
+	public: eListConversation(array<unsigned char>^ Bytes)
 	{
 		MemoryStream^ ms = gcnew MemoryStream(Bytes);
 		BinaryReader^ br = gcnew BinaryReader(ms);
@@ -112,7 +112,7 @@ public ref class eList58
 		br->Close();
 		ms->Close();
 	}
-	protected: ~eList58()
+	protected: ~eListConversation()
 	{
 		DialogCount = 0;
 		//delete Count;
