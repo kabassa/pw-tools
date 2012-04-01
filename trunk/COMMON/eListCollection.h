@@ -17,6 +17,7 @@ public ref class eListCollection
 	{
 	}
 
+	public: int ConversationListIndex;
 	public: String^ ConfigFile;
 	public: array<eList^>^ Lists;
 
@@ -183,6 +184,14 @@ public ref class eListCollection
 		ConfigFile = configFile->Substring(configFile->LastIndexOf("\\"));
 		StreamReader^ sr = gcnew StreamReader(configFile);
 		array<eList^>^ Li = gcnew array<eList^>(Convert::ToInt32(sr->ReadLine()));
+		try
+		{
+			ConversationListIndex = Convert::ToInt32(sr->ReadLine());
+		}
+		catch(...)
+		{
+			ConversationListIndex = 58;
+		}
 		String^ line;
 		for(int i=0; i<Li->Length; i++)
 		{
@@ -249,9 +258,10 @@ public ref class eListCollection
 				}
 			}
 
-			// read list (58)
-			if(l==58)
+			// read conversation list
+			if(l == ConversationListIndex)
 			{
+				// Auto detect only works for Perfect World elements.data !!!
 				if(Li[l]->elementTypes[0]->Contains("AUTO"))
 				{
 					array<unsigned char>^ pattern = (Encoding::GetEncoding("GBK"))->GetBytes("facedata\\");
@@ -322,7 +332,7 @@ public ref class eListCollection
 				bw->Write(Lists[l]->listOffset);
 			}
 
-			if(l != 58)
+			if(l != ConversationListIndex)
 			{
 				bw->Write(Lists[l]->elementValues->Length);
 			}
@@ -384,7 +394,7 @@ public ref class eListCollection
 					}
 				}
 
-				if(l != 58)
+				if(l != ConversationListIndex)
 				{
 					bw->Write(Lists[l]->elementValues->Length);
 				}
