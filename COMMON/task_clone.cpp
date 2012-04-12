@@ -4,6 +4,27 @@
 
 Task^ Task::Clone()
 {
+	// insted of real cloning we use save / load to a memory stream of the current task ;)
+	// we use 9999 as version to make sure saving the max supported version
+	MemoryStream^ ms = gcnew MemoryStream();
+
+	BinaryWriter^ bw = gcnew BinaryWriter(ms);
+	this->Save(9999, bw);
+	bw->Close();
+
+	TreeNodeCollection^ nodes;
+
+	BinaryReader^ br = gcnew BinaryReader(ms);
+	Task^ result = gcnew Task(9999, br, 0, nodes);
+	br->Close();
+
+	nodes->Clear();
+	ms->Close();
+
+	return result;
+
+#pragma region DEPRECATED
+/*
 	Task^ result = gcnew Task();
 	result->id = this->id;
 	result->Name = this->Name; // clone this array, no pointers !!!
@@ -22,7 +43,7 @@ Task^ Task::Clone()
 	result->repeatable = this->repeatable;
 	result->repeatable_after_failure = this->repeatable_after_failure;
 //	result->UNKNOWN_004 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_004));
-	/*
+
 	result->quest_trigger_location = gcnew LocationSpan();
 	result->quest_trigger_location->map_id = this->quest_trigger_location->map_id;
 	result->quest_trigger_location->north = this->quest_trigger_location->north;
@@ -31,7 +52,7 @@ Task^ Task::Clone()
 	result->quest_trigger_location->east = this->quest_trigger_location->east;
 	result->quest_trigger_location->top = this->quest_trigger_location->top;
 	result->quest_trigger_location->bottom = this->quest_trigger_location->bottom;
-	*/
+
 	result->has_instant_teleport = this->has_instant_teleport;
 	result->instant_teleport_location = gcnew Location();
 	result->instant_teleport_location->map_id = this->instant_teleport_location->map_id;
@@ -106,7 +127,7 @@ Task^ Task::Clone()
 	result->required_get_items_unknown = HexString_to_ByteArray(ByteArray_to_HexString(this->required_get_items_unknown));
 	result->required_coins = this->required_coins;
 	result->UNKNOWN_56 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_56));
-	/*
+
 	result->required_reach_location = gcnew LocationSpan();
 	result->required_reach_location->map_id = this->required_reach_location->map_id;
 	result->required_reach_location->north = this->required_reach_location->north;
@@ -115,7 +136,7 @@ Task^ Task::Clone()
 	result->required_reach_location->east = this->required_reach_location->east;
 	result->required_reach_location->top = this->required_reach_location->top;
 	result->required_reach_location->bottom = this->required_reach_location->bottom;
-	*/
+
 	result->required_wait_time = this->required_wait_time;
 	result->UNKNOWN_58 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_58));
 	result->UNKNOWN_59 = HexString_to_ByteArray(ByteArray_to_HexString(this->UNKNOWN_59));
@@ -399,4 +420,6 @@ Task^ Task::Clone()
 	}
 
 	return result;
+*/
+#pragma endregion
 }
