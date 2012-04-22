@@ -1075,26 +1075,27 @@ pq->location->unknown_1 = gcnew array<unsigned char>(4);
 
 // ################# ADD TREE-NODE #############################
 
-// substring problem task 9442
-
-	Drawing::Color c = Drawing::Color::White;
-	String^ node = Name;
-
-	if(node->StartsWith("^"))
+	if(nodes)
 	{
-		try
-		{
-			c = Drawing::Color::FromArgb(int::Parse(node->Substring(1, 6), Globalization::NumberStyles::HexNumber));
-			node = node->Substring(7);
-		}
-		catch(...)
-		{
-			c = Drawing::Color::White;
-		}
-	}
+		Drawing::Color c = Drawing::Color::White;
+		String^ node = Name;
 
-	nodes->Add(id.ToString() + " - " + node);
-	nodes[nodes->Count-1]->ForeColor = c;
+		if(node->StartsWith("^"))
+		{
+			try
+			{
+				c = Drawing::Color::FromArgb(int::Parse(node->Substring(1, 6), Globalization::NumberStyles::HexNumber));
+				node = node->Substring(7);
+			}
+			catch(...)
+			{
+				c = Drawing::Color::White;
+			}
+		}
+
+		nodes->Add(id.ToString() + " - " + node);
+		nodes[nodes->Count-1]->ForeColor = c;
+	}
 
 // ################# SUB TASKS #############################
 
@@ -1103,6 +1104,13 @@ pq->location->unknown_1 = gcnew array<unsigned char>(4);
 
 	for(int i=0; i<sub_quest_count; i++)
 	{
-		sub_quests[i] = gcnew Task(version, br, (int)br->BaseStream->Position, nodes[nodes->Count-1]->Nodes);
+		if(nodes)
+		{
+			sub_quests[i] = gcnew Task(version, br, (int)br->BaseStream->Position, nodes[nodes->Count-1]->Nodes);
+		}
+		else
+		{
+			sub_quests[i] = gcnew Task(version, br, (int)br->BaseStream->Position, nullptr);
+		}
 	}
 }
