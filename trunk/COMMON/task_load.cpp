@@ -707,7 +707,7 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		resource_pq_audit_id = 0;
 		UNKNOWN_53 = 0;
 		UNKNOWN_54 = 0;
-		required_pq_contribution = br->ReadInt32();
+		required_pq_contribution = 0;
 		UNKNOWN_55 = gcnew array<unsigned char>(20);
 	}
 
