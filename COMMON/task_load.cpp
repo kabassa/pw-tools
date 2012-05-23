@@ -249,7 +249,14 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 		reward->UNKNOWN_5 = 0;
 		reward->UNKNOWN_6 = 0;
 	}
-
+if(version >= 102)
+{
+	int debug = br->ReadInt32();
+	if(debug != 0)
+	{
+		int stop = 1;
+	}
+}
 	reward->item_groups = gcnew array<ItemGroup^>(reward->item_groups_count);
 
 	for(int i=0; i<reward->item_groups->Length; i++)
@@ -642,7 +649,15 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	UNKNOWN_41 = br->ReadBoolean();
 	required_be_married = br->ReadBoolean();
 	UNKNOWN_42 = br->ReadBoolean();
+if(version >= 102)
+{
+	br->ReadBoolean();
+}
 	required_be_gm = br->ReadBoolean();
+if(version >= 102)
+{
+	br->ReadBoolean();
+}
 	UNKNOWN_43 = br->ReadBoolean();
 
 	if(version >= 89)
