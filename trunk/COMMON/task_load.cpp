@@ -66,9 +66,9 @@ TeamMembers^ ReadTeamMembers(int version, BinaryReader^ br)
 
 	team_member_group->level_min = br->ReadInt32();
 	team_member_group->level_max = br->ReadInt32();
-	team_member_group->unknown_1 = br->ReadInt32();
-	team_member_group->unknown_2 = br->ReadInt32();
-	team_member_group->unknown_3 = br->ReadInt32();
+	team_member_group->unknown_1 = br->ReadInt32(); // race?
+	team_member_group->unknown_2 = br->ReadInt32(); // occupation?
+	team_member_group->unknown_3 = br->ReadInt32(); // gender?
 	team_member_group->amount_min = br->ReadInt32();
 	team_member_group->amount_max = br->ReadInt32();
 	team_member_group->quest = br->ReadInt32();
@@ -93,13 +93,13 @@ Chase^ ReadChase(int version, BinaryReader^ br)
 	chase->amount_monster = br->ReadInt32();
 	chase->id_drop = br->ReadInt32();
 	chase->amount_drop = br->ReadInt32();
-	chase->unknown_1 = br->ReadByte();
+	chase->unknown_1 = br->ReadByte(); //is common?
 	chase->probability = br->ReadSingle();
-	chase->unknown_2 = br->ReadByte();
+	chase->unknown_2 = br->ReadByte(); // killer level
 
 	if(version >= 92)
 	{
-		chase->unknown_3 = br->ReadBytes(8);
+		chase->unknown_3 = br->ReadBytes(8); // int DPH, int DPS
 	}
 	else
 	{
@@ -341,16 +341,16 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	id = br->ReadInt32();
 	name = br->ReadBytes(60);
 	author_mode = br->ReadBoolean();
-	UNKNOWN_01 = br->ReadBytes(4);
+	UNKNOWN_01 = br->ReadBytes(4); // author mode related pointer?
 	type = br->ReadInt32();
 	time_limit = br->ReadInt32();
 
 	if(version >= 89)
 	{
-		UNKNOWN_02 = br->ReadBoolean();
+		UNKNOWN_02 = br->ReadBoolean(); // has offline fail
 		has_date_fail = br->ReadBoolean();
 		date_fail = ReadDate(version, br);
-		UNKNOWN_03 = br->ReadBoolean();
+		UNKNOWN_03 = br->ReadBoolean(); // item off fail
 	}
 	else
 	{
@@ -368,7 +368,7 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 
 	has_date_spans = br->ReadBoolean();
 	date_spans_count = br->ReadInt32();
-	UNKNOWN_04 = br->ReadBytes(4);
+	UNKNOWN_04 = br->ReadBytes(4); // time types?
 	UNKNOWN_05 = br->ReadBytes(8);
 
 	if(version >= 89)
@@ -380,7 +380,7 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		UNKNOWN_06 = gcnew array<unsigned char>(12);
 	}
 
-	UNKNOWN_07 = br->ReadBytes(8);
+	UNKNOWN_07 = br->ReadBytes(8); // int replication_count + int period_limit ?
 	UNKNOWN_08 = br->ReadInt32();
 
 	if(version >= 89)
