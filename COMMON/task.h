@@ -537,6 +537,8 @@ public ref class Task
 	public: array<unsigned char>^ UNKNOWN_34; // 60 Byte
 	public: bool UNKNOWN_35;
 	public: int UNKNOWN_36;
+
+// required spiritual cultivation?
 	public: array<unsigned char>^ UNKNOWN_37; // 9 Byte
 	public: int UNKNOWN_38;
 	public: bool UNKNOWN_39;
@@ -571,6 +573,10 @@ public ref class Task
 	public: int UNKNOWN_54;
 	public: int required_pq_contribution;
 	public: array<unsigned char>^ UNKNOWN_55; // 20 Byte
+
+// 01-ED-03-00-00-01-C4-09-00-00-00-5A-00-00-00-00-00-00-00-00-01-00-00-00-00-01-FF-FF-FF-FF-00
+// required prestige: C4-09-00-00
+// instant pay influence: 5A-00-00-00
 	public: array<unsigned char>^ UNKNOWN_55_01; // 31 Byte
 	// 0 - ?
 	// 1 - Chase
