@@ -253,7 +253,8 @@ public ref struct PQ_Audit
 	int chase_count;
 	array<PQ_AuditChase^>^ chases;
 	array<unsigned char>^ unknown_7; // 4 Byte
-	array<unsigned char>^ unknown_8; // 5 Byte
+	int required_quests_completed;
+	array<unsigned char>^ unknown_8; // 1 Byte
 	array<unsigned char>^ unknown_9; // 5 Byte
 	array<unsigned char>^ unknown_10; // 5 Byte
 	array<unsigned char>^ unknown_11; // 4 Byte
@@ -573,11 +574,16 @@ public ref class Task
 	public: int UNKNOWN_54;
 	public: int required_pq_contribution;
 	public: array<unsigned char>^ UNKNOWN_55; // 20 Byte
+	public: array<unsigned char>^ UNKNOWN_55_02_01; // bool CheckForce
+	public: int required_force; // 4 Byte
+	public: array<unsigned char>^ UNKNOWN_55_02_02; // bool ShowByForce
+	public: int required_prestige; // 4 Byte
+	public: array<unsigned char>^ UNKNOWN_55_03; // bool ShowByForceReputation
+	public: int required_influence_fee; // 4 Byte
+	public: array<unsigned char>^ UNKNOWN_55_04; // 11 Byte: bool ShowByForceContrib; int ForcePremExp; bool ShowByForceExp; int ForcePremSP; bool ShowByForceSP;
+	public: array<unsigned char>^ UNKNOWN_55_05; // int ForceActivityLevel
+	public: array<unsigned char>^ UNKNOWN_55_06; // bool ShowByForceActivityLevel
 
-// 01-ED-03-00-00-01-C4-09-00-00-00-5A-00-00-00-00-00-00-00-00-01-00-00-00-00-01-FF-FF-FF-FF-00
-// required prestige: C4-09-00-00
-// instant pay influence: 5A-00-00-00
-	public: array<unsigned char>^ UNKNOWN_55_01; // 31 Byte
 	// 0 - ?
 	// 1 - Chase
 	// 2 - Get

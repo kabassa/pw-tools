@@ -251,7 +251,7 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 	}
 if(version >= 102)
 {
-	int debug = br->ReadInt32();
+	int debug = br->ReadInt32(); // quest list size
 	if(debug != 0)
 	{
 		int stop = 1;
@@ -516,7 +516,8 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		pq->unknown_6 = br->ReadBytes(1);
 		pq->chase_count = br->ReadInt32();
 		pq->unknown_7 = br->ReadBytes(4);
-		pq->unknown_8 = br->ReadBytes(5);
+		pq->required_quests_completed = br->ReadInt32();
+		pq->unknown_8 = br->ReadBytes(1);
 
 		// correct position not confirmed
 		if(version >= 92)
@@ -542,7 +543,8 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		pq->unknown_6 = gcnew array<unsigned char>(1);
 		pq->chase_count = 0;
 		pq->unknown_7 = gcnew array<unsigned char>(4);
-		pq->unknown_8 = gcnew array<unsigned char>(5);
+		pq->required_quests_completed = 0;
+		pq->unknown_8 = gcnew array<unsigned char>(1);
 		pq->unknown_9 = gcnew array<unsigned char>(5);
 		pq->unknown_10 = gcnew array<unsigned char>(5);
 	}
@@ -649,15 +651,14 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	UNKNOWN_41 = br->ReadBoolean();
 	required_be_married = br->ReadBoolean();
 	UNKNOWN_42 = br->ReadBoolean();
+
 if(version >= 102)
 {
-	br->ReadBoolean();
+	br->ReadBoolean(); // wedding owner
+	br->ReadBoolean(); // show by wedding owner
 }
+
 	required_be_gm = br->ReadBoolean();
-if(version >= 102)
-{
-	br->ReadBoolean();
-}
 	UNKNOWN_43 = br->ReadBoolean();
 
 	if(version >= 89)
@@ -731,11 +732,27 @@ if(version >= 102)
 	// inside unknown_55 ?
 	if(version >= 100)
 	{
-		UNKNOWN_55_01 = br->ReadBytes(31);
+		UNKNOWN_55_02_01 = br->ReadBytes(1);
+		required_force = br->ReadInt32();
+		UNKNOWN_55_02_02 = br->ReadBytes(1);
+		required_prestige = br->ReadInt32();
+		UNKNOWN_55_03 = br->ReadBytes(1);
+		required_influence_fee = br->ReadInt32();
+		UNKNOWN_55_04 = br->ReadBytes(11);
+		UNKNOWN_55_05 = br->ReadBytes(4);
+		UNKNOWN_55_06 = br->ReadBytes(1);
 	}
 	else
 	{
-		UNKNOWN_55_01 = gcnew array<unsigned char>(31);
+		UNKNOWN_55_02_01 = gcnew array<unsigned char>(1);
+		required_force = 0;
+		UNKNOWN_55_02_02 = gcnew array<unsigned char>(1);
+		required_prestige = 0;
+		UNKNOWN_55_03 = gcnew array<unsigned char>(1);
+		required_influence_fee = 0;
+		UNKNOWN_55_04 = gcnew array<unsigned char>(11);
+		UNKNOWN_55_05 = gcnew array<unsigned char>(4);
+		UNKNOWN_55_06 = gcnew array<unsigned char>(1);
 	}
 
 	required_success_type = br->ReadInt32();
