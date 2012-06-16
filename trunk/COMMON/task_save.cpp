@@ -343,6 +343,7 @@ void Task::Save(int version, BinaryWriter^ bw)
 		bw->Write(pq->unknown_6);
 		bw->Write(pq->chase_count);
 		bw->Write(pq->unknown_7);
+		bw->Write(pq->required_quests_completed);
 		bw->Write(pq->unknown_8);
 
 		if(version >= 92)
@@ -483,7 +484,15 @@ void Task::Save(int version, BinaryWriter^ bw)
 
 	if(version >= 100)
 	{
-		bw->Write(UNKNOWN_55_01);
+		bw->Write(UNKNOWN_55_02_01);
+		bw->Write(required_force);
+		bw->Write(UNKNOWN_55_02_02);
+		bw->Write(required_prestige);
+		bw->Write(UNKNOWN_55_03);
+		bw->Write(required_influence_fee);
+		bw->Write(UNKNOWN_55_04);
+		bw->Write(UNKNOWN_55_05);
+		bw->Write(UNKNOWN_55_06);
 	}
 
 	bw->Write(required_success_type);
