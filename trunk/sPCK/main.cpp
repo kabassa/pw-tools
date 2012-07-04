@@ -8,6 +8,10 @@
 //#define KEY_1 566434367
 //#define KEY_2 408690725
 
+// ESO decoding keys
+//#define KEY_1 -1228069623
+//#define KEY_2 1822409141
+
 // PWI decoding keys
 #define KEY_1 -1466731422
 #define KEY_2 -240896429
