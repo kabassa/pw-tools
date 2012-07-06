@@ -249,14 +249,16 @@ Reward^ ReadReward(int version, BinaryReader^ br)
 		reward->UNKNOWN_5 = 0;
 		reward->UNKNOWN_6 = 0;
 	}
-if(version >= 102)
-{
-	int debug = br->ReadInt32(); // quest list size
-	if(debug != 0)
+
+	if(version >= 102)
 	{
-		int stop = 1;
+		reward->quest_slot_expansion = br->ReadInt32();
 	}
-}
+	else
+	{
+		reward->quest_slot_expansion = 0;
+	}
+
 	reward->item_groups = gcnew array<ItemGroup^>(reward->item_groups_count);
 
 	for(int i=0; i<reward->item_groups->Length; i++)
@@ -652,11 +654,16 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	required_be_married = br->ReadBoolean();
 	UNKNOWN_42 = br->ReadBoolean();
 
-if(version >= 102)
-{
-	br->ReadBoolean(); // wedding owner
-	br->ReadBoolean(); // show by wedding owner
-}
+	if(version >= 102)
+	{
+		UNKNOWN_42_1 = br->ReadBoolean();
+		UNKNOWN_42_2 = br->ReadBoolean();
+	}
+	else
+	{
+		UNKNOWN_42_1 = false;
+		UNKNOWN_42_2 = true;
+	}
 
 	required_be_gm = br->ReadBoolean();
 	UNKNOWN_43 = br->ReadBoolean();

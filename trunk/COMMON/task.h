@@ -186,6 +186,7 @@ public ref struct Reward
 	int prestige;
 	int UNKNOWN_5;
 	int UNKNOWN_6;
+	int quest_slot_expansion;
 	array<ItemGroup^>^ item_groups;
 };
 
@@ -550,6 +551,9 @@ public ref class Task
 	public: bool UNKNOWN_41;
 	public: bool required_be_married;
 	public: bool UNKNOWN_42;
+	//correct position of UNKNOWN_42_1 and UNKNOWN_42_2 not confirmed!
+	public: bool UNKNOWN_42_1; // wedding owner ???
+	public: bool UNKNOWN_42_2; // show by wedding owner
 	public: bool required_be_gm;
 	public: bool UNKNOWN_43;
 	public: array<unsigned char>^ UNKNOWN_44; // 19 Byte

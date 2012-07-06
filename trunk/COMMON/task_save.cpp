@@ -155,6 +155,11 @@ void WriteReward(int version, BinaryWriter^ bw, Reward^ reward)
 		bw->Write(reward->UNKNOWN_6);
 	}
 
+	if(version >= 102)
+	{
+		bw->Write(reward->quest_slot_expansion);
+	}
+
 	for(int i=0; i<reward->item_groups->Length; i++)
 	{
 		 WriteItemGroup(version, bw, reward->item_groups[i]);
@@ -440,6 +445,13 @@ void Task::Save(int version, BinaryWriter^ bw)
 	bw->Write(UNKNOWN_41);
 	bw->Write(required_be_married);
 	bw->Write(UNKNOWN_42);
+
+	if(version >= 102)
+	{
+		bw->Write(UNKNOWN_42_1);
+		bw->Write(UNKNOWN_42_2);
+	}
+
 	bw->Write(required_be_gm);
 	bw->Write(UNKNOWN_43);
 
