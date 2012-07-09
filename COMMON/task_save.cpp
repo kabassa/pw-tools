@@ -401,6 +401,7 @@ void Task::Save(int version, BinaryWriter^ bw)
 		bw->Write(UNKNOWN_36);
 	}
 
+	bw->Write(required_cultivation);
 	bw->Write(UNKNOWN_37);
 
 	if(version >= 93)

@@ -541,7 +541,8 @@ public ref class Task
 	public: int UNKNOWN_36;
 
 // required spiritual cultivation?
-	public: array<unsigned char>^ UNKNOWN_37; // 9 Byte
+	public: int required_cultivation;
+	public: array<unsigned char>^ UNKNOWN_37; // 5 Byte
 	public: int UNKNOWN_38;
 	public: bool UNKNOWN_39;
 	public: int required_gender;

@@ -615,7 +615,8 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		UNKNOWN_36 = 0;
 	}
 
-	UNKNOWN_37 = br->ReadBytes(9);
+	required_cultivation = br->ReadInt32();
+	UNKNOWN_37 = br->ReadBytes(5);
 
 	if(version >= 93)
 	{
