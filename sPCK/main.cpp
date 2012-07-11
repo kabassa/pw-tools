@@ -1,20 +1,44 @@
 #include "main.h"
 
-// RWPD decoding keys
-//#define KEY_1 711164174
-//#define KEY_2 839959661
+// RWPD decoding keys & signatures
+/*
+#define FSIG_1 1305093103
+#define FSIG_2 1453361591
+#define KEY_1 711164174
+#define KEY_2 839959661
+#define ASIG_1 -1424846705
+#define ASIG_2 -1289545470
+*/
 
-// FW decoding keys
-//#define KEY_1 566434367
-//#define KEY_2 408690725
+// FW decoding keys & signatures
+/*
+#define FSIG_1 1305093103
+#define FSIG_2 1453361591
+#define KEY_1 566434367
+#define KEY_2 408690725
+#define ASIG_1 -1526153788
+#define ASIG_2 -2060097592
+*/
 
-// ESO decoding keys
-//#define KEY_1 -1228069623
-//#define KEY_2 1822409141
+// ESO decoding keys & signatures
+/*
+#define FSIG_1 1305093103
+#define FSIG_2 1453361591
+#define KEY_1 -1228069623
+#define KEY_2 1822409141
+#define ASIG_1 1571301968
+#define ASIG_2 2043846474
+*/
 
-// PWI decoding keys
+// PW & JD decoding keys & signatures
+///*
+#define FSIG_1 1305093103
+#define FSIG_2 1453361591
 #define KEY_1 -1466731422
 #define KEY_2 -240896429
+#define ASIG_1 -33685778
+#define ASIG_2 -267534609
+//*/
 
 bool compare(wxByte* buffer1, wxByte* buffer2, wxUint32 length)
 {
@@ -400,9 +424,9 @@ void compress(wxString directory)
 
     wxFFileOutputStream fos(directory.BeforeLast('.'));
     wxDataOutputStream bos(fos);
-    bos.Write32(1305093103);
+    bos.Write32(FSIG_1);
     bos.Write32(0); // placeholder for filesize
-    bos.Write32(1453361591);
+    bos.Write32(FSIG_2);
 
     for(wxUint32 i=0; i<entryCount; i++)
     {
@@ -469,19 +493,20 @@ void compress(wxString directory)
         wxDELETEA(zipBuffer);
     }
 
-    bos.Write32(-33685778);
+    bos.Write32(ASIG_1);
     bos.Write16(2);
     bos.Write16(2);
     bos.Write32(fileTableOffset xor KEY_1);
+    bos.Write32(0); // write int=0 for newer versions (seperator)
     fos.Write("Angelica File Package, Perfect World.", 37);
-    wxByte* zeros = new wxByte[219];
-    for(wxUint32 i=0; i<219; i++)
+    wxByte* zeros = new wxByte[215]; //write only 215 zeros instead of 219 for newer versions
+    for(wxUint32 i=0; i<215; i++)
     {
         zeros[i] = 0;
     }
-    fos.Write(zeros, 219);
+    fos.Write(zeros, 215);
     wxDELETEA(zeros);
-    bos.Write32(-267534609);
+    bos.Write32(ASIG_2);
     bos.Write32(entryCount);
     bos.Write16(2);
     bos.Write16(2);
@@ -637,19 +662,20 @@ void add(wxString directory, bool isBase64)
         wxPrintf(wxString::Format(wxT("\rRe-Writing File Entries: %i/%i (%i Replacements)"), (i+1-replacedCount), entryCount, replacedCount));
     }
 
-    bout.Write32(-33685778);
+    bout.Write32(ASIG_1);
     bout.Write16(2);
     bout.Write16(2);
     bout.Write32(fileTableOffset xor KEY_1);
+    bout.Write32(0); // write int=0 for newer versions (seperator)
     fout.Write("Angelica File Package, Perfect World.", 37);
-    wxByte* zeros = new wxByte[219];
-    for(wxUint32 i=0; i<219; i++)
+    wxByte* zeros = new wxByte[215]; //write only 215 zeros instead of 219 for newer versions
+    for(wxUint32 i=0; i<215; i++)
     {
         zeros[i] = 0;
     }
-    fout.Write(zeros, 219);
+    fout.Write(zeros, 215);
     wxDELETEA(zeros);
-    bout.Write32(-267534609);
+    bout.Write32(ASIG_2);
     bout.Write32(entryCount-replacedCount);
     bout.Write16(2);
     bout.Write16(2);
