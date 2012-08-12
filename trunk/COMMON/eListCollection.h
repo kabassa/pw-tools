@@ -8,15 +8,17 @@ using namespace System::Text;
 
 public ref class eListCollection
 {
-	public: eListCollection(String^ configFile, String^ elFile)
+	public: eListCollection(String^ elFile)
 	{
-		Lists = Load(configFile, elFile);
+		Lists = Load(elFile);
 	}
 
 	protected: ~eListCollection()
 	{
 	}
 
+    public: short Version;
+    public: short Signature;
 	public: int ConversationListIndex;
 	public: String^ ConfigFile;
 	public: array<eList^>^ Lists;
@@ -148,6 +150,44 @@ public ref class eListCollection
 		}
 	}
 
+    // returns an eList array with preconfigured fields from configuration file
+    private: array<eList^>^ loadConfiguration(String^ file)
+	{
+        //ConfigFile = configFiles[0]->Substring(configFiles[0]->LastIndexOf("\\"));
+        StreamReader^ sr = gcnew StreamReader(file);
+        array<eList^>^ Li = gcnew array<eList^>(Convert::ToInt32(sr->ReadLine()));
+        try
+        {
+            ConversationListIndex = Convert::ToInt32(sr->ReadLine());
+        }
+        catch(...)
+        {
+            ConversationListIndex = 58;
+        }
+        String^ line;
+        for(int i=0; i<Li->Length; i++)
+        {
+            System::Windows::Forms::Application::DoEvents();
+
+            while((line = sr->ReadLine()) == "")
+            {
+            }
+            Li[i] = gcnew eList();
+            Li[i]->listName = line;
+            Li[i]->listOffset = nullptr;
+            String^ offset = sr->ReadLine();
+            if(offset != "AUTO")
+            {
+                Li[i]->listOffset = gcnew array<unsigned char>(Convert::ToInt32(offset));
+            }
+            Li[i]->elementFields = sr->ReadLine()->Split(gcnew array<wchar_t>{';'});
+            Li[i]->elementTypes = sr->ReadLine()->Split(gcnew array<wchar_t>{';'});
+        }
+        sr->Close();
+
+        return Li;
+	}
+
 	private: Hashtable^ loadRules(String^ file)
 	{
 		StreamReader^ sr = gcnew StreamReader(file);
@@ -179,139 +219,128 @@ public ref class eListCollection
 		return result;
 	}
 
-	public: array<eList^>^ Load(String^ configFile, String^ elFile)
+    // only works for PW !!!
+	public: array<eList^>^ Load(String^ elFile)
 	{
-		ConfigFile = configFile->Substring(configFile->LastIndexOf("\\"));
-		StreamReader^ sr = gcnew StreamReader(configFile);
-		array<eList^>^ Li = gcnew array<eList^>(Convert::ToInt32(sr->ReadLine()));
-		try
-		{
-			ConversationListIndex = Convert::ToInt32(sr->ReadLine());
-		}
-		catch(...)
-		{
-			ConversationListIndex = 58;
-		}
-		String^ line;
-		for(int i=0; i<Li->Length; i++)
-		{
-			System::Windows::Forms::Application::DoEvents();
+		array<eList^>^ Li = gcnew array<eList^>(0);
 
-			while((line = sr->ReadLine()) == "")
-			{
-			}
-			Li[i] = gcnew eList();
-			Li[i]->listName = line;
-			Li[i]->listOffset = nullptr;
-			String^ offset = sr->ReadLine();
-			if(offset != "AUTO")
-			{
-				Li[i]->listOffset = gcnew array<unsigned char>(Convert::ToInt32(offset));
-			}
-			Li[i]->elementFields = sr->ReadLine()->Split(gcnew array<wchar_t>{';'});
-			Li[i]->elementTypes = sr->ReadLine()->Split(gcnew array<wchar_t>{';'});
-		}
-		sr->Close();
-
-		// Read the Values
+        // open the element file
 		FileStream^ fs =File::OpenRead(elFile);
 		BinaryReader^ br = gcnew BinaryReader(fs);
 
-		// go through all lists
-		for(int l=0; l<Li->Length; l++)
-		{
-			System::Windows::Forms::Application::DoEvents();
+		Version = br->ReadInt16();
+		Signature = br->ReadInt16();
 
-			// read offset
-			if(Li[l]->listOffset)
-			{
-				// offset > 0
-				if(Li[l]->listOffset->Length>0)
-				{
-					Li[l]->listOffset = br->ReadBytes(Li[l]->listOffset->Length);
-				}
-			}
-			// autodetect offset (for list 20 & 100)
-			else
-			{
-				if(l == 20)
-				{
-					array<unsigned char>^ head = br->ReadBytes(4);
-					array<unsigned char>^ count = br->ReadBytes(4);
-					array<unsigned char>^ body = br->ReadBytes(BitConverter::ToInt32(count, 0));
-					array<unsigned char>^ tail = br->ReadBytes(4);
-					Li[l]->listOffset = gcnew array<unsigned char>(head->Length + count->Length + body->Length + tail->Length);
-					Array::Copy(head, 0, Li[l]->listOffset, 0, head->Length);
-					Array::Copy(count, 0, Li[l]->listOffset, 4, count->Length);
-					Array::Copy(body, 0, Li[l]->listOffset, 8, body->Length);
-					Array::Copy(tail, 0, Li[l]->listOffset, 8+body->Length, tail->Length);
-				}
-				if(l == 100)
-				{
-					array<unsigned char>^ head = br->ReadBytes(4);
-					array<unsigned char>^ count = br->ReadBytes(4);
-					array<unsigned char>^ body = br->ReadBytes(BitConverter::ToInt32(count, 0));
-					Li[l]->listOffset = gcnew array<unsigned char>(head->Length + count->Length + body->Length);
-					Array::Copy(head, 0, Li[l]->listOffset, 0, head->Length);
-					Array::Copy(count, 0, Li[l]->listOffset, 4, count->Length);
-					Array::Copy(body, 0, Li[l]->listOffset, 8, body->Length);
-				}
-			}
+        // check if a corresponding configuration file exists
+        // original: ConfigFile = Application::StartupPath + "\\configs\\" + ((ToolStripMenuItem^)sender)->Text + ".cfg";
+        array<String^>^ configFiles = Directory::GetFiles(Application::StartupPath + "\\configs", "PW_*_v" + Version + ".cfg");
+        if(configFiles->Length > 0)
+        {
+            // configure an eList array with the configuration file
+            Li = loadConfiguration(configFiles[0]);
 
-			// read conversation list
-			if(l == ConversationListIndex)
-			{
-				// Auto detect only works for Perfect World elements.data !!!
-				if(Li[l]->elementTypes[0]->Contains("AUTO"))
-				{
-					array<unsigned char>^ pattern = (Encoding::GetEncoding("GBK"))->GetBytes("facedata\\");
-					__int64 sourcePosition = br->BaseStream->Position;
-					int listLength = -72-pattern->Length;
-					bool run = true;
-					while(run)
-					{
-						run = false;
-						for(int i=0; i<pattern->Length; i++)
-						{
-							listLength++;
-							if(br->ReadByte() != pattern[i])
-							{
-								run = true;
-								break;
-							}
-						}
-					}
-					br->BaseStream->Position = sourcePosition;
-					Li[l]->elementTypes[0] = "byte:" + listLength;
-				}
+            // read the element file
+            for(int l=0; l<Li->Length; l++)
+            {
+                System::Windows::Forms::Application::DoEvents();
 
-				Li[l]->elementValues = gcnew array<array<Object^>^>(1);
-				Li[l]->elementValues[0] = gcnew array<Object^>(Li[l]->elementTypes->Length);
-				Li[l]->elementValues[0][0] = readValue(br, Li[l]->elementTypes[0]);
-			}
-			// read lists
-			else
-			{
-				Li[l]->elementValues = gcnew array<array<Object^>^>(br->ReadInt32());
+                // read offset
+                if(Li[l]->listOffset)
+                {
+                    // offset > 0
+                    if(Li[l]->listOffset->Length>0)
+                    {
+                        Li[l]->listOffset = br->ReadBytes(Li[l]->listOffset->Length);
+                    }
+                }
+                // autodetect offset (for list 20 & 100)
+                else
+                {
+                    if(l == 20)
+                    {
+                        array<unsigned char>^ head = br->ReadBytes(4);
+                        array<unsigned char>^ count = br->ReadBytes(4);
+                        array<unsigned char>^ body = br->ReadBytes(BitConverter::ToInt32(count, 0));
+                        array<unsigned char>^ tail = br->ReadBytes(4);
+                        Li[l]->listOffset = gcnew array<unsigned char>(head->Length + count->Length + body->Length + tail->Length);
+                        Array::Copy(head, 0, Li[l]->listOffset, 0, head->Length);
+                        Array::Copy(count, 0, Li[l]->listOffset, 4, count->Length);
+                        Array::Copy(body, 0, Li[l]->listOffset, 8, body->Length);
+                        Array::Copy(tail, 0, Li[l]->listOffset, 8+body->Length, tail->Length);
+                    }
+                    if(l == 100)
+                    {
+                        array<unsigned char>^ head = br->ReadBytes(4);
+                        array<unsigned char>^ count = br->ReadBytes(4);
+                        array<unsigned char>^ body = br->ReadBytes(BitConverter::ToInt32(count, 0));
+                        Li[l]->listOffset = gcnew array<unsigned char>(head->Length + count->Length + body->Length);
+                        Array::Copy(head, 0, Li[l]->listOffset, 0, head->Length);
+                        Array::Copy(count, 0, Li[l]->listOffset, 4, count->Length);
+                        Array::Copy(body, 0, Li[l]->listOffset, 8, body->Length);
+                    }
+                }
 
-				// go through all elements of a list
-				for(int e=0; e<Li[l]->elementValues->Length; e++)
-				{
-					Li[l]->elementValues[e] = gcnew array<Object^>(Li[l]->elementTypes->Length);
+                // read conversation list
+                if(l == ConversationListIndex)
+                {
+                    // Auto detect only works for Perfect World elements.data !!!
+                    if(Li[l]->elementTypes[0]->Contains("AUTO"))
+                    {
+                        array<unsigned char>^ pattern = (Encoding::GetEncoding("GBK"))->GetBytes("facedata\\");
+                        __int64 sourcePosition = br->BaseStream->Position;
+                        int listLength = -72-pattern->Length;
+                        bool run = true;
+                        while(run)
+                        {
+                            run = false;
+                            for(int i=0; i<pattern->Length; i++)
+                            {
+                                listLength++;
+                                if(br->ReadByte() != pattern[i])
+                                {
+                                    run = true;
+                                    break;
+                                }
+                            }
+                        }
+                        br->BaseStream->Position = sourcePosition;
+                        Li[l]->elementTypes[0] = "byte:" + listLength;
+                    }
 
-					// go through all fields of an element
-					for(int f=0; f<Li[l]->elementValues[e]->Length; f++)
-					{
-						Li[l]->elementValues[e][f] = readValue(br, Li[l]->elementTypes[f]);
-					}
-				}
-			}
-		}
+                    Li[l]->elementValues = gcnew array<array<Object^>^>(1);
+                    Li[l]->elementValues[0] = gcnew array<Object^>(Li[l]->elementTypes->Length);
+                    Li[l]->elementValues[0][0] = readValue(br, Li[l]->elementTypes[0]);
+                }
+                // read lists
+                else
+                {
+                    Li[l]->elementValues = gcnew array<array<Object^>^>(br->ReadInt32());
+
+                    // go through all elements of a list
+                    for(int e=0; e<Li[l]->elementValues->Length; e++)
+                    {
+                        Li[l]->elementValues[e] = gcnew array<Object^>(Li[l]->elementTypes->Length);
+
+                        // go through all fields of an element
+                        for(int f=0; f<Li[l]->elementValues[e]->Length; f++)
+                        {
+                            Li[l]->elementValues[e][f] = readValue(br, Li[l]->elementTypes[f]);
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            MessageBox::Show("No corressponding configuration file found!\nVersion: " + Version + "\nPattern: " + "configs\\PW_*_v" + Version + ".cfg");
+        }
+
 		br->Close();
 		fs->Close();
 
 		return Li;
 	}
+
 	public: void Save(String^ elFile)
 	{
 		if(File::Exists(elFile))
@@ -321,6 +350,9 @@ public ref class eListCollection
 
 		FileStream^ fs = gcnew FileStream(elFile, FileMode::Create, FileAccess::Write);
 		BinaryWriter^ bw = gcnew BinaryWriter(fs);
+
+		bw->Write(Version);
+		bw->Write(Signature);
 
 		// go through all lists
 		for(int l=0; l<Lists->Length; l++)
