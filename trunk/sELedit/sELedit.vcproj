@@ -241,11 +241,6 @@
 				</File>
 			</File>
 			<File
-				RelativePath=".\DiffWindow.h"
-				FileType="3"
-				>
-			</File>
-			<File
 				RelativePath=".\JoinWindow.h"
 				FileType="3"
 				>
@@ -280,6 +275,19 @@
 				<File
 					RelativePath=".\ReplaceWindow.resx"
 					SubType="Designer"
+					>
+				</File>
+			</File>
+			<File
+				RelativePath=".\RuleConfig.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RulesWindow.h"
+				FileType="3"
+				>
+				<File
+					RelativePath=".\RulesWindow.resx"
 					>
 				</File>
 			</File>
