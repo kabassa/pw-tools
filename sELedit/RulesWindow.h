@@ -68,13 +68,13 @@ using namespace System::Drawing;
 	private: System::Windows::Forms::DataGridView^  dataGridView_values;
 	private: System::Windows::Forms::DataGridView^  dataGridView_fields;
 	private: System::Windows::Forms::Button^  button_save;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column7;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column8;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column1;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column2;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column3;
 	private: System::Windows::Forms::DataGridViewCheckBoxColumn^  Column4;
 	private: System::Windows::Forms::DataGridViewButtonColumn^  Column6;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column7;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column8;
 
 	private:
 		/// <summary>
@@ -89,7 +89,7 @@ using namespace System::Drawing;
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->button_browseRecent = (gcnew System::Windows::Forms::Button());
 			this->button_browseBase = (gcnew System::Windows::Forms::Button());
@@ -103,7 +103,14 @@ using namespace System::Drawing;
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->dataGridView_values = (gcnew System::Windows::Forms::DataGridView());
+			this->Column7 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Column8 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridView_fields = (gcnew System::Windows::Forms::DataGridView());
+			this->Column1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Column2 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Column3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Column4 = (gcnew System::Windows::Forms::DataGridViewCheckBoxColumn());
+			this->Column6 = (gcnew System::Windows::Forms::DataGridViewButtonColumn());
 			this->textBox_recentOffset = (gcnew System::Windows::Forms::TextBox());
 			this->textBox_baseOffset = (gcnew System::Windows::Forms::TextBox());
 			this->radioButton_recentOffset = (gcnew System::Windows::Forms::RadioButton());
@@ -111,13 +118,6 @@ using namespace System::Drawing;
 			this->checkBox_removeList = (gcnew System::Windows::Forms::CheckBox());
 			this->comboBox_lists = (gcnew System::Windows::Forms::ComboBox());
 			this->button_save = (gcnew System::Windows::Forms::Button());
-			this->Column7 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column8 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column2 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column4 = (gcnew System::Windows::Forms::DataGridViewCheckBoxColumn());
-			this->Column6 = (gcnew System::Windows::Forms::DataGridViewButtonColumn());
 			this->groupBox1->SuspendLayout();
 			this->groupBox2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView_values))->BeginInit();
@@ -140,7 +140,7 @@ using namespace System::Drawing;
 			this->groupBox1->Controls->Add(this->label1);
 			this->groupBox1->Location = System::Drawing::Point(0, 2);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(632, 75);
+			this->groupBox1->Size = System::Drawing::Size(792, 75);
 			this->groupBox1->TabIndex = 0;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Files";
@@ -148,7 +148,7 @@ using namespace System::Drawing;
 			// button_browseRecent
 			// 
 			this->button_browseRecent->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->button_browseRecent->Location = System::Drawing::Point(551, 46);
+			this->button_browseRecent->Location = System::Drawing::Point(711, 46);
 			this->button_browseRecent->Name = L"button_browseRecent";
 			this->button_browseRecent->Size = System::Drawing::Size(75, 23);
 			this->button_browseRecent->TabIndex = 9;
@@ -159,7 +159,7 @@ using namespace System::Drawing;
 			// button_browseBase
 			// 
 			this->button_browseBase->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->button_browseBase->Location = System::Drawing::Point(551, 17);
+			this->button_browseBase->Location = System::Drawing::Point(711, 17);
 			this->button_browseBase->Name = L"button_browseBase";
 			this->button_browseBase->Size = System::Drawing::Size(75, 23);
 			this->button_browseBase->TabIndex = 8;
@@ -171,7 +171,7 @@ using namespace System::Drawing;
 			// 
 			this->textBox_recentVersion->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->textBox_recentVersion->Enabled = false;
-			this->textBox_recentVersion->Location = System::Drawing::Point(509, 48);
+			this->textBox_recentVersion->Location = System::Drawing::Point(669, 48);
 			this->textBox_recentVersion->Name = L"textBox_recentVersion";
 			this->textBox_recentVersion->Size = System::Drawing::Size(36, 20);
 			this->textBox_recentVersion->TabIndex = 7;
@@ -180,7 +180,7 @@ using namespace System::Drawing;
 			// 
 			this->textBox_baseVersion->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->textBox_baseVersion->Enabled = false;
-			this->textBox_baseVersion->Location = System::Drawing::Point(509, 19);
+			this->textBox_baseVersion->Location = System::Drawing::Point(669, 19);
 			this->textBox_baseVersion->Name = L"textBox_baseVersion";
 			this->textBox_baseVersion->Size = System::Drawing::Size(36, 20);
 			this->textBox_baseVersion->TabIndex = 6;
@@ -192,7 +192,7 @@ using namespace System::Drawing;
 			this->textBox_recentFile->Enabled = false;
 			this->textBox_recentFile->Location = System::Drawing::Point(75, 48);
 			this->textBox_recentFile->Name = L"textBox_recentFile";
-			this->textBox_recentFile->Size = System::Drawing::Size(377, 20);
+			this->textBox_recentFile->Size = System::Drawing::Size(537, 20);
 			this->textBox_recentFile->TabIndex = 5;
 			// 
 			// textBox_baseFile
@@ -202,14 +202,14 @@ using namespace System::Drawing;
 			this->textBox_baseFile->Enabled = false;
 			this->textBox_baseFile->Location = System::Drawing::Point(75, 19);
 			this->textBox_baseFile->Name = L"textBox_baseFile";
-			this->textBox_baseFile->Size = System::Drawing::Size(377, 20);
+			this->textBox_baseFile->Size = System::Drawing::Size(537, 20);
 			this->textBox_baseFile->TabIndex = 4;
 			// 
 			// label4
 			// 
 			this->label4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(458, 51);
+			this->label4->Location = System::Drawing::Point(618, 51);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(45, 13);
 			this->label4->TabIndex = 3;
@@ -219,7 +219,7 @@ using namespace System::Drawing;
 			// 
 			this->label3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(458, 22);
+			this->label3->Location = System::Drawing::Point(618, 22);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(45, 13);
 			this->label3->TabIndex = 2;
@@ -258,7 +258,7 @@ using namespace System::Drawing;
 			this->groupBox2->Controls->Add(this->comboBox_lists);
 			this->groupBox2->Location = System::Drawing::Point(0, 83);
 			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Size = System::Drawing::Size(632, 337);
+			this->groupBox2->Size = System::Drawing::Size(792, 457);
 			this->groupBox2->TabIndex = 1;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"Lists";
@@ -271,11 +271,27 @@ using namespace System::Drawing;
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->dataGridView_values->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) {this->Column7, 
 				this->Column8});
-			this->dataGridView_values->Location = System::Drawing::Point(374, 98);
+			this->dataGridView_values->Location = System::Drawing::Point(488, 98);
 			this->dataGridView_values->Name = L"dataGridView_values";
-			this->dataGridView_values->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
-			this->dataGridView_values->Size = System::Drawing::Size(252, 233);
+			this->dataGridView_values->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::AutoSizeToDisplayedHeaders;
+			this->dataGridView_values->Size = System::Drawing::Size(298, 353);
 			this->dataGridView_values->TabIndex = 7;
+			// 
+			// Column7
+			// 
+			this->Column7->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
+			this->Column7->HeaderText = L"Base Values";
+			this->Column7->Name = L"Column7";
+			this->Column7->ReadOnly = true;
+			this->Column7->Width = 91;
+			// 
+			// Column8
+			// 
+			this->Column8->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::DisplayedCells;
+			this->Column8->HeaderText = L"Recent Values";
+			this->Column8->Name = L"Column8";
+			this->Column8->ReadOnly = true;
+			this->Column8->Width = 102;
 			// 
 			// dataGridView_fields
 			// 
@@ -288,103 +304,11 @@ using namespace System::Drawing;
 				this->Column2, this->Column3, this->Column4, this->Column6});
 			this->dataGridView_fields->Location = System::Drawing::Point(6, 98);
 			this->dataGridView_fields->Name = L"dataGridView_fields";
-			this->dataGridView_fields->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::DisableResizing;
-			this->dataGridView_fields->Size = System::Drawing::Size(362, 233);
+			this->dataGridView_fields->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::AutoSizeToDisplayedHeaders;
+			this->dataGridView_fields->Size = System::Drawing::Size(476, 353);
 			this->dataGridView_fields->TabIndex = 6;
 			this->dataGridView_fields->CellValueChanged += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &RulesWindow::change_field);
 			this->dataGridView_fields->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &RulesWindow::click_field);
-			// 
-			// textBox_recentOffset
-			// 
-			this->textBox_recentOffset->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left) 
-				| System::Windows::Forms::AnchorStyles::Right));
-			this->textBox_recentOffset->Location = System::Drawing::Point(131, 72);
-			this->textBox_recentOffset->Name = L"textBox_recentOffset";
-			this->textBox_recentOffset->Size = System::Drawing::Size(495, 20);
-			this->textBox_recentOffset->TabIndex = 5;
-			// 
-			// textBox_baseOffset
-			// 
-			this->textBox_baseOffset->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left) 
-				| System::Windows::Forms::AnchorStyles::Right));
-			this->textBox_baseOffset->Location = System::Drawing::Point(131, 46);
-			this->textBox_baseOffset->Name = L"textBox_baseOffset";
-			this->textBox_baseOffset->Size = System::Drawing::Size(495, 20);
-			this->textBox_baseOffset->TabIndex = 4;
-			// 
-			// radioButton_recentOffset
-			// 
-			this->radioButton_recentOffset->AutoSize = true;
-			this->radioButton_recentOffset->Location = System::Drawing::Point(6, 73);
-			this->radioButton_recentOffset->Name = L"radioButton_recentOffset";
-			this->radioButton_recentOffset->Size = System::Drawing::Size(119, 17);
-			this->radioButton_recentOffset->TabIndex = 3;
-			this->radioButton_recentOffset->TabStop = true;
-			this->radioButton_recentOffset->Text = L"Keep Recent Offset";
-			this->radioButton_recentOffset->UseVisualStyleBackColor = true;
-			this->radioButton_recentOffset->CheckedChanged += gcnew System::EventHandler(this, &RulesWindow::check_offset);
-			// 
-			// radioButton_baseOffset
-			// 
-			this->radioButton_baseOffset->AutoSize = true;
-			this->radioButton_baseOffset->Location = System::Drawing::Point(6, 47);
-			this->radioButton_baseOffset->Name = L"radioButton_baseOffset";
-			this->radioButton_baseOffset->Size = System::Drawing::Size(102, 17);
-			this->radioButton_baseOffset->TabIndex = 2;
-			this->radioButton_baseOffset->TabStop = true;
-			this->radioButton_baseOffset->Text = L"Use Base Offset";
-			this->radioButton_baseOffset->UseVisualStyleBackColor = true;
-			this->radioButton_baseOffset->CheckedChanged += gcnew System::EventHandler(this, &RulesWindow::check_offset);
-			// 
-			// checkBox_removeList
-			// 
-			this->checkBox_removeList->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->checkBox_removeList->AutoSize = true;
-			this->checkBox_removeList->Location = System::Drawing::Point(541, 21);
-			this->checkBox_removeList->Name = L"checkBox_removeList";
-			this->checkBox_removeList->Size = System::Drawing::Size(85, 17);
-			this->checkBox_removeList->TabIndex = 1;
-			this->checkBox_removeList->Text = L"Remove List";
-			this->checkBox_removeList->UseVisualStyleBackColor = true;
-			this->checkBox_removeList->CheckedChanged += gcnew System::EventHandler(this, &RulesWindow::check_removeList);
-			// 
-			// comboBox_lists
-			// 
-			this->comboBox_lists->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left) 
-				| System::Windows::Forms::AnchorStyles::Right));
-			this->comboBox_lists->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
-			this->comboBox_lists->FormattingEnabled = true;
-			this->comboBox_lists->Location = System::Drawing::Point(6, 19);
-			this->comboBox_lists->Name = L"comboBox_lists";
-			this->comboBox_lists->Size = System::Drawing::Size(529, 21);
-			this->comboBox_lists->TabIndex = 0;
-			this->comboBox_lists->SelectedIndexChanged += gcnew System::EventHandler(this, &RulesWindow::change_list);
-			// 
-			// button_save
-			// 
-			this->button_save->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
-			this->button_save->Location = System::Drawing::Point(264, 426);
-			this->button_save->Name = L"button_save";
-			this->button_save->Size = System::Drawing::Size(104, 23);
-			this->button_save->TabIndex = 2;
-			this->button_save->Text = L"Save as Rules";
-			this->button_save->UseVisualStyleBackColor = true;
-			// 
-			// Column7
-			// 
-			this->Column7->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::AllCells;
-			this->Column7->HeaderText = L"Base Values";
-			this->Column7->Name = L"Column7";
-			this->Column7->ReadOnly = true;
-			this->Column7->Width = 91;
-			// 
-			// Column8
-			// 
-			this->Column8->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::AllCells;
-			this->Column8->HeaderText = L"Recent Values";
-			this->Column8->Name = L"Column8";
-			this->Column8->ReadOnly = true;
-			this->Column8->Width = 102;
 			// 
 			// Column1
 			// 
@@ -419,24 +343,99 @@ using namespace System::Drawing;
 			// Column6
 			// 
 			this->Column6->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::ColumnHeader;
-			dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleCenter;
-			dataGridViewCellStyle1->BackColor = System::Drawing::SystemColors::Control;
-			this->Column6->DefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle2->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleCenter;
+			dataGridViewCellStyle2->BackColor = System::Drawing::SystemColors::Control;
+			this->Column6->DefaultCellStyle = dataGridViewCellStyle2;
 			this->Column6->HeaderText = L"Analyze";
 			this->Column6->Name = L"Column6";
 			this->Column6->Width = 50;
+			// 
+			// textBox_recentOffset
+			// 
+			this->textBox_recentOffset->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left) 
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->textBox_recentOffset->Location = System::Drawing::Point(131, 72);
+			this->textBox_recentOffset->Name = L"textBox_recentOffset";
+			this->textBox_recentOffset->Size = System::Drawing::Size(655, 20);
+			this->textBox_recentOffset->TabIndex = 5;
+			// 
+			// textBox_baseOffset
+			// 
+			this->textBox_baseOffset->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left) 
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->textBox_baseOffset->Location = System::Drawing::Point(131, 46);
+			this->textBox_baseOffset->Name = L"textBox_baseOffset";
+			this->textBox_baseOffset->Size = System::Drawing::Size(655, 20);
+			this->textBox_baseOffset->TabIndex = 4;
+			// 
+			// radioButton_recentOffset
+			// 
+			this->radioButton_recentOffset->AutoSize = true;
+			this->radioButton_recentOffset->Location = System::Drawing::Point(6, 73);
+			this->radioButton_recentOffset->Name = L"radioButton_recentOffset";
+			this->radioButton_recentOffset->Size = System::Drawing::Size(119, 17);
+			this->radioButton_recentOffset->TabIndex = 3;
+			this->radioButton_recentOffset->TabStop = true;
+			this->radioButton_recentOffset->Text = L"Keep Recent Offset";
+			this->radioButton_recentOffset->UseVisualStyleBackColor = true;
+			// 
+			// radioButton_baseOffset
+			// 
+			this->radioButton_baseOffset->AutoSize = true;
+			this->radioButton_baseOffset->Location = System::Drawing::Point(6, 47);
+			this->radioButton_baseOffset->Name = L"radioButton_baseOffset";
+			this->radioButton_baseOffset->Size = System::Drawing::Size(102, 17);
+			this->radioButton_baseOffset->TabIndex = 2;
+			this->radioButton_baseOffset->TabStop = true;
+			this->radioButton_baseOffset->Text = L"Use Base Offset";
+			this->radioButton_baseOffset->UseVisualStyleBackColor = true;
+			this->radioButton_baseOffset->CheckedChanged += gcnew System::EventHandler(this, &RulesWindow::check_offset);
+			// 
+			// checkBox_removeList
+			// 
+			this->checkBox_removeList->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->checkBox_removeList->AutoSize = true;
+			this->checkBox_removeList->Location = System::Drawing::Point(701, 21);
+			this->checkBox_removeList->Name = L"checkBox_removeList";
+			this->checkBox_removeList->Size = System::Drawing::Size(85, 17);
+			this->checkBox_removeList->TabIndex = 1;
+			this->checkBox_removeList->Text = L"Remove List";
+			this->checkBox_removeList->UseVisualStyleBackColor = true;
+			this->checkBox_removeList->CheckedChanged += gcnew System::EventHandler(this, &RulesWindow::check_removeList);
+			// 
+			// comboBox_lists
+			// 
+			this->comboBox_lists->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left) 
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->comboBox_lists->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->comboBox_lists->FormattingEnabled = true;
+			this->comboBox_lists->Location = System::Drawing::Point(6, 19);
+			this->comboBox_lists->Name = L"comboBox_lists";
+			this->comboBox_lists->Size = System::Drawing::Size(689, 21);
+			this->comboBox_lists->TabIndex = 0;
+			this->comboBox_lists->SelectedIndexChanged += gcnew System::EventHandler(this, &RulesWindow::change_list);
+			// 
+			// button_save
+			// 
+			this->button_save->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->button_save->Location = System::Drawing::Point(344, 546);
+			this->button_save->Name = L"button_save";
+			this->button_save->Size = System::Drawing::Size(104, 23);
+			this->button_save->TabIndex = 2;
+			this->button_save->Text = L"Save as Rules";
+			this->button_save->UseVisualStyleBackColor = true;
 			// 
 			// RulesWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(632, 453);
+			this->ClientSize = System::Drawing::Size(792, 573);
 			this->Controls->Add(this->button_save);
 			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->groupBox1);
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
-			this->MinimumSize = System::Drawing::Size(640, 480);
+			this->MinimumSize = System::Drawing::Size(800, 600);
 			this->Name = L"RulesWindow";
 			this->ShowIcon = false;
 			this->Text = L"Element Structure Diff";
@@ -519,6 +518,10 @@ using namespace System::Drawing;
 					eRules[l]->ReplaceOffset = false;
 					eRules[l]->Offset = "";
 					eRules[l]->RemoveValues = gcnew array<bool>(eLC_recent->Lists[l]->elementFields->Length);
+					for(int f=0; f<eRules[l]->RemoveValues->Length; f++)
+					{
+						eRules[l]->RemoveValues[f] = false;
+					}
 				}
 			}
 
@@ -558,7 +561,7 @@ using namespace System::Drawing;
 
 				for(int f=0; f<eLC_recent->Lists[l]->elementFields->Length; f++)
 				{
-					if(eRules[l]->RemoveValues[f] || f >= eLC_base->Lists[l]->elementFields->Length)
+					if(eRules[l]->RemoveValues[f] || baseFieldIndex >= eLC_base->Lists[l]->elementFields->Length)
 					{
 						baseFieldIndex--;
 						dataGridView_fields->Rows->Add(gcnew array<String^>{"", eLC_recent->Lists[l]->elementTypes[recentFieldIndex], count_mismatches(l, baseFieldIndex, recentFieldIndex).ToString(), eRules[l]->RemoveValues[f].ToString(), "Details"});
@@ -567,9 +570,9 @@ using namespace System::Drawing;
 					{
 						dataGridView_fields->Rows->Add(gcnew array<String^>{eLC_base->Lists[l]->elementTypes[baseFieldIndex], eLC_recent->Lists[l]->elementTypes[recentFieldIndex], count_mismatches(l, baseFieldIndex, recentFieldIndex).ToString(), eRules[l]->RemoveValues[f].ToString(), "Details"});
 					}
+					dataGridView_fields->Rows[dataGridView_fields->Rows->Count-1]->HeaderCell->Value = f.ToString();
 					baseFieldIndex++;
 					recentFieldIndex++;
-
 				}
 			}
 			else
@@ -587,15 +590,79 @@ using namespace System::Drawing;
 
 	private: System::Void check_offset(System::Object^  sender, System::EventArgs^  e)
 	{
+		int l = comboBox_lists->SelectedIndex;
+		if(l > -1)
+		{
+			if(radioButton_baseOffset->Checked)
+			{
+				eRules[l]->ReplaceOffset = true;
+				eRules[l]->Offset = eLC_base->GetOffset(l);
+			}
+			else
+			{
+				eRules[l]->ReplaceOffset = false;
+				eRules[l]->Offset = "";
+			}
+		}
 	}
 
 	private: System::Void change_field(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e)
 	{
-		MessageBox::Show(e->);
 	}
 
 	private: System::Void click_field(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e)
 	{
-		MessageBox::Show("Cell Click");
+		int l = comboBox_lists->SelectedIndex;
+		if(l > -1 && e->ColumnIndex == 3 && e->RowIndex > -1)
+		{
+			int displayRow = dataGridView_fields->FirstDisplayedCell->RowIndex;
+			int displayCol = dataGridView_fields->FirstDisplayedCell->ColumnIndex;
+			// click event don't has new state, we need to access next state property: EditedFormattedValue
+			eRules[l]->RemoveValues[e->RowIndex] = Convert::ToBoolean(dataGridView_fields->Rows[e->RowIndex]->Cells[e->ColumnIndex]->EditedFormattedValue);
+			change_list(nullptr, nullptr);
+			dataGridView_fields->FirstDisplayedCell = dataGridView_fields->Rows[displayRow]->Cells[displayCol];
+		}
+
+		if(l > -1 && e->ColumnIndex == 4 && e->RowIndex > -1)
+		{
+			Cursor = Windows::Forms::Cursors::AppStarting;
+
+			dataGridView_values->Rows->Clear();
+
+			int baseFieldIndex = 0;
+			int recentFieldIndex = 0;
+
+			for(int f=0; f<e->RowIndex; f++)
+			{
+				if(eRules[l]->RemoveValues[f])
+				{
+					baseFieldIndex--;
+				}
+				baseFieldIndex++;
+				recentFieldIndex++;
+			}
+
+			if(baseFieldIndex < eLC_base->Lists[l]->elementFields->Length && recentFieldIndex < eLC_recent->Lists[l]->elementFields->Length)
+			{
+				//array<DataGridViewRow^>^ rows;
+
+				for(int i=0; i<eLC_recent->Lists[l]->elementValues->Length; i++)
+				{
+					if(i < eLC_base->Lists[l]->elementValues->Length)
+					{
+						dataGridView_values->Rows->Add(gcnew array<String^>{eLC_base->GetValue(l, i, baseFieldIndex), eLC_recent->GetValue(l, i, recentFieldIndex)});
+					}
+					else
+					{
+						dataGridView_values->Rows->Add(gcnew array<String^>{"", eLC_recent->GetValue(l, i, recentFieldIndex)});
+					}
+					dataGridView_values->Rows[dataGridView_values->Rows->Count-1]->HeaderCell->Value = i.ToString();
+				}
+
+				//dataGridView_values->Rows->AddRange(rows);
+			}
+
+			Cursor = Windows::Forms::Cursors::Default;
+		}
 	}
 };
