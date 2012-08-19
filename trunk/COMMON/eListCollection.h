@@ -153,7 +153,6 @@ public ref class eListCollection
     // returns an eList array with preconfigured fields from configuration file
     private: array<eList^>^ loadConfiguration(String^ file)
 	{
-        //ConfigFile = configFiles[0]->Substring(configFiles[0]->LastIndexOf("\\"));
         StreamReader^ sr = gcnew StreamReader(file);
         array<eList^>^ Li = gcnew array<eList^>(Convert::ToInt32(sr->ReadLine()));
         try
@@ -232,12 +231,12 @@ public ref class eListCollection
 		Signature = br->ReadInt16();
 
         // check if a corresponding configuration file exists
-        // original: ConfigFile = Application::StartupPath + "\\configs\\" + ((ToolStripMenuItem^)sender)->Text + ".cfg";
         array<String^>^ configFiles = Directory::GetFiles(Application::StartupPath + "\\configs", "PW_*_v" + Version + ".cfg");
         if(configFiles->Length > 0)
         {
             // configure an eList array with the configuration file
-            Li = loadConfiguration(configFiles[0]);
+			ConfigFile = configFiles[0];
+            Li = loadConfiguration(ConfigFile);
 
             // read the element file
             for(int l=0; l<Li->Length; l++)
@@ -395,6 +394,30 @@ public ref class eListCollection
 
 		FileStream^ fs = gcnew FileStream(TargetFile, FileMode::Create, FileAccess::Write);
 		BinaryWriter^ bw = gcnew BinaryWriter(fs);
+
+		if(rules->ContainsKey("SETVERSION"))
+		{
+			bw->Write(Convert::ToInt16( (String^)rules["SETVERSION"] ));
+		}
+		else
+		{
+			MessageBox::Show("Rules file is missing parameter\n\nSETVERSION:", "Export Failed");
+			bw->Close();
+			fs->Close();
+			return;
+		}
+
+		if(rules->ContainsKey("SETSIGNATURE"))
+		{
+			bw->Write(Convert::ToInt16( (String^)rules["SETSIGNATURE"] ));
+		}
+		else
+		{
+			MessageBox::Show("Rules file is missing parameter\n\nSETSIGNATURE:", "Export Failed");
+			bw->Close();
+			fs->Close();
+			return;
+		}
 
 		// go through all lists
 		for(int l=0; l<Lists->Length; l++)

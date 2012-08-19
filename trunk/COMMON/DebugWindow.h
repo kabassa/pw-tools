@@ -50,12 +50,15 @@ public ref class DebugWindow : public System::Windows::Forms::Form
 		this->message->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
 			| System::Windows::Forms::AnchorStyles::Left) 
 			| System::Windows::Forms::AnchorStyles::Right));
+		this->message->Font = (gcnew System::Drawing::Font(L"Lucida Console", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			static_cast<System::Byte>(0)));
 		this->message->Location = System::Drawing::Point(0, 2);
 		this->message->Multiline = true;
 		this->message->Name = L"message";
 		this->message->ScrollBars = System::Windows::Forms::ScrollBars::Both;
 		this->message->Size = System::Drawing::Size(320, 478);
 		this->message->TabIndex = 0;
+		this->message->WordWrap = false;
 		// 
 		// DebugWindow
 		// 

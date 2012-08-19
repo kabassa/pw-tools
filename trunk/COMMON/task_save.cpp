@@ -53,7 +53,24 @@ void WriteTeamMembers(int version, BinaryWriter^ bw, TeamMembers^ team_member_gr
 	bw->Write(team_member_group->quest);
 	if(version >= 100)
 	{
-		bw->Write(team_member_group->order);
+		bw->Write(team_member_group->force);
+	}
+}
+
+void WriteMoraiPK(int version, BinaryWriter^ bw, MoraiPK^ morai_pk)
+{
+	if(version >= 103)
+	{
+		bw->Write(morai_pk->unknown_1);
+		bw->Write(morai_pk->unknown_2);
+		bw->Write(morai_pk->unknown_3);
+		bw->Write(morai_pk->unknown_4);
+		bw->Write(morai_pk->probability);
+		bw->Write(morai_pk->class_mask);
+		bw->Write(morai_pk->level_min);
+		bw->Write(morai_pk->level_max);
+		bw->Write(morai_pk->unknown_5);
+		bw->Write(morai_pk->type);
 	}
 }
 
@@ -510,6 +527,13 @@ void Task::Save(int version, BinaryWriter^ bw)
 
 	bw->Write(required_success_type);
 	bw->Write(required_npc_type);
+
+	if(version >= 103)
+	{
+		bw->Write(required_morai_pk_count);
+		bw->Write(required_morai_pk_unknown);
+	}
+
 	bw->Write(required_chases_count);
 	bw->Write(required_chases_unknown);
 	bw->Write(required_get_items_count);
@@ -667,6 +691,14 @@ void Task::Save(int version, BinaryWriter^ bw)
 	for(int i=0; i<required_team_member_groups->Length; i++)
 	{
 		WriteTeamMembers(version, bw, required_team_member_groups[i]);
+	}
+
+// ################# MORAI PK #############################
+// after: ?
+// before: ?
+	for(int i=0; i<required_morai_pk->Length; i++)
+	{
+		WriteMoraiPK(version, bw, required_morai_pk[i]);
 	}
 
 // ################# CHASE #############################
