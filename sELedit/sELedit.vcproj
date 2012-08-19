@@ -288,6 +288,7 @@
 				>
 				<File
 					RelativePath=".\RulesWindow.resx"
+					SubType="Designer"
 					>
 				</File>
 			</File>
@@ -320,6 +321,7 @@
 				>
 				<File
 					RelativePath="..\COMMON\DebugWindow.resx"
+					SubType="Designer"
 					>
 				</File>
 			</File>

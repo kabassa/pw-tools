@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..\COMMON\eListCollection.h"
+#include "..\COMMON\DebugWindow.h"
 #include "RuleConfig.h"
 
 using namespace System;
@@ -67,7 +68,9 @@ using namespace System::Drawing;
 	private: System::Windows::Forms::ComboBox^  comboBox_lists;
 	private: System::Windows::Forms::DataGridView^  dataGridView_values;
 	private: System::Windows::Forms::DataGridView^  dataGridView_fields;
-	private: System::Windows::Forms::Button^  button_save;
+	private: System::Windows::Forms::Button^  button_view;
+	private: System::Windows::Forms::Button^  button_import;
+	private: System::Windows::Forms::Button^  button_export;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column1;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column2;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column3;
@@ -75,12 +78,14 @@ using namespace System::Drawing;
 	private: System::Windows::Forms::DataGridViewButtonColumn^  Column6;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column7;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column8;
+	private: System::Windows::Forms::ToolTip^  toolTip;
+	private: System::ComponentModel::IContainer^  components;
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -89,7 +94,9 @@ using namespace System::Drawing;
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			this->components = (gcnew System::ComponentModel::Container());
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(RulesWindow::typeid));
+			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->button_browseRecent = (gcnew System::Windows::Forms::Button());
 			this->button_browseBase = (gcnew System::Windows::Forms::Button());
@@ -117,7 +124,10 @@ using namespace System::Drawing;
 			this->radioButton_baseOffset = (gcnew System::Windows::Forms::RadioButton());
 			this->checkBox_removeList = (gcnew System::Windows::Forms::CheckBox());
 			this->comboBox_lists = (gcnew System::Windows::Forms::ComboBox());
-			this->button_save = (gcnew System::Windows::Forms::Button());
+			this->button_view = (gcnew System::Windows::Forms::Button());
+			this->button_import = (gcnew System::Windows::Forms::Button());
+			this->button_export = (gcnew System::Windows::Forms::Button());
+			this->toolTip = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->groupBox1->SuspendLayout();
 			this->groupBox2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView_values))->BeginInit();
@@ -307,6 +317,7 @@ using namespace System::Drawing;
 			this->dataGridView_fields->RowHeadersWidthSizeMode = System::Windows::Forms::DataGridViewRowHeadersWidthSizeMode::AutoSizeToDisplayedHeaders;
 			this->dataGridView_fields->Size = System::Drawing::Size(476, 353);
 			this->dataGridView_fields->TabIndex = 6;
+			this->toolTip->SetToolTip(this->dataGridView_fields, "Comparsion of fields from the selected list.\r\nIf recent file has more fields in this list then base file you have to remove some fields.\r\n\r\nMismatches compares all element values for the related field and count how many different values appears. Higher amount of mismatches might be an indicator for a new added field in the recent file's current list.\r\n\r\nDEL will remove the recent field and update the view (re-calculate mismatches related to the removed field).\r\n\r\nAnalyze wil show a detailed comparsion of all element values from base file and recent files for the related field in the current list.");
 			this->dataGridView_fields->CellValueChanged += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &RulesWindow::change_field);
 			this->dataGridView_fields->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &RulesWindow::click_field);
 			// 
@@ -343,9 +354,9 @@ using namespace System::Drawing;
 			// Column6
 			// 
 			this->Column6->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::ColumnHeader;
-			dataGridViewCellStyle2->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleCenter;
-			dataGridViewCellStyle2->BackColor = System::Drawing::SystemColors::Control;
-			this->Column6->DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle3->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleCenter;
+			dataGridViewCellStyle3->BackColor = System::Drawing::SystemColors::Control;
+			this->Column6->DefaultCellStyle = dataGridViewCellStyle3;
 			this->Column6->HeaderText = L"Analyze";
 			this->Column6->Name = L"Column6";
 			this->Column6->Width = 50;
@@ -377,6 +388,7 @@ using namespace System::Drawing;
 			this->radioButton_recentOffset->TabIndex = 3;
 			this->radioButton_recentOffset->TabStop = true;
 			this->radioButton_recentOffset->Text = L"Keep Recent Offset";
+			this->toolTip->SetToolTip(this->radioButton_recentOffset, L"Keep the list offsets from the recent file.\r\nSuspicious offsets are in lists: 0, 20, 100\r\n\r\nFor version 7 base file (1.2.6 server) you have to use base offsets from list 0, 20, 100 !!!");
 			this->radioButton_recentOffset->UseVisualStyleBackColor = true;
 			// 
 			// radioButton_baseOffset
@@ -388,6 +400,7 @@ using namespace System::Drawing;
 			this->radioButton_baseOffset->TabIndex = 2;
 			this->radioButton_baseOffset->TabStop = true;
 			this->radioButton_baseOffset->Text = L"Use Base Offset";
+			this->toolTip->SetToolTip(this->radioButton_baseOffset, "Use the list offsets from the base file instead from the recent file.\r\nSuspicious offsets are in lists: 0, 20, 100\r\n\r\nFor version 7 base file (1.2.6 server) you have to use base offsets from list 0, 20, 100 !!!");
 			this->radioButton_baseOffset->UseVisualStyleBackColor = true;
 			this->radioButton_baseOffset->CheckedChanged += gcnew System::EventHandler(this, &RulesWindow::check_offset);
 			// 
@@ -400,6 +413,7 @@ using namespace System::Drawing;
 			this->checkBox_removeList->Size = System::Drawing::Size(85, 17);
 			this->checkBox_removeList->TabIndex = 1;
 			this->checkBox_removeList->Text = L"Remove List";
+			this->toolTip->SetToolTip(this->checkBox_removeList, L"Remove the selected list.");
 			this->checkBox_removeList->UseVisualStyleBackColor = true;
 			this->checkBox_removeList->CheckedChanged += gcnew System::EventHandler(this, &RulesWindow::check_removeList);
 			// 
@@ -415,30 +429,61 @@ using namespace System::Drawing;
 			this->comboBox_lists->TabIndex = 0;
 			this->comboBox_lists->SelectedIndexChanged += gcnew System::EventHandler(this, &RulesWindow::change_list);
 			// 
-			// button_save
+			// button_view
 			// 
-			this->button_save->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
-			this->button_save->Location = System::Drawing::Point(344, 546);
-			this->button_save->Name = L"button_save";
-			this->button_save->Size = System::Drawing::Size(104, 23);
-			this->button_save->TabIndex = 2;
-			this->button_save->Text = L"Save as Rules";
-			this->button_save->UseVisualStyleBackColor = true;
+			this->button_view->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->button_view->Location = System::Drawing::Point(346, 546);
+			this->button_view->Name = L"button_view";
+			this->button_view->Size = System::Drawing::Size(100, 23);
+			this->button_view->TabIndex = 2;
+			this->button_view->Text = L"View Rules...";
+			this->button_view->UseVisualStyleBackColor = true;
+			this->button_view->Click += gcnew System::EventHandler(this, &RulesWindow::click_viewRules);
+			// 
+			// button_import
+			// 
+			this->button_import->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->button_import->Location = System::Drawing::Point(240, 546);
+			this->button_import->Name = L"button_import";
+			this->button_import->Size = System::Drawing::Size(100, 23);
+			this->button_import->TabIndex = 2;
+			this->button_import->Text = L"Import Rules...";
+			this->button_import->UseVisualStyleBackColor = true;
+			this->button_import->Click += gcnew System::EventHandler(this, &RulesWindow::click_importRules);
+			// 
+			// button_export
+			// 
+			this->button_export->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->button_export->Location = System::Drawing::Point(452, 546);
+			this->button_export->Name = L"button_export";
+			this->button_export->Size = System::Drawing::Size(100, 23);
+			this->button_export->TabIndex = 2;
+			this->button_export->Text = L"Export Rules...";
+			this->button_export->UseVisualStyleBackColor = true;
+			this->button_export->Click += gcnew System::EventHandler(this, &RulesWindow::click_exportRules);
+			// 
+			// toolTip
+			// 
+			this->toolTip->AutomaticDelay = 0;
+			this->toolTip->AutoPopDelay = 25000;
+			this->toolTip->InitialDelay = 0;
+			this->toolTip->ReshowDelay = 0;
 			// 
 			// RulesWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(792, 573);
-			this->Controls->Add(this->button_save);
+			this->Controls->Add(this->button_view);
+			this->Controls->Add(this->button_import);
+			this->Controls->Add(this->button_export);
 			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->groupBox1);
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
-			this->MinimumSize = System::Drawing::Size(800, 600);
 			this->Name = L"RulesWindow";
 			this->ShowIcon = false;
-			this->Text = L"Element Structure Diff";
+			this->Text = L"Element Structure Diff (Rules GUI)";
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
 			this->groupBox2->ResumeLayout(false);
@@ -446,7 +491,7 @@ using namespace System::Drawing;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView_values))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView_fields))->EndInit();
 			this->ResumeLayout(false);
-
+			this->MinimumSize = System::Drawing::Size(860, 600);
 		}
 #pragma endregion
 
@@ -454,14 +499,19 @@ using namespace System::Drawing;
 	{
 		int mismatches = 0;
 
+		if(eRules[listIndex]->RemoveValues[recentFieldIndex])
+		{
+			return -1;
+		}
+
 		if(baseFieldIndex >= eLC_base->Lists[listIndex]->elementFields->Length)
 		{
-			return eLC_recent->Lists[listIndex]->elementValues->Length;
+			return -1; //eLC_recent->Lists[listIndex]->elementValues->Length;
 		}
 
 		if(recentFieldIndex >= eLC_recent->Lists[listIndex]->elementFields->Length)
 		{
-			return eLC_base->Lists[listIndex]->elementValues->Length;
+			return -1; //eLC_base->Lists[listIndex]->elementValues->Length;
 		}
 
 		for(int e=0; e<eLC_recent->Lists[listIndex]->elementValues->Length; e++)
@@ -490,6 +540,10 @@ using namespace System::Drawing;
 
 			dataGridView_fields->Rows->Clear();
 			dataGridView_values->Rows->Clear();
+			this->Column1->HeaderText = "Base Fields";
+			this->Column2->HeaderText = "Recent Fields";
+			this->Column7->HeaderText = L"Base Values";
+			this->Column8->HeaderText = L"Recent Values";
 			comboBox_lists->Items->Clear();
 
 			if(sender == (Object^)button_browseBase)
@@ -535,17 +589,25 @@ using namespace System::Drawing;
 
 		dataGridView_fields->Rows->Clear();
 		dataGridView_values->Rows->Clear();
+		this->Column1->HeaderText = "Base Fields";
+		this->Column2->HeaderText = "Recent Fields";
+		this->Column7->HeaderText = L"Base Values";
+		this->Column8->HeaderText = L"Recent Values";
 
 		int l = comboBox_lists->SelectedIndex;
 
 		if(l > -1)
 		{
+			checkBox_removeList->Checked = eRules[l]->RemoveList;
+
 			if(eLC_base->Lists->Length > l && eLC_base->ConversationListIndex != l)
 			{
+				this->Column1->HeaderText = "Base Fields (" + eLC_base->Lists[l]->elementFields->Length.ToString() + ")";
+				this->Column2->HeaderText = "Recent Fields (" + eLC_recent->Lists[l]->elementFields->Length.ToString() + ")";
+
 				int baseFieldIndex = 0;
 				int recentFieldIndex = 0;
 
-				checkBox_removeList->Checked = eRules[l]->RemoveList;
 				if(eRules[l]->ReplaceOffset)
 				{
 					radioButton_baseOffset->Checked = true;
@@ -561,9 +623,13 @@ using namespace System::Drawing;
 
 				for(int f=0; f<eLC_recent->Lists[l]->elementFields->Length; f++)
 				{
-					if(eRules[l]->RemoveValues[f] || baseFieldIndex >= eLC_base->Lists[l]->elementFields->Length)
+					if(eRules[l]->RemoveValues[f])
 					{
 						baseFieldIndex--;
+					}
+
+					if(eRules[l]->RemoveValues[f] || baseFieldIndex >= eLC_base->Lists[l]->elementFields->Length)
+					{
 						dataGridView_fields->Rows->Add(gcnew array<String^>{"", eLC_recent->Lists[l]->elementTypes[recentFieldIndex], count_mismatches(l, baseFieldIndex, recentFieldIndex).ToString(), eRules[l]->RemoveValues[f].ToString(), "Details"});
 					}
 					else
@@ -577,7 +643,7 @@ using namespace System::Drawing;
 			}
 			else
 			{
-				// index out of accessable lists
+				//
 			}
 		}
 
@@ -586,6 +652,11 @@ using namespace System::Drawing;
 
 	private: System::Void check_removeList(System::Object^  sender, System::EventArgs^  e)
 	{
+		int l = comboBox_lists->SelectedIndex;
+		if(l > -1)
+		{
+			eRules[l]->RemoveList = checkBox_removeList->Checked;
+		}
 	}
 
 	private: System::Void check_offset(System::Object^  sender, System::EventArgs^  e)
@@ -623,11 +694,13 @@ using namespace System::Drawing;
 			dataGridView_fields->FirstDisplayedCell = dataGridView_fields->Rows[displayRow]->Cells[displayCol];
 		}
 
-		if(l > -1 && e->ColumnIndex == 4 && e->RowIndex > -1)
+		if(l > -1 && e->ColumnIndex == 4 && e->RowIndex > -1/* && !eRules[l]->RemoveValues[e->RowIndex]*/)
 		{
 			Cursor = Windows::Forms::Cursors::AppStarting;
 
 			dataGridView_values->Rows->Clear();
+			this->Column7->HeaderText = L"Base Values";
+			this->Column8->HeaderText = L"Recent Values";
 
 			int baseFieldIndex = 0;
 			int recentFieldIndex = 0;
@@ -642,13 +715,14 @@ using namespace System::Drawing;
 				recentFieldIndex++;
 			}
 
-			if(baseFieldIndex < eLC_base->Lists[l]->elementFields->Length && recentFieldIndex < eLC_recent->Lists[l]->elementFields->Length)
+			if(recentFieldIndex < eLC_recent->Lists[l]->elementFields->Length)
 			{
-				//array<DataGridViewRow^>^ rows;
+				this->Column7->HeaderText = L"Base Values (" + eLC_base->Lists[l]->elementValues->Length.ToString() + ")";
+				this->Column8->HeaderText = L"Recent Values (" + eLC_recent->Lists[l]->elementValues->Length.ToString() + ")";
 
 				for(int i=0; i<eLC_recent->Lists[l]->elementValues->Length; i++)
 				{
-					if(i < eLC_base->Lists[l]->elementValues->Length)
+					if(i < eLC_base->Lists[l]->elementValues->Length && baseFieldIndex < eLC_base->Lists[l]->elementFields->Length && !eRules[l]->RemoveValues[recentFieldIndex])
 					{
 						dataGridView_values->Rows->Add(gcnew array<String^>{eLC_base->GetValue(l, i, baseFieldIndex), eLC_recent->GetValue(l, i, recentFieldIndex)});
 					}
@@ -658,11 +732,192 @@ using namespace System::Drawing;
 					}
 					dataGridView_values->Rows[dataGridView_values->Rows->Count-1]->HeaderCell->Value = i.ToString();
 				}
-
-				//dataGridView_values->Rows->AddRange(rows);
 			}
 
 			Cursor = Windows::Forms::Cursors::Default;
+		}
+	}
+	private: System::Void click_viewRules(System::Object^  sender, System::EventArgs^  e)
+	{
+		if(eRules)
+		{
+			String^ message = "";
+			message += "##############################\r\n";
+			message += "#### RULES FOR v" + eLC_recent->Version.ToString() + " -> v" + eLC_base->Version.ToString() + " ####\r\n";
+			message += "##############################\r\n";
+
+			message += "\r\nSETVERSION|" + eLC_base->Version.ToString();
+			message += "\r\nSETSIGNATURE|" + eLC_base->Signature.ToString() + "\r\n";
+
+			// find all remove lists
+			for(int l=0; l<eRules->Length; l++)
+			{
+				if(eRules[l]->RemoveList)
+				{
+					message += "\r\nREMOVELIST:" + l.ToString();
+				}
+			}
+
+			message += "\r\n";
+
+			// find all replace offsets
+			for(int l=0; l<eRules->Length; l++)
+			{
+				if(eRules[l]->ReplaceOffset)
+				{
+					message += "\r\nREPLACEOFFSET:" + l.ToString() + "|" + eRules[l]->Offset;
+				}
+			}
+
+			// find all remove values
+			bool breakLine = true;
+			for(int l=0; l<eRules->Length; l++)
+			{
+				if(breakLine)
+				{
+					message += "\r\n";
+					breakLine = false;
+				}
+
+				for(int f=0; f<eRules[l]->RemoveValues->Length; f++)
+				{
+					if(eRules[l]->RemoveValues[f])
+					{
+						message += "\r\nREMOVEVALUE:" + l.ToString() + ":" + f.ToString();
+						breakLine = true;
+					}
+				}
+			}
+
+			gcnew DebugWindow("Rules v" + eLC_recent->Version.ToString() + " -> v" + eLC_base->Version.ToString(), message);
+		}
+	}
+	private: System::Void click_importRules(System::Object^  sender, System::EventArgs^  e)
+	{
+		if(eRules)
+		{
+			OpenFileDialog^ rLoad = gcnew OpenFileDialog();
+			rLoad->Filter = "Rules File (*.rules)|*.rules|All Files (*.*)|*.*";
+			if(rLoad->ShowDialog() == Windows::Forms::DialogResult::OK && File::Exists(rLoad->FileName))
+			{
+				Cursor = Windows::Forms::Cursors::AppStarting;
+
+				StreamReader^ sr = gcnew StreamReader(rLoad->FileName);
+
+				array<String^>^ values;
+				String^ line;
+				while((line = sr->ReadLine()))
+				{
+					System::Windows::Forms::Application::DoEvents();
+
+					if(line != "" && !line->StartsWith("#"))
+					{
+						// use SETVERSION & SETSIGNATURE from eLC_base instead from rules
+						/*
+						if(line->StartsWith("SETVERSION|"))
+						{
+						}
+						if(line->StartsWith("SETSIGNATURE|"))
+						{
+						}
+						*/
+						if(line->StartsWith("REMOVELIST:"))
+						{
+							values = line->Split(gcnew array<wchar_t>{':'});
+							eRules[Convert::ToInt32(values[1])]->RemoveList = true;
+						}
+						if(line->StartsWith("REPLACEOFFSET:"))
+						{
+							values = line->Split(gcnew array<wchar_t>{':', '|'});
+							int l = Convert::ToInt32(values[1]);
+							eRules[l]->ReplaceOffset = true;
+							// use offset from eLC_base instead the one from rules
+							eRules[l]->Offset = eLC_base->GetOffset(l); // eRules[l]->Offset = values[2];
+						}
+						if(line->StartsWith("REMOVEVALUE:"))
+						{
+							values = line->Split(gcnew array<wchar_t>{':'});
+							eRules[Convert::ToInt32(values[1])]->RemoveValues[Convert::ToInt32(values[2])] = true;
+						}
+					}
+				}
+
+				sr->Close();
+
+				change_list(nullptr, nullptr);
+
+				Cursor = Windows::Forms::Cursors::Default;
+			}
+		}
+	}
+	private: System::Void click_exportRules(System::Object^  sender, System::EventArgs^  e)
+	{
+		if(eRules)
+		{
+			SaveFileDialog^ rSave = gcnew SaveFileDialog();
+			rSave->Filter = "Rules File (*.rules)|*.rules|All Files (*.*)|*.*";
+			rSave->FileName = "PW_v" + eLC_recent->Version.ToString() + " = PW_v" + eLC_base->Version.ToString() + ".rules";
+			if(rSave->ShowDialog() == Windows::Forms::DialogResult::OK)
+			{
+				Cursor = Windows::Forms::Cursors::AppStarting;
+
+				StreamWriter^ sw = gcnew StreamWriter(rSave->FileName);
+
+				sw->WriteLine("##############################");
+				sw->WriteLine("#### RULES FOR v" + eLC_recent->Version.ToString() + " -> v" + eLC_base->Version.ToString() + " ####");
+				sw->WriteLine("##############################");
+
+				sw->WriteLine();
+
+				sw->WriteLine("SETVERSION|" + eLC_base->Version.ToString());
+				sw->WriteLine("SETSIGNATURE|" + eLC_base->Signature.ToString());
+
+				sw->WriteLine();
+
+				// find all remove lists
+				for(int l=0; l<eRules->Length; l++)
+				{
+					if(eRules[l]->RemoveList)
+					{
+						sw->WriteLine("REMOVELIST:" + l.ToString());
+					}
+				}
+
+				sw->WriteLine();
+
+				// find all replace offsets
+				for(int l=0; l<eRules->Length; l++)
+				{
+					if(eRules[l]->ReplaceOffset)
+					{
+						sw->WriteLine("REPLACEOFFSET:" + l.ToString() + "|" + eRules[l]->Offset);
+					}
+				}
+
+				// find all remove values
+				bool breakLine = true;
+				for(int l=0; l<eRules->Length; l++)
+				{
+					if(breakLine)
+					{
+						sw->WriteLine();
+						breakLine = false;
+					}
+
+					for(int f=0; f<eRules[l]->RemoveValues->Length; f++)
+					{
+						if(eRules[l]->RemoveValues[f])
+						{
+							sw->WriteLine("REMOVEVALUE:" + l.ToString() + ":" + f.ToString());
+							breakLine = true;
+						}
+					}
+				}
+
+				sw->Close();
+
+				Cursor = Windows::Forms::Cursors::Default;
+			}
 		}
 	}
 };

@@ -30,6 +30,20 @@ public ref struct ItemGroup
 	array<Item^>^ items;
 };
 
+public ref struct MoraiPK
+{
+	int unknown_1;
+	int unknown_2;
+	int unknown_3;
+	unsigned char unknown_4;
+	float probability;
+	int class_mask;
+	int level_min;
+	int level_max;
+	int unknown_5;
+	int type;
+};
+
 public ref struct Chase
 {
 	int id_monster;
@@ -95,7 +109,7 @@ public ref struct TeamMembers
 	int amount_min;
 	int amount_max;
 	int quest;
-	int order;
+	int force;
 };
 
 public ref struct PQ_Chase
@@ -601,6 +615,8 @@ public ref class Task
 	// 0 - None (Gift Box Reward)
 	// 1 - Reward NPC
 	public: int required_npc_type;
+	public: int required_morai_pk_count;
+	public: array<unsigned char>^ required_morai_pk_unknown; // 4 Byte
 	public: int required_chases_count;
 	public: array<unsigned char>^ required_chases_unknown; // 4 Byte
 	public: int required_get_items_count;
@@ -637,6 +653,7 @@ public ref class Task
 	public: array<Item^>^ required_items;
 	public: array<Item^>^ given_items;
 	public: array<TeamMembers^>^ required_team_member_groups;
+	public: array<MoraiPK^>^ required_morai_pk;
 	public: array<Chase^>^ required_chases;
 	public: array<Item^>^ required_get_items;
 	public: Reward^ reward_success;

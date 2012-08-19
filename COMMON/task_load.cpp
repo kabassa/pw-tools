@@ -15,6 +15,7 @@ Date^ ReadDate(int version, BinaryReader^ br)
 
 	return date;
 }
+
 DateSpan^ ReadDateSpan(int version, BinaryReader^ br)
 {
 	DateSpan^ date_span = gcnew DateSpan();
@@ -24,6 +25,7 @@ DateSpan^ ReadDateSpan(int version, BinaryReader^ br)
 
 	return date_span;
 }
+
 Item^ ReadItem(int version, BinaryReader^ br)
 {
 	Item^ item = gcnew Item();
@@ -75,14 +77,48 @@ TeamMembers^ ReadTeamMembers(int version, BinaryReader^ br)
 
 	if(version >= 100)
 	{
-		team_member_group->order = br->ReadInt32();
+		team_member_group->force = br->ReadInt32();
 	}
 	else
 	{
-		team_member_group->order = 0;
+		team_member_group->force = 0;
 	}
 
 	return team_member_group;
+}
+
+MoraiPK^ ReadMoraiPK(int version, BinaryReader^ br)
+{
+	MoraiPK^ morai_pk = gcnew MoraiPK();
+
+	if(version >= 103)
+	{
+		morai_pk->unknown_1 = br->ReadInt32();
+		morai_pk->unknown_2 = br->ReadInt32();
+		morai_pk->unknown_3 = br->ReadInt32();
+		morai_pk->unknown_4 = br->ReadByte();
+		morai_pk->probability = br->ReadSingle();
+		morai_pk->class_mask = br->ReadInt32();
+		morai_pk->level_min = br->ReadInt32();
+		morai_pk->level_max = br->ReadInt32();
+		morai_pk->unknown_5 = br->ReadInt32();
+		morai_pk->type = br->ReadInt32();
+	}
+	else
+	{
+		morai_pk->unknown_1 = 1;
+		morai_pk->unknown_2 = 0;
+		morai_pk->unknown_3 = 1;
+		morai_pk->unknown_4 = 0;
+		morai_pk->probability = 1.0f;
+		morai_pk->class_mask = 1023;
+		morai_pk->level_min = 0;
+		morai_pk->level_max = 150;
+		morai_pk->unknown_5 = 0;
+		morai_pk->type = 0;
+	}
+
+	return morai_pk;
 }
 
 Chase^ ReadChase(int version, BinaryReader^ br)
@@ -766,6 +802,17 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	required_success_type = br->ReadInt32();
 	required_npc_type = br->ReadInt32();
 
+	if(version >= 103)
+	{
+		required_morai_pk_count = br->ReadInt32();
+		required_morai_pk_unknown = br->ReadBytes(4);
+	}
+	else
+	{
+		required_morai_pk_count = 0;
+		required_morai_pk_unknown = gcnew array<unsigned char>(4);
+	}
+
 	required_chases_count = br->ReadInt32();
 	required_chases_unknown = br->ReadBytes(4);
 	required_get_items_count = br->ReadInt32();
@@ -988,6 +1035,15 @@ pq->location->unknown_1 = gcnew array<unsigned char>(4);
 	for(int i=0; i<required_team_member_groups->Length; i++)
 	{
 		required_team_member_groups[i] = ReadTeamMembers(version, br);
+	}
+
+// ################# MORAI PK #############################
+// after: ?
+// before: ?
+	required_morai_pk = gcnew array<MoraiPK^>(required_morai_pk_count);
+	for(int i=0; i<required_morai_pk->Length; i++)
+	{
+		required_morai_pk[i] = ReadMoraiPK(version, br);
 	}
 
 // ################# CHASE #############################
