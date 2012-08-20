@@ -242,7 +242,7 @@ using namespace System::Drawing;
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(63, 13);
 			this->label2->TabIndex = 1;
-			this->label2->Text = L"Resent File:";
+			this->label2->Text = L"Recent File:";
 			// 
 			// label1
 			// 
