@@ -9,4 +9,4 @@ http://stools.googlecode.com/svn/wiki/sactedit.gif
 
 This tutorial will show how to exchange skeleton animation of similar characters. In this example i've choosen to replace the female archer running animation with the female assassin running animation, both characters have the same skeleton structure.
 
-[http://www.youtube.com/watch?v=tWmJVw3SUcA&hd=1]
+[http://www.youtube.com/watch?v=tWmJVw3SUcA&hd=1 YouTube - Archer with Assassin Run Animation]
