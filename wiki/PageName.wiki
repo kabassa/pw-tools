@@ -21,9 +21,9 @@ This tutorial will show how to exchange skeleton animation of similar characters
   *first extract all required model files of the female assassin and female archer
   *make sure the directory structure is the same as in the pck file (models.pck.files/models/...)
   *if you haven't made a backup yet make one now
-[http://img820.imageshack.us/img820/4374/79778943.gif http://img820.imageshack.us/img820/4374/79778943.th.gif]
+   [http://img820.imageshack.us/img820/4374/79778943.gif http://img820.imageshack.us/img820/4374/79778943.th.gif]
   *start sACTedit and load the ecm file of the assassin
-
+   [.gif .th.gif]
   *select the combine act for the running animation (index = 34)
   *in the right textbox the combine act data will be loaded
 
@@ -39,5 +39,5 @@ This tutorial will show how to exchange skeleton animation of similar characters
   *at least click save and add the modified archer model files back to your models.pck
   *start the game and see your archer running like an assassin
 
-'*'some combine acts have additional gfx, these gfx can be replaced by editing the ecm text field in the combine act section (the gfx part begins with "EventCount: ", each event block is a gfx description)
+'*'some combine acts have additional gfx, these gfx can be replaced by editing the ecm text field in the combine act section (the gfx part begins with '"'EventCount: '"', each event block is a gfx description)
 when replacing text in combine acts make sure it is the same MOXTVersion, or ecm file will be corrupted
