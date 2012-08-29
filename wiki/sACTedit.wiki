@@ -1,7 +1,6 @@
 =sACTedit - simple Animation Editor=
 
 An editor`*` for character model animations of the popular MMORPG Perfect World.
-
 (`*`currently only character animation import/export is supported)
 
 http://stools.googlecode.com/svn/wiki/sactedit.gif
