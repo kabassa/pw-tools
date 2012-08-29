@@ -55,7 +55,7 @@ Example: versions.sw
 2=ec_patch_1-2.xup
 }}}
 
-Beside the "versions.sw" you have to place all your "ec_patch_*.xup" files in the same directory. These files are simple compressed archives.
+Beside the "versions.sw" you have to place all your `"ec_patch_*.xup"` files in the same directory. These files are simple compressed archives.
 
 
 =Creating a Patch:=
@@ -71,7 +71,7 @@ Patch Data Files 2:
 http://stools.googlecode.com/svn/wiki/spatch_data_01.gif
 
 
-At least create a xup patch by dragging the "ec_patch" folder onto "patcher.exe". The new *.xup patch is created in the same directory where "ec_patch" folder is located.
+At least create a xup patch by dragging the "ec_patch" folder onto "patcher.exe". The new `*.xup` patch is created in the same directory where "ec_patch" folder is located.
 
 In our Example (by dragging...):
 {{{
@@ -88,4 +88,4 @@ Inside "ec_patch_0-0.xup" File 2:
 <br>
 http://stools.googlecode.com/svn/wiki/spatch_data_03.gif
 
-Now rename this patch file to match your version and upload the "ec_patch_*.xup" to your patch-server and add the created patch with a new version to your "versions.sw" database. The client patcher will download and install it next time when it connects to the server.
+Now rename this patch file to match your version and upload the `"ec_patch_*.xup"` to your patch-server and add the created patch with a new version to your "versions.sw" database. The client patcher will download and install it next time when it connects to the server.
