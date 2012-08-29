@@ -1,0 +1,5 @@
+=sTASKedit - simple TASK editor=
+
+This program can modify and export Perfect World tasks.data files...
+
+http://stools.googlecode.com/svn/wiki/staskedit.png
