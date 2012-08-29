@@ -9,3 +9,46 @@ http://stools.googlecode.com/svn/wiki/spatch_00.jpg
 http://stools.googlecode.com/svn/wiki/spatch_01.jpg
 <br>
 `*`full mode
+
+
+=Install & Configure Patcher:=
+
+The patcher directory must be placed in the same directory as the game client's element folder (delete or rename the original patcher directory!).
+
+http://stools.googlecode.com/svn/wiki/spatch_install.jpg
+
+
+After placing patcher to the correct location its time to explain the included files.
+  * The patcher has a "skin" folder, where the graphic are stored. Simply modify/exchange the files to customize your patcher.
+  * The "tools" folder contains some helpers for the patcher and are unimportant for you.
+  * The "version.sw" is a file that contains only the integer number of the current client version. For first use when you hand it out to your users, i recommend set it to 0. When connecting to server, all patches above the number in "version.sw" will be downloaded and installed.
+  * The "patcher.ini" file contains configuration parameters for the patcher. In each case this file must contain the "patch_server=" key. This is where the patcher looking for new patches. Dont forget the tailing / at the end.
+
+Example: patcher.ini
+{{{patch_server=http://87.118.104.73/public/PW/patch_test/}}}
+
+Currently you can add the additional "patch_notes=" key to this file. If you add this key, the patcher adds a custom webpage (384x246 pixel) into the launcher. If you don't define this key, the launcher stays in its small-mode.
+<br>
+The patcher also allows local webpages, just enter the relative path to the file instead an url. Wwebpage size is 384x216.
+
+Example: patcher.ini
+{{{
+patch_server=http://87.118.104.73/public/PW/patch_test/
+patch_notes=http://launcher.perfectworld.com/pwi/launcher.html
+}}}
+
+
+=Using Patcher:=
+
+Just launch the patcher and wait while fetching patch database. Now you see the current version and available version. If your current version is below available version, you can click update to start auto-patching. Depending on which files are patched, this process can be really time consuming (especially in .pck repacking). After finishing the client can be started by click play. Don't use the manual button for patching, i made this only for developers who don't wanna download the patch each time when debugging patches.
+
+
+=onfigure Patch Server:=
+
+Any web server can act as an patch server, all you need is an directory with patch database and patch files. The patch database is called "versions.sw". It's an simple text file, each line contains version number and corresponding patch file.
+
+Example: versions.sw
+{{{
+1=ec_patch_0-1.xup
+2=ec_patch_1-2.xup
+}}}
