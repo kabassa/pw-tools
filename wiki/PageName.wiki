@@ -21,11 +21,11 @@ This tutorial will show how to exchange skeleton animation of similar characters
   *first extract all required model files of the female assassin and female archer
   *make sure the directory structure is the same as in the pck file (models.pck.files/models/...)
   *if you haven't made a backup yet make one now
-
+[http://img820.imageshack.us/img820/4374/79778943.gif http://img820.imageshack.us/img820/4374/79778943.th.gif]
   *start sACTedit and load the ecm file of the assassin
 
   *select the combine act for the running animation (index = 34)
-in the right textbox the combine act data will be loaded
+  *in the right textbox the combine act data will be loaded
 
   *the combine act holds a link to a base act (joint animation), click on this name and sACTedit will automatically jump to the correct base act on the left panel (index = 36)
 
