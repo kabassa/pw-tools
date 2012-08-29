@@ -1,8 +1,8 @@
 =sACTedit - simple Animation Editor=
 
-An editor for character model animations of the popular MMORPG Perfect World.
+An editor`*` for character model animations of the popular MMORPG Perfect World.
 
-(currently only character animation import/export is supported)
+(`*`currently only character animation import/export is supported)
 
 http://stools.googlecode.com/svn/wiki/sactedit.gif
 
@@ -40,5 +40,5 @@ _This tutorial will show how to exchange skeleton animation of similar character
   * at least click save and add the modified archer model files back to your models.pck
   * start the game and see your archer running like an assassin
 
-some combine acts have additional gfx, these gfx can be replaced by editing the ecm text field in the combine act section (the gfx part begins with "EventCount: ", each event block is a gfx description)
+`*`some combine acts have additional gfx, these gfx can be replaced by editing the ecm text field in the combine act section (the gfx part begins with "EventCount: ", each event block is a gfx description)
 when replacing text in combine acts make sure it is the same MOXTVersion, or ecm file will be corrupted
