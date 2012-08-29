@@ -15,7 +15,16 @@ _sGSHOPedit uses it's own database file which contains all informations (client 
 ==Load & Edit a Database==
   # start sGSHOPedit
   # load your database file (i.e. gshop.db)
-  # edit the categories and entries like in the old version
+  # edit the categories & items
+  * browse through categories, subcategories, items by select them in the lists
+  * to rename categories and subcategories select the item in the list and edit them in the textfield below the list
+  * re-sort categories, subcategories and items by selecting the item in the list, hold the left mouse button and move them up or down
+  * move subcategories or items by selecting the item in the list and select target via context menu -> move to command
+  * add subcategories or items by context menu add command
+  * delete subcategories or items by selecting the item in the list and using the context menu delete command
+  * edit an item by selecting the item in the list and change the property fields
+  * use the update button to aquire name and descrition from pwdatabase.com, secondary source for description is the item_desc.txt
+  * file in the application directory, if both don't return result, values leave untouched
 
 
 ==Export a Database==
