@@ -19,10 +19,11 @@ http://stools.googlecode.com/svn/wiki/sclothfix.png
 
 
 
-*Loaded texture*
 
+*Loaded texture*
+<br>
 http://stools.googlecode.com/svn/wiki/sclothfix_01.jpg
 
 *Preview after fixing*
-
+<br>
 http://stools.googlecode.com/svn/wiki/sclothfix_02.jpg
