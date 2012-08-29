@@ -5,8 +5,14 @@ An editor'*' for character model animations of the popular MMORPG Perfect World.
 
 http://stools.googlecode.com/svn/wiki/sactedit.gif
 
+
 ==Tutorial ([http://forum.ragezone.com/f695/character-animation-exchange-archer-assassin-719039/#post6106454 Source])==
 
 This tutorial will show how to exchange skeleton animation of similar characters. In this example i've choosen to replace the female archer running animation with the female assassin running animation, both characters have the same skeleton structure.
 
 [http://www.youtube.com/watch?v=tWmJVw3SUcA&hd=1 YouTube - Archer with Assassin Run Animation]
+
+*Requirements:*
+  *the models must have the same skeleton structure (number of joints, joint-tree)
+  *the ecm files must be fixed with latest sMODfix
+  *the smd files version must be 8
