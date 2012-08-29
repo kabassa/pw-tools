@@ -5,8 +5,7 @@ This tool will fix the tint problem in the new 1.4.2 fashion items and the metal
 http://stools.googlecode.com/svn/wiki/sclothfix.png
 
 
-Quick Guide
-
+=Quick Guide=
   * extract your models.pck
   * navigate to "models.pck.files\models\players\装备" and drag this folder onto sCLOTH
   * now sCLOTH searches for all 1.4.2 fashions and armors
@@ -19,8 +18,11 @@ Quick Guide
   * if you're fine with the fix then you can save the changes to a file in the output
 
 
+
 *Loaded texture*
+
 http://stools.googlecode.com/svn/wiki/sclothfix_01.jpg
 
 *Preview after fixing*
+
 http://stools.googlecode.com/svn/wiki/sclothfix_02.jpg
