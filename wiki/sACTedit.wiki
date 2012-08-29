@@ -1,0 +1,44 @@
+=sACTedit - simple Animation Editor=
+
+An editor`*` for character model animations of the popular MMORPG Perfect World.
+
+(`*`currently only character animation import/export is supported)
+
+http://stools.googlecode.com/svn/wiki/sactedit.gif
+
+
+=Tutorial ([http://forum.ragezone.com/f695/character-animation-exchange-archer-assassin-719039/#post6106454 Source])=
+
+_This tutorial will show how to exchange skeleton animation of similar characters. In this example i've choosen to replace the female archer running animation with the female assassin running animation, both characters have the same skeleton structure._
+
+[http://www.youtube.com/watch?v=tWmJVw3SUcA&hd=1 YouTube - Archer with Assassin Run Animation]
+
+*Requirements:*
+  * the models must have the same skeleton structure (number of joints, joint-tree)
+  * the ecm files must be fixed with latest sMODfix
+  * the smd files version must be 8
+
+*Guide:*
+  * first extract all required model files of the female assassin and female archer
+  * make sure the directory structure is the same as in the pck file (models.pck.files/models/...)
+  * if you haven't made a backup yet make one now
+  [http://img820.imageshack.us/img820/4374/79778943.gif http://img820.imageshack.us/img820/4374/79778943.th.gif]
+  * start sACTedit and load the ecm file of the assassin
+  [http://img196.imageshack.us/img196/5716/40847342.gif http://img196.imageshack.us/img196/5716/40847342.th.gif]
+  * select the combine act for the running animation (index = 34)
+  * in the right textbox the combine act data will be loaded
+  [http://img694.imageshack.us/img694/2161/80181126.gif http://img694.imageshack.us/img694/2161/80181126.th.gif]
+  * the combine act holds a link to a base act (joint animation), click on this name and sACTedit will automatically jump to the correct base act on the left panel (index = 36)
+  [http://img14.imageshack.us/img14/5688/77370101.gif http://img14.imageshack.us/img14/5688/77370101.th.gif]
+  * right click on the base act and click export, select a filename i.e. "c:/somewhere.../assassinfrun.act"
+  [http://img405.imageshack.us/img405/1101/37992565.gif http://img405.imageshack.us/img405/1101/37992565.th.gif]
+  * now open the ecm file for the female archer and repeat the steps like for the assassin
+  * select the combine act for the running animation (index = 16)
+  * click the base act to jump to the linked base act (index = 33)
+  * right click on the base act and click import, select the file you have exported from the female assassin
+  [http://img524.imageshack.us/img524/5938/87480624.gif http://img524.imageshack.us/img524/5938/87480624.th.gif]
+  * at least click save and add the modified archer model files back to your models.pck
+  * start the game and see your archer running like an assassin
+
+`*`some combine acts have additional gfx, these gfx can be replaced by editing the ecm text field in the combine act section (the gfx part begins with "EventCount: ", each event block is a gfx description)
+when replacing text in combine acts make sure it is the same MOXTVersion, or ecm file will be corrupted
