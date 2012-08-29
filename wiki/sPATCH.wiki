@@ -45,7 +45,7 @@ patch_notes=http://launcher.perfectworld.com/pwi/launcher.html
 Just launch the patcher and wait while fetching patch database. Now you see the current version and available version. If your current version is below available version, you can click update to start auto-patching. Depending on which files are patched, this process can be really time consuming (especially in .pck repacking). After finishing the client can be started by click play. Don't use the manual button for patching, i made this only for developers who don't wanna download the patch each time when debugging patches.
 
 
-=onfigure Patch Server:=
+=Configure Patch Server:=
 
 Any web server can act as an patch server, all you need is an directory with patch database and patch files. The patch database is called "versions.sw". It's an simple text file, each line contains version number and corresponding patch file.
 
@@ -69,3 +69,23 @@ http://stools.googlecode.com/svn/wiki/spatch_data_00.gif
 Patch Data Files 2:
 <br>
 http://stools.googlecode.com/svn/wiki/spatch_data_01.gif
+
+
+At least create a xup patch by dragging the "ec_patch" folder onto "patcher.exe". The new *.xup patch is created in the same directory where "ec_patch" folder is located.
+
+In our Example (by dragging...):
+{{{
+patcher.exe "C:\Users\Ronny\Desktop\ec_patch"
+}}}
+
+a new "ec_patch_0-0.xup" file was created besides your patch root directory.
+
+Inside "ec_patch_0-0.xup" File 1:
+<br>
+http://stools.googlecode.com/svn/wiki/spatch_data_02.gif
+
+Inside "ec_patch_0-0.xup" File 2:
+<br>
+http://stools.googlecode.com/svn/wiki/spatch_data_03.gif
+
+Now rename this patch file to match your version and upload the "ec_patch_*.xup" to your patch-server and add the created patch with a new version to your "versions.sw" database. The client patcher will download and install it next time when it connects to the server.
