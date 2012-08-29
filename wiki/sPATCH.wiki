@@ -25,7 +25,9 @@ After placing patcher to the correct location its time to explain the included f
   * The "patcher.ini" file contains configuration parameters for the patcher. In each case this file must contain the "patch_server=" key. This is where the patcher looking for new patches. Dont forget the tailing / at the end.
 
 Example: patcher.ini
-{{{patch_server=http://87.118.104.73/public/PW/patch_test/}}}
+{{{
+patch_server=http://87.118.104.73/public/PW/patch_test/
+}}}
 
 Currently you can add the additional "patch_notes=" key to this file. If you add this key, the patcher adds a custom webpage (384x246 pixel) into the launcher. If you don't define this key, the launcher stays in its small-mode.
 <br>
@@ -52,3 +54,18 @@ Example: versions.sw
 1=ec_patch_0-1.xup
 2=ec_patch_1-2.xup
 }}}
+
+Beside the "versions.sw" you have to place all your "ec_patch_*.xup" files in the same directory. These files are simple compressed archives.
+
+
+=Creating a Patch:=
+
+The patch contains files that will be downloaded and replaced in the client. The directory structure in a patch file must be the same as in the client. Lets assume you want to share some new files, first we have to create a root directory i.e. "ec_patch". Inside this directory we create "element" folder and inside of this the directory we place the files to be added to using sPatch. If you want to update files in a .pck package you have to create the corresponding .pck.files folder inside the "elements" directory. Place the files you want to add/replace inside this folder.
+
+Patch Data Files 1:
+<br>
+http://stools.googlecode.com/svn/wiki/spatch_data_00.gif
+
+Patch Data Files 2:
+<br>
+http://stools.googlecode.com/svn/wiki/spatch_data_01.gif
