@@ -12,10 +12,10 @@ http://stools.googlecode.com/svn/wiki/smaptool.gif
   * Click start to begin converting process, this may take some minutes depending on selected files
 
 _*Note:*_ `*`.t2bk will only export terrain, disregarding litmodels
-path.sev Editor
 
 
-=Open path file=
+=path.sev Editor=
+  * Open path file=
   * Select a background template if you want
   * Select a path from the list, the path is shown in the image
   * Use context menu to add/remove path from the list
@@ -27,10 +27,10 @@ path.sev Editor
   * The segment length will be calculated automatically when changing startpoint/endpoint, or their coordinates
   * Automatic length calculation is based on line mode, not curve mode { segment control point meaning is unknown to me (B-Splines, Polynomial, ... ?) }
   * When finished click save to store changes to the loaded path file
-*.hmap Editor
 
 
-=Open hmap file=
+=.hmap Editor=
+  * Open hmap file=
   * Select a background template if you want
   * Select a color scheme by right click on the value expansion bar
   * Select a polygon by left mouse clicks
@@ -38,10 +38,10 @@ path.sev Editor
   * The values in the selection are linear interpolated over the bounding rectangle corners using an weighted distance algorithm
   * Clear the current selection polygon by right mouse click
   * When finished click save to store changes to the loaded hmap file
-*.rmap Editor
 
 
-=Open rmap file=
+=.rmap Editor=
+  * Open rmap file=
   * Select a polygon by left mouse clicks
   * Choose the selection mode for the polygon
   * Set the selection to true or false
