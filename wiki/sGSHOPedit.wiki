@@ -6,7 +6,7 @@ An editor for gshop.data file of the popular MMORPG Perfect World.
 =Quick Start Tutorial=
 _sGSHOPedit uses it's own database file which contains all informations (client and server files complement each other, so they are a inconsistent base for editing...)_
 
-*Create a new Database*
+==Create a new Database==
   # start sGSHOPedit
   # import an existing gshop.data (1.4.4 client preferred)
   # save the file to gshop.db or a name of your choice
