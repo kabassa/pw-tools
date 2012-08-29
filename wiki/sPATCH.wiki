@@ -1,0 +1,11 @@
+=sPatcher - Perfect World Client Autopatcher=
+
+This patcher is an alternative to the default perfect world patcher. It offers easy client patching by connecting to a patch server, check for new patches, downloading and installing these new patches.
+
+http://stools.googlecode.com/svn/wiki/spatch_00.jpg
+<br>
+`*`minimal mode
+
+http://stools.googlecode.com/svn/wiki/spatch_01.jpg
+<br>
+`*`full mode
