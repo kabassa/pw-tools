@@ -8,7 +8,7 @@ http://stools.googlecode.com/svn/wiki/sclothfix.png
 Quick Guide
 
   * extract your models.pck
-navigate to "models.pck.files\models\players\装备" and drag this folder onto sCLOTH
+  * navigate to "models.pck.files\models\players\装备" and drag this folder onto sCLOTH
   * now sCLOTH searches for all 1.4.2 fashions and armors
   * when finished, you can select a file from the list to see the preview
   * there are two pictures, the large one on the right shows the basic texture and the one at the bottom shows the corresponding new 1.4.2 mask texture
@@ -19,6 +19,8 @@ navigate to "models.pck.files\models\players\装备" and drag this folder onto s
   * if you're fine with the fix then you can save the changes to a file in the output
 
 
+*Loaded texture*
 http://stools.googlecode.com/svn/wiki/sclothfix_01.jpg
 
+*Preview after fixing*
 http://stools.googlecode.com/svn/wiki/sclothfix_02.jpg
