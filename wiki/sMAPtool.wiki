@@ -15,7 +15,7 @@ _*Note:*_ `*`.t2bk will only export terrain, disregarding litmodels
 
 
 =path.sev Editor=
-  * Open path file=
+  * Open path file
   * Select a background template if you want
   * Select a path from the list, the path is shown in the image
   * Use context menu to add/remove path from the list
@@ -30,7 +30,7 @@ _*Note:*_ `*`.t2bk will only export terrain, disregarding litmodels
 
 
 =.hmap Editor=
-  * Open hmap file=
+  * Open hmap file
   * Select a background template if you want
   * Select a color scheme by right click on the value expansion bar
   * Select a polygon by left mouse clicks
@@ -41,7 +41,7 @@ _*Note:*_ `*`.t2bk will only export terrain, disregarding litmodels
 
 
 =.rmap Editor=
-  * Open rmap file=
+  * Open rmap file
   * Select a polygon by left mouse clicks
   * Choose the selection mode for the polygon
   * Set the selection to true or false
