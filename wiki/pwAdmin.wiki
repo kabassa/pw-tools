@@ -2,7 +2,7 @@
 
 pwAdmin is an Web Interface based on JSP that uses the PW-Java API to control an Perfect World Server.
 
-http://stools.googlecode.com/svn/wiki/pwadmin.png
+http://pw-tools.googlecode.com/svn/wiki/pwadmin.png
 
 =pwAdmin / Jetty-7.x.x Bundle=
 ==Basic Installation==

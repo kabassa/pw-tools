@@ -2,7 +2,7 @@
 
 An viewer/editor/converter for various map files of the popular MMORPG Perfect World.
 
-http://stools.googlecode.com/svn/wiki/smaptool.gif
+http://pw-tools.googlecode.com/svn/wiki/smaptool.gif
 
 
 =Converter=

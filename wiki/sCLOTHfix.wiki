@@ -2,7 +2,7 @@
 
 This tool will fix the tint problem in the new 1.4.2 fashion items and the metallic reflection in new 1.4.2 armor. The output will be 1.3.6 compatible.
 
-http://stools.googlecode.com/svn/wiki/sclothfix.png
+http://pw-tools.googlecode.com/svn/wiki/sclothfix.png
 
 
 =Quick Guide=
@@ -20,8 +20,8 @@ http://stools.googlecode.com/svn/wiki/sclothfix.png
 
 *Loaded texture*
 <br>
-http://stools.googlecode.com/svn/wiki/sclothfix_01.jpg
+http://pw-tools.googlecode.com/svn/wiki/sclothfix_01.jpg
 
 *Preview after fixing*
 <br>
-http://stools.googlecode.com/svn/wiki/sclothfix_02.jpg
+http://pw-tools.googlecode.com/svn/wiki/sclothfix_02.jpg

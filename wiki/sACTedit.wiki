@@ -4,7 +4,7 @@ An editor`*` for character model animations of the popular MMORPG Perfect World.
 <br>
 (`*`currently only character animation import/export is supported)
 
-http://stools.googlecode.com/svn/wiki/sactedit.gif
+http://pw-tools.googlecode.com/svn/wiki/sactedit.gif
 
 
 =Tutorial ([http://forum.ragezone.com/f695/character-animation-exchange-archer-assassin-719039/#post6106454 Source])=

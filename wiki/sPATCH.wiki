@@ -2,11 +2,11 @@
 
 This patcher is an alternative to the default perfect world patcher. It offers easy client patching by connecting to a patch server, check for new patches, downloading and installing these new patches.
 
-http://stools.googlecode.com/svn/wiki/spatch_00.jpg
+http://pw-tools.googlecode.com/svn/wiki/spatch_00.jpg
 <br>
 `*`minimal mode
 
-http://stools.googlecode.com/svn/wiki/spatch_01.jpg
+http://pw-tools.googlecode.com/svn/wiki/spatch_01.jpg
 <br>
 `*`full mode
 
@@ -15,7 +15,7 @@ http://stools.googlecode.com/svn/wiki/spatch_01.jpg
 
 The patcher directory must be placed in the same directory as the game client's element folder (delete or rename the original patcher directory!).
 
-http://stools.googlecode.com/svn/wiki/spatch_install.jpg
+http://pw-tools.googlecode.com/svn/wiki/spatch_install.jpg
 
 
 After placing patcher to the correct location its time to explain the included files.
@@ -64,11 +64,11 @@ The patch contains files that will be downloaded and replaced in the client. The
 
 Patch Data Files 1:
 <br>
-http://stools.googlecode.com/svn/wiki/spatch_data_00.gif
+http://pw-tools.googlecode.com/svn/wiki/spatch_data_00.gif
 
 Patch Data Files 2:
 <br>
-http://stools.googlecode.com/svn/wiki/spatch_data_01.gif
+http://pw-tools.googlecode.com/svn/wiki/spatch_data_01.gif
 
 
 At least create a xup patch by dragging the "ec_patch" folder onto "patcher.exe". The new `*.xup` patch is created in the same directory where "ec_patch" folder is located.
@@ -82,10 +82,10 @@ a new "ec_patch_0-0.xup" file was created besides your patch root directory.
 
 Inside "ec_patch_0-0.xup" File 1:
 <br>
-http://stools.googlecode.com/svn/wiki/spatch_data_02.gif
+http://pw-tools.googlecode.com/svn/wiki/spatch_data_02.gif
 
 Inside "ec_patch_0-0.xup" File 2:
 <br>
-http://stools.googlecode.com/svn/wiki/spatch_data_03.gif
+http://pw-tools.googlecode.com/svn/wiki/spatch_data_03.gif
 
 Now rename this patch file to match your version and upload the `"ec_patch_*.xup"` to your patch-server and add the created patch with a new version to your "versions.sw" database. The client patcher will download and install it next time when it connects to the server.

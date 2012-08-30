@@ -2,7 +2,7 @@
 
 Can extract files, compress files and add files from/to angelica file packages.
 
-http://stools.googlecode.com/svn/wiki/spck.gif
+http://pw-tools.googlecode.com/svn/wiki/spck.gif
 
 
 =Decode CUP Patch=
