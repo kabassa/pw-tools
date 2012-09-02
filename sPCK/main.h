@@ -7,9 +7,17 @@
 #include <wx/buffer.h>
 #include <wx/process.h>
 #include <wx/textfile.h>
+#include <wx/stdpaths.h>
 
 #include "base64.h"
 #include "wxTraverser.h"
+
+int FSIG_1;
+int FSIG_2;
+int KEY_1;
+int KEY_2;
+int ASIG_1;
+int ASIG_2;
 
 class pckApp : public wxApp
 {
