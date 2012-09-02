@@ -18,7 +18,7 @@ bool sPATCHApp::OnInit()
         if(wxDirExists(patchDir))
         {
             //wxProcess::Open(wxT("tools\\sPCK.exe -cp \"") + patchDir + wxT("\""), wxEXEC_NOHIDE);
-            wxShell(wxString(argv[0]).BeforeLast('\\') + wxT("\\tools\\sPCK.exe -cp \"") + patchDir + wxT("\""));
+            wxShell(wxString(argv[0]).BeforeLast('\\') + wxT("\\tools\\sPCK.exe -pw -cp \"") + patchDir + wxT("\""));
             return false;
         }
         else
