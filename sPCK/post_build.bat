@@ -1,1 +1,0 @@
-copy "..\bin\sPCK\sPCK.exe" "..\bin\patcher\tools\sPCK.exe"
