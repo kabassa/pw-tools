@@ -7,7 +7,7 @@ http://pw-tools.googlecode.com/svn/wiki/spck.gif
 
 =Select Game Mode=
 _sPCK supports multiple games so we need to set the first parameter switch to set the correct game mode
-  * command line usage: sPCK.exe -pw <instruction> <path/file>
+  * command line usage: `sPCK.exe -pw <instruction> <path/file>`
   * -pw is the switch for the game mode, valid options:
     # -pw (Perfect World)
     # -jd (Jade Dynasty)
