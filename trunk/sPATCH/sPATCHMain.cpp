@@ -312,12 +312,12 @@ void sPATCHDialog::ApplyPatches()
                 if(files[i].EndsWith(wxT(".pck.files")))
                 {
                     Status = wxT("Updating PCK File (") + files[i].AfterLast('\\').BeforeLast('.') + wxT(") ...");
-                    wxProcess::Open(wxT("tools\\sPCK.exe -a \"..\\element\\") + files[i].AfterLast(L'\\') + wxT("\""), wxEXEC_SYNC | wxEXEC_NODISABLE);
+                    wxProcess::Open(wxT("tools\\sPCK.exe -pw -a \"..\\element\\") + files[i].AfterLast(L'\\') + wxT("\""), wxEXEC_SYNC | wxEXEC_NODISABLE);
                 }
                 if(files[i].EndsWith(wxT(".pck.b64.files")))
                 {
                     Status = wxT("Updating PCK File (") + files[i].AfterLast('\\').BeforeLast('.').BeforeLast('.') + wxT(") ...");
-                    wxProcess::Open(wxT("tools\\sPCK.exe -ap \"..\\element\\") + files[i].AfterLast(L'\\') + wxT("\""), wxEXEC_SYNC | wxEXEC_NODISABLE);
+                    wxProcess::Open(wxT("tools\\sPCK.exe -pw -ap \"..\\element\\") + files[i].AfterLast(L'\\') + wxT("\""), wxEXEC_SYNC | wxEXEC_NODISABLE);
                 }
                 this->Refresh();
                 wxDeldir(files[i]);

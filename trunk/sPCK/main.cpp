@@ -1,45 +1,5 @@
 #include "main.h"
 
-// RWPD decoding keys & signatures
-/*
-#define FSIG_1 1305093103
-#define FSIG_2 1453361591
-#define KEY_1 711164174
-#define KEY_2 839959661
-#define ASIG_1 -1424846705
-#define ASIG_2 -1289545470
-*/
-
-// FW decoding keys & signatures
-/*
-#define FSIG_1 1305093103
-#define FSIG_2 1453361591
-#define KEY_1 566434367
-#define KEY_2 408690725
-#define ASIG_1 -1526153788
-#define ASIG_2 -2060097592
-*/
-
-// ESO decoding keys & signatures
-/*
-#define FSIG_1 1305093103
-#define FSIG_2 1453361591
-#define KEY_1 -1228069623
-#define KEY_2 1822409141
-#define ASIG_1 1571301968
-#define ASIG_2 2043846474
-*/
-
-// PW & JD decoding keys & signatures
-///*
-#define FSIG_1 1305093103
-#define FSIG_2 1453361591
-#define KEY_1 -1466731422
-#define KEY_2 -240896429
-#define ASIG_1 -33685778
-#define ASIG_2 -267534609
-//*/
-
 bool compare(wxByte* buffer1, wxByte* buffer2, wxUint32 length)
 {
     for(wxUint32 i=0; i<length; i++)
@@ -844,24 +804,65 @@ bool pckApp::OnInit()
 
         // check if amount of command line arguments is correct
         // first parameter is the execuable file itself
-        // second is the instruction
-        // third is the file/directory
+        // second is the game mode
+        // third is the instruction
+        // fourth is the file/directory
 
-        if(argc<3)
+        if(argc<4)
         {
             wxPrintf(wxT("Invalid amount of arguments\nPress Enter to exit"));
             wxScanf(new wxChar);
             exit(1);
         }
 
-        // Convert second parameter argv[1] from char* to wxString
-        wxString instruction(argv[1], wxConvUTF8);
-        // Convert third parameter argv[2] from char* to wxString
-        wxString path(argv[2], wxConvUTF8);
+        // Convert first parameter argv[1] from char* to wxString
+        wxString gamemode(argv[1], wxConvUTF8);
+        // Convert second parameter argv[2] from char* to wxString
+        wxString instruction(argv[2], wxConvUTF8);
+        // Convert third parameter argv[3] from char* to wxString
+        wxString path(argv[3], wxConvUTF8);
+
+        // file signature for all games
+        {
+            FSIG_1 = 1305093103;
+            FSIG_2 = 1453361591;
+        }
+        // perfect world & jade dynasty
+        if(gamemode == wxT("-pw") || gamemode == wxT("-jw"))
+        {
+            KEY_1 = -1466731422;
+            KEY_2 = -240896429;
+            ASIG_1 = -33685778;
+            ASIG_2 = -267534609;
+        }
+        // forsaken world
+        if(gamemode == wxT("-fw"))
+        {
+            KEY_1 = 566434367;
+            KEY_2 = 408690725;
+            ASIG_1 = -1526153788;
+            ASIG_2 = -2060097592;
+        }
+        // ether sage
+        if(gamemode == wxT("-eso"))
+        {
+            KEY_1 = -1228069623;
+            KEY_2 = 1822409141;
+            ASIG_1 = 1571301968;
+            ASIG_2 = 2043846474;
+        }
+        // rwp dance (steps)
+        if(gamemode == wxT("-rwpd"))
+        {
+            KEY_1 = 711164174;
+            KEY_2 = 839959661;
+            ASIG_1 = -1424846705;
+            ASIG_2 = -1289545470;
+        }
 
         if(instruction != wxT("-x") && instruction != wxT("-c") && instruction != wxT("-a") && instruction != wxT("-ap") && instruction != wxT("-xp") && instruction != wxT("-cp"))
         {
-            wxPrintf(wxT("First argument is not a valid instruction\nPress Enter to exit"));
+            wxPrintf(wxT("Second argument is not a valid instruction\nPress Enter to exit"));
             wxScanf(new wxChar);
             exit(2);
         }
@@ -871,7 +872,7 @@ bool pckApp::OnInit()
             // Check if path is a valid file
             if(!wxFileExists(path))
             {
-                wxPrintf(wxT("Second argument is not a valid file\nPress Enter to exit"));
+                wxPrintf(wxT("Third argument is not a valid file\nPress Enter to exit"));
                 wxScanf(new wxChar);
                 exit(3);
             }
@@ -886,7 +887,7 @@ bool pckApp::OnInit()
             // Check if path is a valid directory
             if(!wxDirExists(path) && path.EndsWith(wxT(".pck.files")))
             {
-                wxPrintf(wxT("Second argument is not a valid directory\nPress Enter to exit"));
+                wxPrintf(wxT("Third argument is not a valid directory\nPress Enter to exit"));
                 wxScanf(new wxChar);
                 exit(4);
             }
@@ -901,7 +902,7 @@ bool pckApp::OnInit()
             // Check if path is a valid directory
             if(!wxDirExists(path))
             {
-                wxPrintf(wxT("Second argument is not a valid directory\nPress Enter to exit"));
+                wxPrintf(wxT("Third argument is not a valid directory\nPress Enter to exit"));
                 wxScanf(new wxChar);
                 exit(5);
             }
@@ -916,7 +917,7 @@ bool pckApp::OnInit()
             // Check if path is a valid directory
             if(!wxDirExists(path))
             {
-                wxPrintf(wxT("Second argument is not a valid directory\nPress Enter to exit"));
+                wxPrintf(wxT("Third argument is not a valid directory\nPress Enter to exit"));
                 wxScanf(new wxChar);
                 exit(5);
             }
@@ -931,7 +932,7 @@ bool pckApp::OnInit()
             // Check if path is a valid file
             if(!wxFileExists(path))
             {
-                wxPrintf(wxT("Second argument is not a valid file\nPress Enter to exit"));
+                wxPrintf(wxT("Third argument is not a valid file\nPress Enter to exit"));
                 wxScanf(new wxChar);
                 exit(6);
             }
@@ -948,7 +949,7 @@ bool pckApp::OnInit()
             // Check if path is a valid directory
             if(!wxDirExists(path))
             {
-                wxPrintf(wxT("Second argument is not a valid directory\nPress Enter to exit"));
+                wxPrintf(wxT("Third argument is not a valid directory\nPress Enter to exit"));
                 wxScanf(new wxChar);
                 exit(7);
             }
