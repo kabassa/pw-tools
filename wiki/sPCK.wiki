@@ -5,10 +5,22 @@ Can extract files, compress files and add files from/to angelica file packages.
 http://pw-tools.googlecode.com/svn/wiki/spck.gif
 
 
+=Select Game Mode=
+_sPCK supports multiple games so we need to set the first parameter switch to set the correct game mode
+  * command line usage: sPCK.exe -pw <instruction> <path/file>
+  * -pw is the switch for the game mode, valid options:
+    # -pw (Perfect World)
+    # -jd (Jade Dynasty)
+    # -fw (Forsaken World)
+    # -eso (Ether Sage)
+    # -rwpd (Steps / Sincerity Dance Scrambling)
+
+
 =Decode CUP Patch=
 
 _Extracting all files from file "example.cup" to directory "example.cup.files" and decode to "example.cup.decoded"_
-  * command line usage: sPCK.exe -xp "example.cup"
+  * command line usage: sPCK.exe -pw -xp "example.cup"
+  * -pw is the switch for the game mode (here: Perfect World)
   * -xp is the switch for patch extraction
   * example.cup is the path to the input file that should be extracted
   * the input file must always ends with ".cup"
@@ -21,7 +33,8 @@ _Extracting all files from file "example.cup" to directory "example.cup.files" a
 =Extract=
 
 _Extracting all files from file "example.pck" to directory "example.pck.files"_
-  * command line usage: sPCK.exe -x "example.pck"
+  * command line usage: sPCK.exe -pw -x "example.pck"
+  * -pw is the switch for the game mode (here: Perfect World)
   * -x is the switch for extraction
   * example.pck is the path to the input file that should be extracted
   * the input file must always ends with ".pck"
@@ -33,7 +46,8 @@ _Extracting all files from file "example.pck" to directory "example.pck.files"_
 =Compress=
 
 _Compressing all files from directory "example.pck.files" to file "example.pck"_
-  * command line usage: sPCK.exe -c "example.pck.files"
+  * command line usage: sPCK.exe -pw -c "example.pck.files"
+  * -pw is the switch for the game mode (here: Perfect World)
   * -c is the switch for compression
   * example.pck.files is the root directory containing the files to be compressed
   * the root directory must always ends with ".pck.files"
@@ -45,7 +59,8 @@ _Compressing all files from directory "example.pck.files" to file "example.pck"_
 =Add / Replace=
 
 _Adding/Replacing all files from directory "example.pck.files" into file "example.pck"_
-  * command line usage: sPCK.exe -a "example.pck.files"
+  * command line usage: sPCK.exe -pw -a "example.pck.files"
+  * -pw is the switch for the game mode (here: Perfect World)
   * -a is the switch for adding files to an exisiting pck package
   * example.pck.files is the root directory containing the files to be added
   * the root directory must always ends with ".pck.files"
@@ -60,7 +75,8 @@ when replacing a lot of files it's strongly recommend to repack the package (thi
 =Add / Replace Base64 encoded Files=
 
 _Adding/Replacing all files from directory "example.pck.b64.files" with base64 encoded names into file "example.pck" (the base64 names are decoded while slipstreaming). This option was designed for sPatch to support OS without chinese character encoding support..._
-  * command line usage: sPCK.exe -ap "example.pck.b64.files"
+  * command line usage: sPCK.exe -pw -ap "example.pck.b64.files"
+  * -pw is the switch for the game mode (here: Perfect World)
   * -ap is the switch for adding files with base64 naming to an exisiting pck package
   * example.pck.b64.files is the root directory containing the files to be added
   * the root directory must always ends with ".pck.b64.files"
@@ -72,6 +88,7 @@ _Adding/Replacing all files from directory "example.pck.b64.files" with base64 e
 =Create XUP Patch for sPatch=
 
 _This is a special renaming and compressing option added to create XUP patches for sPatch. Please read the documentation on sPatch for detailed usage_
-  * command line usage: sPCK.exe -cp "ec_patch"
+  * command line usage: sPCK.exe -pw -cp "ec_patch"
+  * -pw is the switch for the game mode (here: Perfect World)
   * -cp is the switch for creating a 7z compressed patch with base64 naming of pck.files
   * ec_patch is the root directory containing the element folder
