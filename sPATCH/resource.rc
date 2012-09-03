@@ -1,3 +1,1 @@
-aaaa ICON "app.ico"
-
-#include "wx/msw/wx.rc"
+aaaa ICON "..\\COMMON\\app.ico"

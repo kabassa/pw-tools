@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="SkillDescriptionConvert"
 	ProjectGUID="{AB41A2DB-CC7C-4108-96EF-5FD98BEA97AC}"
 	RootNamespace="SkillDescriptionConvert"
@@ -236,10 +236,6 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-			<File
-				RelativePath=".\app.ico"
-				>
-			</File>
 			<File
 				RelativePath=".\app.rc"
 				>
