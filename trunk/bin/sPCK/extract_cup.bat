@@ -1,1 +1,1 @@
-sPCK.exe -xp "C:\Users\ronny\Desktop\ec_patch_522-528.cup"
+sPCK.exe -pw -xp "C:\Users\ronny\Desktop\ec_patch_522-528.cup"
