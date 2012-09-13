@@ -652,7 +652,7 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 			String^ line;
 			int i=0;
 
-			while(i < siList->Length && (line = sr->ReadLine()) != "")
+			while(i < siList->Length && (line = sr->ReadLine()))
 			{
 				if(!line->StartsWith("#"))
 				{
@@ -692,17 +692,44 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 
 			sr->Close();
 
+			// fill the missing if necessary
+			for(i; i<siList->Length; i++)
+			{
+				si = gcnew ScanInfo();
+				si->EntrySizePrior = GetElTypeSize(i);
+				si->FirstElementID = -1;
+				si->SecondElementID = -1;
+				siList[i] = si;
+			}
+
 			return siList;
 		}
 
 		return nullptr;
 	}
 
-	private: void SkipOffset(int listIndex, BinaryReader^ br)
+	private: void SkipOffset(int version, int listIndex, BinaryReader^ br)
 	{
-		if(listOffsets[listIndex] != "")
+		String^ offset = listOffsets[listIndex];
+
+		// support for 1.2.6 config scan (assuming)
+		if(loadedConfFileName->EndsWith("_v7.cfg") && version > 8)
 		{
-			if(listOffsets[listIndex] == "AUTO")
+			if(listIndex == 0)
+			{
+				// force offset = 4
+				offset = "4";
+			}
+			if(listIndex == 20 || listIndex == 100)
+			{
+				// force offset = AUTO
+				offset = "AUTO";
+			}
+		}
+
+		if(offset != "" && offset != "0")
+		{
+			if(offset == "AUTO")
 			{
 				if(listIndex == 20)
                 {
@@ -720,7 +747,7 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 			}
 			else
 			{
-				br->ReadBytes(Convert::ToInt32(listOffsets[listIndex]));
+				br->ReadBytes(Convert::ToInt32(offset));
 			}
 		}
 	}
@@ -780,7 +807,7 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 			for(int i=0; i<listNames->Length; i++)
 			{
 				// skip offset
-				SkipOffset(i, br);
+				SkipOffset(version, i, br);
 				// skip conversation list
 				if(i == conversationListIndex)
 				{
@@ -857,7 +884,7 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 
 									// we have to rely on the offset from the configuration file (hopefully it doesn't changed)
 									// if the offset is AUTO mode then we can give up here
-									if(listOffsets[i+1] == "AUTO")
+									if(listOffsets[i+1] == "AUTO" || ((i+1 == 20 || i+1 == 100) && version > 8 && loadedConfFileName->EndsWith("_v7.cfg")))
 									{
 										if(MessageBox::Show("List Index: " + i.ToString() + "\r\n\r\nDeep scan through Offset:AUTO in next list not possible.\r\nTry to use EntrySize from configuration file?\r\n*Application may crash when EntrySize has been increased!", listNames[i], MessageBoxButtons::YesNo) == Windows::Forms::DialogResult::Yes)
 										{
