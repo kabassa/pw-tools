@@ -7,6 +7,15 @@ using namespace System::Windows::Forms;
 using namespace System::Data;
 using namespace System::Drawing;
 
+public ref struct ScanInfo
+{
+	int ElementCount;
+	int FirstElementID;
+	int SecondElementID;
+	int EntrySizePrior;
+	int EntrySizeEstimated;
+};
+
 public ref class ConfigWindow : public System::Windows::Forms::Form
 {
 	public:
@@ -28,6 +37,7 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 	}
 
 	int conversationListIndex;
+	String^ loadedConfFileName;
 	array<String^>^ listNames;
 	array<String^>^ listOffsets;
 	array<array<String^>^>^ fieldNames;
@@ -53,6 +63,8 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 	private: System::Windows::Forms::TextBox^  textBox_offset;
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::TextBox^  textBox_conversationListIndex;
+	private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
+	private: System::Windows::Forms::ToolStripMenuItem^  scanNewGenerationExperimentalToolStripMenuItem;
 	private: System::ComponentModel::IContainer^  components;
 	private:
 	/// <summary>
@@ -89,6 +101,8 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 		this->textBox_offset = (gcnew System::Windows::Forms::TextBox());
 		this->label4 = (gcnew System::Windows::Forms::Label());
 		this->textBox_conversationListIndex = (gcnew System::Windows::Forms::TextBox());
+		this->toolStripSeparator1 = (gcnew System::Windows::Forms::ToolStripSeparator());
+		this->scanNewGenerationExperimentalToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 		this->menuStrip_mainMenu->SuspendLayout();
 		(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView_item))->BeginInit();
 		this->contextMenuStrip_row->SuspendLayout();
@@ -109,12 +123,12 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 		// toolStripMenuItem1
 		// 
 		this->toolStripMenuItem1->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
-		this->toolStripMenuItem1->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->loadToolStripMenuItem, 
-			this->saveToolStripMenuItem});
+		this->toolStripMenuItem1->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {this->loadToolStripMenuItem, 
+			this->saveToolStripMenuItem, this->toolStripSeparator1, this->scanNewGenerationExperimentalToolStripMenuItem});
 		this->toolStripMenuItem1->ImageScaling = System::Windows::Forms::ToolStripItemImageScaling::None;
 		this->toolStripMenuItem1->Name = L"toolStripMenuItem1";
 		this->toolStripMenuItem1->Padding = System::Windows::Forms::Padding(0);
-		this->toolStripMenuItem1->Size = System::Drawing::Size(27, 20);
+		this->toolStripMenuItem1->Size = System::Drawing::Size(29, 20);
 		this->toolStripMenuItem1->Text = L"File";
 		this->toolStripMenuItem1->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 		// 
@@ -122,7 +136,7 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 		// 
 		this->loadToolStripMenuItem->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
 		this->loadToolStripMenuItem->Name = L"loadToolStripMenuItem";
-		this->loadToolStripMenuItem->Size = System::Drawing::Size(125, 22);
+		this->loadToolStripMenuItem->Size = System::Drawing::Size(240, 22);
 		this->loadToolStripMenuItem->Text = L"Load...";
 		this->loadToolStripMenuItem->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 		this->loadToolStripMenuItem->Click += gcnew System::EventHandler(this, &ConfigWindow::click_load);
@@ -131,7 +145,7 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 		// 
 		this->saveToolStripMenuItem->DisplayStyle = System::Windows::Forms::ToolStripItemDisplayStyle::Text;
 		this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
-		this->saveToolStripMenuItem->Size = System::Drawing::Size(125, 22);
+		this->saveToolStripMenuItem->Size = System::Drawing::Size(240, 22);
 		this->saveToolStripMenuItem->Text = L"Save As...";
 		this->saveToolStripMenuItem->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 		this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &ConfigWindow::click_save);
@@ -213,7 +227,7 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 		this->Column1->HeaderText = L"Name";
 		this->Column1->Name = L"Column1";
 		this->Column1->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
-		this->Column1->Width = 40;
+		this->Column1->Width = 41;
 		// 
 		// Column2
 		// 
@@ -230,19 +244,19 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 		this->contextMenuStrip_row->Name = L"contextMenuStrip1";
 		this->contextMenuStrip_row->RenderMode = System::Windows::Forms::ToolStripRenderMode::System;
 		this->contextMenuStrip_row->ShowImageMargin = false;
-		this->contextMenuStrip_row->Size = System::Drawing::Size(105, 48);
+		this->contextMenuStrip_row->Size = System::Drawing::Size(109, 48);
 		// 
 		// addRowToolStripMenuItem
 		// 
 		this->addRowToolStripMenuItem->Name = L"addRowToolStripMenuItem";
-		this->addRowToolStripMenuItem->Size = System::Drawing::Size(104, 22);
+		this->addRowToolStripMenuItem->Size = System::Drawing::Size(108, 22);
 		this->addRowToolStripMenuItem->Text = L"Add Row";
 		this->addRowToolStripMenuItem->Click += gcnew System::EventHandler(this, &ConfigWindow::add_row);
 		// 
 		// deleteRowToolStripMenuItem
 		// 
 		this->deleteRowToolStripMenuItem->Name = L"deleteRowToolStripMenuItem";
-		this->deleteRowToolStripMenuItem->Size = System::Drawing::Size(104, 22);
+		this->deleteRowToolStripMenuItem->Size = System::Drawing::Size(108, 22);
 		this->deleteRowToolStripMenuItem->Text = L"Delete Row";
 		this->deleteRowToolStripMenuItem->Click += gcnew System::EventHandler(this, &ConfigWindow::delete_row);
 		// 
@@ -304,6 +318,18 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 		this->textBox_conversationListIndex->TabIndex = 13;
 		this->textBox_conversationListIndex->TextChanged += gcnew System::EventHandler(this, &ConfigWindow::change_conversationListIndex);
 		// 
+		// toolStripSeparator1
+		// 
+		this->toolStripSeparator1->Name = L"toolStripSeparator1";
+		this->toolStripSeparator1->Size = System::Drawing::Size(237, 6);
+		// 
+		// scanNewGenerationExperimentalToolStripMenuItem
+		// 
+		this->scanNewGenerationExperimentalToolStripMenuItem->Name = L"scanNewGenerationExperimentalToolStripMenuItem";
+		this->scanNewGenerationExperimentalToolStripMenuItem->Size = System::Drawing::Size(240, 22);
+		this->scanNewGenerationExperimentalToolStripMenuItem->Text = L"Scan Sequel EL... (Experimental)";
+		this->scanNewGenerationExperimentalToolStripMenuItem->Click += gcnew System::EventHandler(this, &ConfigWindow::click_scanSequel);
+		// 
 		// ConfigWindow
 		// 
 		this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -345,6 +371,7 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 		cLoad->Filter = "EL Configuration File (*.cfg)|*.cfg|All Files (*.*)|*.*";
 		if(cLoad->ShowDialog() == Windows::Forms::DialogResult::OK && File::Exists(cLoad->FileName))
 		{
+			loadedConfFileName = cLoad->SafeFileName;
 			StreamReader^ sr = gcnew StreamReader(cLoad->FileName);
 
 			comboBox_lists->Items->Clear();
@@ -564,5 +591,427 @@ public ref class ConfigWindow : public System::Windows::Forms::Form
 		{
 			listOffsets[comboBox_lists->SelectedIndex] = textBox_offset->Text;
 		}
+	}
+
+	private: int GetTypeSize(String^ type)
+	{
+		if(type == "int16")
+		{
+			return 2;
+		}
+		if(type == "int32")
+		{
+			return 4;
+		}
+		if(type == "int64")
+		{
+			return 8;
+		}
+		if(type == "float")
+		{
+			return 4;
+		}
+		if(type == "double")
+		{
+			return 8;
+		}
+		if(type->Contains("byte:"))
+		{
+			return Convert::ToInt32(type->Split(gcnew array<wchar_t>{':'})[1]);
+		}
+		if(type->Contains("wstring:"))
+		{
+			return Convert::ToInt32(type->Split(gcnew array<wchar_t>{':'})[1]);
+		}
+		if(type->Contains("string:"))
+		{
+			return Convert::ToInt32(type->Split(gcnew array<wchar_t>{':'})[1]);
+		}
+
+		return 0;
+	}
+
+	private: int GetElTypeSize(int listIndex)
+	{
+		int size = 0;
+		for(int i=0; i<fieldTypes[listIndex]->Length; i++)
+		{
+			size += GetTypeSize(fieldTypes[listIndex][i]);
+		}
+		return size;
+	}
+
+	private: array<ScanInfo^>^ LoadSequelScannerConfiguration(String^ file)
+	{
+		if(listNames && File::Exists(file))
+		{
+			StreamReader^ sr = gcnew StreamReader(file);
+
+			array<ScanInfo^>^ siList = gcnew array<ScanInfo^>(listNames->Length);
+			ScanInfo^ si;
+			String^ line;
+			int i=0;
+
+			while(i < siList->Length && (line = sr->ReadLine()) != "")
+			{
+				if(!line->StartsWith("#"))
+				{
+					si = gcnew ScanInfo();
+
+					si->EntrySizePrior = -1;
+					si->EntrySizeEstimated = -1;
+
+					if(i != conversationListIndex)
+					{
+						si->EntrySizePrior = GetElTypeSize(i);
+					}
+					if(line == "NULL")
+					{
+						si->FirstElementID = -1;
+					}
+					else
+					{
+						si->FirstElementID = Convert::ToInt32(line);
+					}
+
+					line = sr->ReadLine();
+
+					if(line == "NULL")
+					{
+						si->SecondElementID = -1;
+					}
+					else
+					{
+						si->SecondElementID = Convert::ToInt32(line);
+					}
+
+					siList[i] = si;
+					i++;
+				}
+			}
+
+			sr->Close();
+
+			return siList;
+		}
+
+		return nullptr;
+	}
+
+	private: void SkipOffset(int listIndex, BinaryReader^ br)
+	{
+		if(listOffsets[listIndex] != "")
+		{
+			if(listOffsets[listIndex] == "AUTO")
+			{
+				if(listIndex == 20)
+                {
+                    br->ReadBytes(4); // head
+                    int count = br->ReadInt32(); // count
+                    br->ReadBytes(count); // body
+                    br->ReadBytes(4); // tail
+                }
+                if(listIndex == 100)
+                {
+                    br->ReadBytes(4); // head
+                    int count = br->ReadInt32(); // count
+                    br->ReadBytes(count); // body
+                }
+			}
+			else
+			{
+				br->ReadBytes(Convert::ToInt32(listOffsets[listIndex]));
+			}
+		}
+	}
+
+	private: void SkipConversationList(int listIndex, BinaryReader^ br)
+	{
+		// scan directly to next list count (automatically skip next list offset)
+		if(fieldTypes[listIndex][0]->Contains("AUTO"))
+		{
+			array<unsigned char>^ pattern = (Encoding::GetEncoding("GBK"))->GetBytes("facedata\\");
+            __int64 sourcePosition = br->BaseStream->Position;
+
+            bool run = true;
+            while(run)
+            {
+                run = false;
+                for(int i=0; i<pattern->Length; i++)
+                {
+                    if(br->ReadByte() != pattern[i])
+                    {
+                        run = true;
+                        break;
+                    }
+                }
+            }
+			// decrement base stream position (ElementCount, ID, Name, PatternLength)
+            br->BaseStream->Position -= (4 + 4 + 64 + pattern->Length);
+		}
+		else
+		{
+			br->BaseStream->Position += Convert::ToInt32(fieldTypes[listIndex][0]->Split(gcnew array<wchar_t>{':'})[0]) + Convert::ToInt32(listOffsets[listIndex]);
+			//br->ReadBytes( Convert::ToInt32(fieldTypes[listIndex][0]->Split(gcnew array<wchar_t>{':'})[0]) );
+		}
+	}
+
+	private: System::Void click_scanSequel(System::Object^  sender, System::EventArgs^  e)
+	{
+		array<ScanInfo^>^ siList = LoadSequelScannerConfiguration(Application::StartupPath + "\\configs\\sequel_scanner.txt");
+
+		// open the new element.data file
+		OpenFileDialog^ eLoad = gcnew OpenFileDialog();
+		eLoad->Filter = "EL (*.data)|*.data|All Files (*.*)|*.*";
+		if(eLoad->ShowDialog() == Windows::Forms::DialogResult::OK && File::Exists(eLoad->FileName))
+		{
+			StreamReader^ sr = gcnew StreamReader(eLoad->FileName);
+			BinaryReader^ br = gcnew BinaryReader(sr->BaseStream);
+
+			__int64 streamPos;
+			int currentListIndex = 0;
+			short version = br->ReadInt16();
+			short signature = br->ReadInt16();
+
+			String^ log;
+			log += "Configuration File: " + loadedConfFileName + "\r\n";
+			log += "Element File Version: " + version.ToString() + "\r\n\r\n";
+
+			for(int i=0; i<listNames->Length; i++)
+			{
+				// skip offset
+				SkipOffset(i, br);
+				// skip conversation list
+				if(i == conversationListIndex)
+				{
+					// offset from next list automatically skipped
+					SkipConversationList(i, br);
+					log += i.ToString("D3") + ": SKIPPED (Conversation List)\r\n";
+					i++;
+				}
+
+				log += i.ToString("D3") + ":";
+
+				// read the number of elements in this list
+				siList[i]->ElementCount = br->ReadInt32();
+				// store the current stream position (list begin)
+				streamPos = br->BaseStream->Position;
+
+				// only process non-empty lists
+				if(siList[i]->ElementCount > 0)
+				{
+					// FirstElementID = VALID
+					if(siList[i]->FirstElementID > -1)
+					{
+						// SecondElementID = VALID
+						if(siList[i]->SecondElementID > -1)
+						{
+							// CurrentList: ElementCount = >1 (assumption, because elements will never removed in newer lists)
+							// CurrentList: FirstElementID = VALID
+							// CurrentList: SecondElementID = VALID
+							// CurrentList: ElementCountConfig = >1
+							//
+							// NextList: ElementCount = ?
+							// NextList: FirstElementID = ?
+							// NextList: SecondElementID = ?
+							// NextList: ElementCountConfig = ?
+
+							// skip byte size from (prior)configuration file
+							br->ReadBytes(siList[i]->EntrySizePrior);
+							siList[i]->EntrySizeEstimated = siList[i]->EntrySizePrior;
+							// read byte by byte until value matches SecondElementID
+							while(br->ReadInt32() != siList[i]->SecondElementID)
+							{
+								// TODO: condition to prevent infinite loop
+								siList[i]->EntrySizeEstimated++;
+								br->BaseStream->Position -= 3;
+							}
+							br->BaseStream->Position = streamPos + (siList[i]->ElementCount * siList[i]->EntrySizeEstimated);
+
+							if(siList[i]->EntrySizePrior != siList[i]->EntrySizeEstimated)
+							{
+								log += " CHANGED: Entry Size Increased (" + siList[i]->EntrySizePrior.ToString() + " -> " + siList[i]->EntrySizeEstimated.ToString() + ", +" + (siList[i]->EntrySizeEstimated - siList[i]->EntrySizePrior).ToString() + ")";
+							}
+							else
+							{
+								log += " -";
+							}
+						}
+						// SecondElementID = NULL
+						else
+						{
+							if(i < siList->Length-1)
+							{
+								// NextList: FirstElementID = VALID
+								if(siList[i+1]->FirstElementID > -1)
+								{
+									// CurrentList: ElementCount = >0
+									// CurrentList: FirstElementID = VALID
+									// CurrentList: SecondElementID = NULL
+									// CurrentList: ElementCountConfig = >0
+									//
+									// NextList: ElementCount = ?
+									// NextList: FirstElementID = VALID
+									// NextList: SecondElementID = ?
+									// NextList: ElementCountConfig = >0
+
+									// we have to rely on the offset from the configuration file (hopefully it doesn't changed)
+									// if the offset is AUTO mode then we can give up here
+									if(listOffsets[i+1] == "AUTO")
+									{
+										if(MessageBox::Show("List Index: " + i.ToString() + "\r\n\r\nDeep scan through Offset:AUTO in next list not possible.\r\nTry to use EntrySize from configuration file?\r\n*Application may crash when EntrySize has been increased!", listNames[i], MessageBoxButtons::YesNo) == Windows::Forms::DialogResult::Yes)
+										{
+											siList[i]->EntrySizeEstimated = siList[i]->EntrySizePrior;
+											br->BaseStream->Position = streamPos + (siList[i]->ElementCount * siList[i]->EntrySizeEstimated);
+											log += " INHERITED: Using Entry Size from Configuration File (" + siList[i]->EntrySizeEstimated + ")";
+										}
+										else
+										{
+											log += " ABORT (Can't deep scan through OFFSET:AUTO)\r\n";
+											goto ABORT;
+										}
+									}
+									else
+									{
+										// scan for the FirstElementID in next list
+										br->BaseStream->Position += (siList[i]->ElementCount * siList[i]->EntrySizePrior);
+										// read byte by byte until value matches FirstElementID in next list
+										while(br->ReadInt32() != siList[i+1]->FirstElementID)
+										{
+											// TODO: condition to prevent infinite loop
+											br->BaseStream->Position -= 3;
+										}
+										// decrement stream position by NextList: Offset + ElementCount + FirstItemID
+										br->BaseStream->Position -= (Convert::ToInt32(listOffsets[i+1]) + 4 + 4);
+										// divide list length by entrycount to acquire the EntrySizeExtimated
+										siList[i]->EntrySizeEstimated = (int)((br->BaseStream->Position - streamPos) / siList[i]->ElementCount);
+
+										if(siList[i]->EntrySizePrior != siList[i]->EntrySizeEstimated)
+										{
+											log += " CHANGED: Entry Size Increased (" + siList[i]->EntrySizePrior.ToString() + " -> " + siList[i]->EntrySizeEstimated.ToString() + ", +" + (siList[i]->EntrySizeEstimated - siList[i]->EntrySizePrior).ToString() + ")";
+										}
+										else
+										{
+											log += " -";
+										}
+									}
+								}
+								// NextList: FirstElementID = NULL
+								else
+								{
+									// CurrentList: ElementCount = >0
+									// CurrentList: FirstElementID = VALID
+									// CurrentList: SecondElementID = NULL
+									// CurrentList: ElementCountConfig = >0
+									//
+									// NextList: ElementCount = ?
+									// NextList: FirstElementID = NULL
+									// NextList: SecondElementID = ?
+									// NextList: ElementCountConfig = 0
+									log += " ABORT (Can't deep scan through multiple unknown lists)\r\n";
+									goto ABORT;
+								}
+							}
+							else
+							{
+								// use EntrySizePrior and check if end of file reached
+								br->BaseStream->Position += (siList[i]->ElementCount * siList[i]->EntrySizePrior);
+								if(br->BaseStream->Length != br->BaseStream->Position)
+								{
+									log += " ABORT (Can't deep scan through next [non-existing] list)\r\n";
+									goto ABORT;
+								}
+								else
+								{
+									siList[i]->EntrySizeEstimated = siList[i]->EntrySizePrior;
+									log += " INHERITED: Using Entry Size from Configuration File (" + siList[i]->EntrySizeEstimated + ")";
+								}
+							}
+						}
+					}
+					// FirstElementID = NULL
+					else
+					{
+						// SecondElementID = VALID
+						if(false)
+						{
+							// SecondElementID can't be valid when FirstElementID is NULL
+							// otherwise: wrong sequel_scanner configuration
+							log += " ABORT (Error in sequel_scanner.txt)\r\n";
+							goto ABORT;
+						}
+						// SecondElementID = NULL
+						else
+						{
+							if(i < siList->Length-1)
+							{
+								// NextList: FirstElementID = VALID
+								if(siList[i+1]->FirstElementID > -1)
+								{
+									// CurrentList: ElementCount = >0
+									// CurrentList: FirstElementID = NULL
+									// CurrentList: SecondElementID = NULL
+									// CurrentList: ElementCountConfig = 0
+									//
+									// NextList: ElementCount = ?
+									// NextList: FirstElementID = VALID
+									// NextList: SecondElementID = ?
+									// NextList: ElementCountConfig = >0
+									log += " ABORT (mot implemented yet)\r\n";
+									goto ABORT;
+								}
+								// NextList: FirstElementID = NULL
+								else
+								{
+									// CurrentList: ElementCount = >0
+									// CurrentList: FirstElementID = NULL
+									// CurrentList: SecondElementID = NULL
+									// CurrentList: ElementCountConfig = 0
+									//
+									// NextList: ElementCount = ?
+									// NextList: FirstElementID = NULL
+									// NextList: SecondElementID = ?
+									// NextList: ElementCountConfig = 0
+									log += " ABORT (Can't deep scan through multiple unknown lists)\r\n";
+									goto ABORT;
+								}
+							}
+							else
+							{
+								// use EntrySizePrior and check if end of file reached
+								br->BaseStream->Position += (siList[i]->ElementCount * siList[i]->EntrySizePrior);
+								if(br->BaseStream->Length != br->BaseStream->Position)
+								{
+									log += " ABORT (Can't deep scan through next [non-existing] list)\r\n";
+									goto ABORT;
+								}
+								else
+								{
+									siList[i]->EntrySizeEstimated = siList[i]->EntrySizePrior;
+									log += " INHERITED: Using Entry Size from Configuration File (" + siList[i]->EntrySizeEstimated + ")";
+								}
+							}
+						}
+					}
+				}
+				else
+				{
+					log += " SKIPPED (Empty List)";
+				}
+
+				log += "\r\n";
+				//MessageBox::Show("List Name: " + listNames[i] + "\n\nList Index: " + i.ToString() + "\nElement Count: " + siList[i]->ElementCount.ToString() + "\nEntry Size (Prior Config): " + siList[i]->EntrySizePrior.ToString() + "\nEntry Size (Estimated): " + siList[i]->EntrySizeEstimated.ToString());
+			}
+
+			ABORT:
+
+			log += "\r\nBYTES LEFT: " + (br->BaseStream->Length - br->BaseStream->Position).ToString();
+
+			br->Close();
+			sr->Close();
+
+			gcnew DebugWindow("Scan Results", log);
+		}
+
 	}
 };
