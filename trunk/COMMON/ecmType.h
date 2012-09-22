@@ -70,6 +70,16 @@ public ref class ecmTYPE
 					Parameters->RemoveAt(i);
 					i--;
 				}
+				if(line->StartsWith("CustomData:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
+				if(line->StartsWith("GfxRotWithModel:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
 				if(line->StartsWith("FadeOut:"))
 				{
 					int time = Convert::ToInt32(line->Split(seperator)[1]);

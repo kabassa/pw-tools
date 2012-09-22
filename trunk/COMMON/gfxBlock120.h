@@ -41,6 +41,11 @@ public ref class gfxBLOCK120 : gfxBLOCK
 					Parameters->RemoveAt(i);
 					i--;
 				}
+				if(line->StartsWith("InitRandomTexture:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
 				if(line->StartsWith("ParIniDir:"))
 				{
 					Parameters->RemoveAt(i);

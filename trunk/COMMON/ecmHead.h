@@ -71,6 +71,11 @@ public ref class ecmHEAD
 					Parameters->RemoveAt(i);
 					i--;
 				}
+				if(line->StartsWith("PSFileVersion:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
 				if(line->StartsWith("ShaderFile:"))
 				{
 					Parameters->RemoveAt(i);

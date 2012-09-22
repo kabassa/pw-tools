@@ -59,6 +59,16 @@ public ref class gfxHEAD
 					Parameters->RemoveAt(i);
 					i--;
 				}
+				if(line->StartsWith("ShakeCamBlur:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
+				if(line->StartsWith("ShakeCamPixOff:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
 				if(line->StartsWith("PhysExist:"))
 				{
 					Parameters->RemoveAt(i);
