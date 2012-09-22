@@ -111,6 +111,21 @@ public ref class gfxBLOCK210 : gfxBLOCK
 					vreverse = Convert::ToBoolean(Convert::ToInt16(line->Split(seperator)[1]));
 					Parameters[i] = "VReverse: 0";
 				}
+				if(line->StartsWith("AffByScl:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
+				if(line->StartsWith("RotFromView:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
+				if(line->StartsWith("fOffsetHeight:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
 				if(line->StartsWith("wNumber:"))
 				{
 					try

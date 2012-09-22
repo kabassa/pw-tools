@@ -31,6 +31,26 @@ public ref class gfxBLOCK150 : gfxBLOCK
 					Parameters->RemoveAt(i);
 					i--;
 				}
+				if(line->StartsWith("WaveMoving:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
+				if(line->StartsWith("WaveMovingSpeed:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
+				if(line->StartsWith("FixWaveLength:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
+				if(line->StartsWith("NumWaves:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
 			}
 		}
 		return true;

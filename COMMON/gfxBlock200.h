@@ -31,6 +31,11 @@ public ref class gfxBLOCK200 : gfxBLOCK
 					Parameters->RemoveAt(i);
 					i--;
 				}
+				if(line->StartsWith("DummyUseGScale:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
 			}
 		}
 		return true;

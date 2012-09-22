@@ -31,6 +31,11 @@ public ref class gfxBLOCK160 : gfxBLOCK
 					Parameters->RemoveAt(i);
 					i--;
 				}
+				if(line->StartsWith("FacingDir:"))
+				{
+					Parameters->RemoveAt(i);
+					i--;
+				}
 			}
 		}
 		return true;
