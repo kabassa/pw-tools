@@ -6,6 +6,7 @@ http://pw-tools.googlecode.com/svn/wiki/smaptool.gif
 
 
 =Converter=
+[http://pw-tools.googlecode.com/svn/wiki/smaptool-01.jpg http://pw-tools.googlecode.com/svn/wiki/smaptool-01-thumb.jpg]
   * Select the client maps root directory (the folder where all the "a" folders are located)
   * Select the target directory (a "maps" folder will created in the target directory, all "a" folders are stored inside this "maps" folder)
   * Select the files which should recursively be converted
@@ -15,6 +16,7 @@ _*Note:*_ `*`.t2bk will only export terrain, disregarding litmodels
 
 
 =path.sev Editor=
+[http://pw-tools.googlecode.com/svn/wiki/smaptool-02.jpg http://pw-tools.googlecode.com/svn/wiki/smaptool-02-thumb.jpg]
   * Open path file
   * Select a background template if you want
   * Select a path from the list, the path is shown in the image
@@ -30,6 +32,7 @@ _*Note:*_ `*`.t2bk will only export terrain, disregarding litmodels
 
 
 =.hmap Editor=
+[http://pw-tools.googlecode.com/svn/wiki/smaptool-03.jpg http://pw-tools.googlecode.com/svn/wiki/smaptool-03-thumb.jpg]
   * Open hmap file
   * Select a background template if you want
   * Select a color scheme by right click on the value expansion bar
@@ -41,6 +44,7 @@ _*Note:*_ `*`.t2bk will only export terrain, disregarding litmodels
 
 
 =.rmap Editor=
+[http://pw-tools.googlecode.com/svn/wiki/smaptool-04.jpg http://pw-tools.googlecode.com/svn/wiki/smaptool-04-thumb.jpg]
   * Open rmap file
   * Select a polygon by left mouse clicks
   * Choose the selection mode for the polygon
@@ -50,8 +54,10 @@ _*Note:*_ `*`.t2bk will only export terrain, disregarding litmodels
 
 
 =.wmap Editor=
+[http://pw-tools.googlecode.com/svn/wiki/smaptool-05.jpg http://pw-tools.googlecode.com/svn/wiki/smaptool-05-thumb.jpg]
   * ...
 
 
 =World Explorer=
+[http://pw-tools.googlecode.com/svn/wiki/smaptool-06.jpg http://pw-tools.googlecode.com/svn/wiki/smaptool-06-thumb.jpg] [http://pw-tools.googlecode.com/svn/wiki/smaptool-07.jpg http://pw-tools.googlecode.com/svn/wiki/smaptool-07-thumb.jpg] [http://pw-tools.googlecode.com/svn/wiki/smaptool-08.jpg http://pw-tools.googlecode.com/svn/wiki/smaptool-08-thumb.jpg]
   * Browse worldmap coordinates, zones and satelite view
