@@ -49,5 +49,9 @@ _*Note:*_ `*`.t2bk will only export terrain, disregarding litmodels
   * When finished click save to store changes to the loaded rmap file
 
 
+=.wmap Editor=
+  * ...
+
+
 =World Explorer=
   * Browse worldmap coordinates, zones and satelite view
