@@ -531,6 +531,7 @@ public ref class Task
 	public: bool UNKNOWN_25;
 	public: bool UNKNOWN_26;
 	public: PQ_Audit^ pq;
+	public: bool LeaveFactionFail;
 	public: array<unsigned char>^ UNKNOWN_26_01;
 	public: int level_min;
 	public: int level_max;
@@ -628,6 +629,7 @@ public ref class Task
 	public: int required_wait_time;
 	public: array<unsigned char>^ UNKNOWN_57_01; // 15 Byte
 	public: array<unsigned char>^ UNKNOWN_58; // 8 Byte
+	public: array<unsigned char>^ TransformedForm; // 1 Byte
 	public: array<unsigned char>^ UNKNOWN_59; // 24 Byte
 	public: int parent_quest;
 	public: int previous_quest;

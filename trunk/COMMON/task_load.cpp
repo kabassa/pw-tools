@@ -590,6 +590,10 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	pq->scripts = gcnew array<PQ_AuditScript^>(pq->script_count);
 	pq->chases = gcnew array<PQ_AuditChase^>(pq->chase_count);
 
+	if(version >= 105)
+	{
+		LeaveFactionFail = br->ReadBoolean();
+	}
 	if(version >= 100)
 	{
 		UNKNOWN_26_01 = br->ReadBytes(2);
@@ -912,6 +916,10 @@ pq->location->unknown_1 = gcnew array<unsigned char>(4);
 
 	// Need to checked if contains something != 0
 	UNKNOWN_58 = br->ReadBytes(8);
+	if(version >= 105)
+	{
+		TransformedForm = br->ReadBytes(1);
+	}
 	UNKNOWN_59 = br->ReadBytes(24);
 	parent_quest = br->ReadInt32();
 	previous_quest = br->ReadInt32();

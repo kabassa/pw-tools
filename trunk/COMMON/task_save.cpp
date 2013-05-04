@@ -375,7 +375,10 @@ void Task::Save(int version, BinaryWriter^ bw)
 
 		bw->Write(pq->unknown_10);
 	}
-
+	if(version >= 105)
+	{
+		bw->Write(LeaveFactionFail);
+	}
 	if(version >= 100)
 	{
 		bw->Write(UNKNOWN_26_01);
@@ -586,6 +589,10 @@ void Task::Save(int version, BinaryWriter^ bw)
 	}
 
 	bw->Write(UNKNOWN_58);
+	if(version >= 105)
+	{
+		bw->Write(TransformedForm);
+	}
 	bw->Write(UNKNOWN_59);
 	bw->Write(parent_quest);
 	bw->Write(previous_quest);
