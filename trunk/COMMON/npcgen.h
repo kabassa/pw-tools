@@ -38,6 +38,7 @@ public ref struct CreatureGroup
 	int unknown_14;
 	int unknown_15;
 	int unknown_16;
+	int unknown_17;
 };
 
 public ref struct CreatureSet
