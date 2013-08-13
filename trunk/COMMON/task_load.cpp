@@ -594,6 +594,18 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 	{
 		LeaveFactionFail = br->ReadBoolean();
 	}
+	else
+	{
+		LeaveFactionFail = false;
+	}
+	if(version >= 108)
+	{
+		NotClearItemWhenFailed = br->ReadBoolean();
+	}
+	else
+	{
+		NotClearItemWhenFailed = false;
+	}
 	if(version >= 100)
 	{
 		UNKNOWN_26_01 = br->ReadBytes(2);
@@ -789,6 +801,20 @@ void Task::Load(int version, BinaryReader^ br, int stream_position, TreeNodeColl
 		UNKNOWN_55_04 = br->ReadBytes(11);
 		UNKNOWN_55_05 = br->ReadBytes(4);
 		UNKNOWN_55_06 = br->ReadBytes(1);
+		if(version >= 108)
+		{
+			PremIsKing = br->ReadBoolean();
+			ShowByKing = br->ReadBoolean();
+			PremNotInTeam = br->ReadBoolean();
+			ShowByNotInTeam = br->ReadBoolean();
+		}
+		else
+		{
+			PremIsKing = false;
+			ShowByKing = false;
+			PremNotInTeam = false;
+			ShowByNotInTeam = false;
+		}
 	}
 	else
 	{
@@ -919,6 +945,10 @@ pq->location->unknown_1 = gcnew array<unsigned char>(4);
 	if(version >= 105)
 	{
 		TransformedForm = br->ReadBytes(1);
+	}
+	else
+	{
+		TransformedForm = gcnew array<unsigned char>(1);
 	}
 	UNKNOWN_59 = br->ReadBytes(24);
 	parent_quest = br->ReadInt32();

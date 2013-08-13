@@ -379,6 +379,10 @@ void Task::Save(int version, BinaryWriter^ bw)
 	{
 		bw->Write(LeaveFactionFail);
 	}
+	if(version >= 108)
+	{
+		bw->Write(NotClearItemWhenFailed);
+	}
 	if(version >= 100)
 	{
 		bw->Write(UNKNOWN_26_01);
@@ -527,7 +531,13 @@ void Task::Save(int version, BinaryWriter^ bw)
 		bw->Write(UNKNOWN_55_05);
 		bw->Write(UNKNOWN_55_06);
 	}
-
+	if(version >= 108)
+	{
+		bw->Write(PremIsKing);
+		bw->Write(ShowByKing);
+		bw->Write(PremNotInTeam);
+		bw->Write(ShowByNotInTeam);
+	}
 	bw->Write(required_success_type);
 	bw->Write(required_npc_type);
 
