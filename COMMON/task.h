@@ -532,6 +532,7 @@ public ref class Task
 	public: bool UNKNOWN_26;
 	public: PQ_Audit^ pq;
 	public: bool LeaveFactionFail;
+	public: bool NotClearItemWhenFailed;
 	public: array<unsigned char>^ UNKNOWN_26_01;
 	public: int level_min;
 	public: int level_max;
@@ -603,6 +604,10 @@ public ref class Task
 	public: array<unsigned char>^ UNKNOWN_55_04; // 11 Byte: bool ShowByForceContrib; int ForcePremExp; bool ShowByForceExp; int ForcePremSP; bool ShowByForceSP;
 	public: array<unsigned char>^ UNKNOWN_55_05; // int ForceActivityLevel
 	public: array<unsigned char>^ UNKNOWN_55_06; // bool ShowByForceActivityLevel
+	public: bool PremIsKing;
+	public: bool ShowByKing;
+	public: bool PremNotInTeam;
+	public: bool ShowByNotInTeam;
 
 	// 0 - ?
 	// 1 - Chase
